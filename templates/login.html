@@ -15,6 +15,14 @@
         <label>{{ t.password }}</label>
         <input type="password" id="password" autocomplete="{% if mode == 'register' %}new-password{% else %}current-password{% endif %}" placeholder="{{ t.password_ph }}" required>
       </div>
+      {% if mode == 'register' %}
+      <div class="field">
+        <label style="display:flex;align-items:flex-start;gap:8px;font-weight:500;cursor:pointer">
+          <input type="checkbox" id="agreePrivacy" style="margin-top:4px;accent-color:#b537f2">
+          <span class="muted tiny">{{ t.privacy_agree }} · <a href="{{ url_for('privacy') }}" target="_blank" rel="noopener">{{ t.privacy_view }}</a></span>
+        </label>
+      </div>
+      {% endif %}
       <button type="submit" class="btn btn-primary btn-block">
         {% if mode == 'register' %}{{ t.reg_submit }}{% else %}{{ t.login_submit }}{% endif %}
       </button>
@@ -44,6 +52,14 @@
     var u = document.getElementById('username').value.trim();
     var p = document.getElementById('password').value;
     msg.className = 'form-msg'; msg.textContent = '';
+    if (MODE === 'register') {
+      var agree = document.getElementById('agreePrivacy');
+      if (agree && !agree.checked) {
+        msg.className = 'form-msg err';
+        msg.textContent = T.privacy_agree_required;
+        return;
+      }
+    }
     var fn = MODE === 'register' ? window.IanAPI.register : window.IanAPI.login;
     fn(u, p).then(function (r) {
       if (r && r.ok) {

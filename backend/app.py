@@ -205,6 +205,10 @@ def create_app(config_class=Config):
         session.pop('uid', None)
         return redirect(url_for('index'))
 
+    @app.route('/privacy')
+    def privacy():
+        return render_template('privacy.html')
+
     @app.route('/profile')
     @login_required
     def profile():
