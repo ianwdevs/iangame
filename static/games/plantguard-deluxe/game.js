@@ -1,5 +1,5 @@
 /* ============================================================
- * 植物大战僵尸 · 精致版 (pvz-deluxe)  ·  Phase 2
+ * 植物守卫战 · 精致版 (plantguard-deluxe)  ·  Phase 2
  * ------------------------------------------------------------
  * 单文件 IIFE,实现 IanGame 契约:window.IanGame.init(canvas, hooks)
  *   → 返回 { pause, resume, restart(diff), destroy }

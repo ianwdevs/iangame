@@ -15,7 +15,7 @@ from sqlalchemy.exc import IntegrityError
 
 from config import Config
 from extensions import db
-from models import User, Game, Score, Favorite, LoginAttempt, SEED_GAMES, CATEGORY_LABELS
+from models import User, Game, Score, Favorite, LoginAttempt, SEED_GAMES, CATEGORY_LABELS, SLUG_RENAMES
 from i18n import LANGS, LANG_NAMES, STRINGS, detect_lang, tr, COOKIE_NAME as LANG_COOKIE, COOKIE_MAX_AGE as LANG_COOKIE_AGE
 from i18n_games import get_game_meta, CATEGORY_LABELS_I18N
 
@@ -179,6 +179,9 @@ def create_app(config_class=Config):
 
     @app.route('/play/<slug>')
     def play(slug):
+        # 旧 slug 301 到新 slug(历史分享链接兼容)
+        if slug in SLUG_RENAMES:
+            return redirect(url_for('play', slug=SLUG_RENAMES[slug]), code=301)
         game = Game.query.filter_by(slug=slug).first()
         if not game:
             abort(404)
@@ -423,6 +426,15 @@ def _seed():
     """按 slug upsert 种子游戏:已有库可补种新游戏,无需删库。
     sort 以 SEED_GAMES 中的顺序为准(新游戏追加在末尾)。"""
     changed = False
+    # 去商标 slug 迁移:games/scores/favorites 三表联动,保留历史分数与收藏
+    for old, new in SLUG_RENAMES.items():
+        has_old = Game.query.filter_by(slug=old).first()
+        has_new = Game.query.filter_by(slug=new).first()
+        if has_old and not has_new:
+            Score.query.filter_by(game_slug=old).update({'game_slug': new})
+            Favorite.query.filter_by(game_slug=old).update({'game_slug': new})
+            has_old.slug = new
+            changed = True
     existing = {g.slug: g for g in Game.query.all()}
     for i, g in enumerate(SEED_GAMES):
         row = existing.get(g['slug'])

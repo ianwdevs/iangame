@@ -5,7 +5,7 @@
  *   → 返回 { pause, resume, restart(diff), destroy }
  *
  * Phase 1 交付:
- *   · 复用 pvz-deluxe 的 Engine 层(工具/粒子/音效/输入/主循环)
+ *   · 复用 plantguard-deluxe 的 Engine 层(工具/粒子/音效/输入/主循环)
  *   · 玩家坦克 3 星成长(1星单发→2星双发→3星三发+穿甲+护盾)
  *   · 3 种敌方坦克(轻/重/快)+ 差异化 AI 雏形
  *   · 5 关手工设计地图
@@ -341,7 +341,7 @@
   ];
 
   // ============================================================
-  // Engine · 工具(与 pvz-deluxe 一致)
+  // Engine · 工具(与 plantguard-deluxe 一致)
   // ============================================================
   function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
   function rand(a, b) { return a + Math.random() * (b - a); }
@@ -366,7 +366,7 @@
   }
 
   // ============================================================
-  // Engine · 粒子(与 pvz-deluxe 一致)
+  // Engine · 粒子(与 plantguard-deluxe 一致)
   // ============================================================
   function makeParticles() {
     var list = [];
@@ -415,7 +415,7 @@
   }
 
   // ============================================================
-  // Engine · 音效(WebAudio 合成,与 pvz-deluxe 一致)
+  // Engine · 音效(WebAudio 合成,与 plantguard-deluxe 一致)
   // ============================================================
   function makeAudio() {
     var actx = null, enabled = true;
