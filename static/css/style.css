@@ -323,14 +323,62 @@ canvas { display: block; }
 .text-grad { background: var(--grad-main); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
 /* ---------- 响应式 ---------- */
+/* 表格容器:小屏允许横向滚动(配合 profile.html 的 .table-scroll) */
+.table-scroll { overflow: hidden; }
+
+/* 平板:游戏页单栏,导航收紧但入口保留 */
 @media (max-width: 880px) {
   .play-wrap { grid-template-columns: 1fr; }
-  .nav-links { display: none; }
+  .nav-inner { gap: 12px; }
+  .nav-links { gap: 2px; }
+  .nav-links a { padding: 8px 10px; font-size: 14px; }
   .hero { padding: 36px 22px; }
+  /* 竖屏下去掉 480px 最小高,画布随宽度等比自撑,消除上下黑边 */
+  .play-canvas-box { min-height: 0; }
 }
+
+/* 手机:导航精简(logo=首页 · 大厅保留 · 头像=个人中心),触控目标加大 */
 @media (max-width: 520px) {
+  .container { padding: 0 14px; }
+  html, body { overflow-x: hidden; }
+  .nav .brand span:last-child { display: none; }        /* 只留 logo 方块 */
+  .nav-inner { gap: 8px; }
+  .nav-links .nav-home, .nav-links .nav-profile { display: none; }
+  .nav-links a { padding: 8px 10px; }
+  .nav-right { gap: 6px; }
+  .nav-right .nav-login { display: none; }              /* 注册页内有登录入口 */
+  .chip-name { max-width: 64px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; }
+  .lang-select { padding: 7px 24px 7px 8px; }
+
+  .hero { padding: 28px 18px; border-radius: 18px; }
+  .hero p { font-size: 16px; }
+  .hero-stats { gap: 16px; }
+  .hero-stat b { font-size: 22px; }
+  .hero-actions { gap: 10px; }
+  .hero-actions .btn { flex: 1; min-width: 140px; }
+
   .game-grid, .game-grid.compact { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .hero-stats { gap: 18px; }
+  .game-cover { height: 92px; font-size: 40px; }
+  .game-body { padding: 10px; gap: 4px; }
+  .game-body h3 { font-size: 15px; }
+  .game-body .desc { font-size: 12px; }
+  .btn-sm { padding: 9px 13px; }                        /* 触控目标贴近 44px */
+  .chip { padding: 9px 14px; }
+
+  .play-meta { gap: 10px; width: 100%; justify-content: space-between; }
+  .stat-pill { padding: 6px 10px; }
+  .stat-pill .v { font-size: 16px; }
+  .overlay .ttl { font-size: 24px; }
+  .overlay .final-score { font-size: 36px; }
+  .play-toolbar { gap: 8px; }
+
+  .auth-wrap { padding: 16px; min-height: calc(100dvh - var(--nav-h)); }  /* dvh 修移动地址栏跳变 */
+  .auth-card { padding: 26px 20px; }
+  .panel { padding: 16px; }
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  .toast { max-width: calc(100vw - 32px); }
+  .section { padding: 32px 0; }
 }
 
 /* ---------- 滚动条 ---------- */

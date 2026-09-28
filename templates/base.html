@@ -19,20 +19,20 @@
         <span class="hex">⬡</span><span><b>IAN</b>GAME</span>
       </a>
       <div class="nav-links">
-        <a href="{{ url_for('index') }}">{{ t.nav_home }}</a>
-        <a href="{{ url_for('games_page') }}">{{ t.nav_games }}</a>
-        {% if current_user %}<a href="{{ url_for('profile') }}">{{ t.nav_profile }}</a>{% endif %}
+        <a class="nav-home" href="{{ url_for('index') }}">{{ t.nav_home }}</a>
+        <a class="nav-games" href="{{ url_for('games_page') }}">{{ t.nav_games }}</a>
+        {% if current_user %}<a class="nav-profile" href="{{ url_for('profile') }}">{{ t.nav_profile }}</a>{% endif %}
       </div>
       <div class="nav-right">
         {% if current_user %}
           <a class="user-chip" href="{{ url_for('profile') }}">
             <span class="avatar">{{ current_user.username[0] | upper }}</span>
-            <span>{{ current_user.username }}</span>
+            <span class="chip-name">{{ current_user.username }}</span>
           </a>
-          <a class="btn btn-ghost btn-sm" href="{{ url_for('logout') }}">{{ t.nav_logout }}</a>
+          <a class="btn btn-ghost btn-sm nav-logout" href="{{ url_for('logout') }}">{{ t.nav_logout }}</a>
         {% else %}
-          <a class="btn btn-ghost btn-sm" href="{{ url_for('login') }}">{{ t.nav_login }}</a>
-          <a class="btn btn-primary btn-sm" href="{{ url_for('register') }}">{{ t.nav_register }}</a>
+          <a class="btn btn-ghost btn-sm nav-login" href="{{ url_for('login') }}">{{ t.nav_login }}</a>
+          <a class="btn btn-primary btn-sm nav-register" href="{{ url_for('register') }}">{{ t.nav_register }}</a>
         {% endif %}
         <select class="lang-select" aria-label="Language"
                 onchange="if(this.value) window.location.href='/setlang/'+this.value">

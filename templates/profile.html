@@ -16,7 +16,7 @@
       <div class="section-title"><span class="dot"></span>{{ t.my_scores }}</div>
       <a class="section-link" href="{{ url_for('games_page') }}">{{ t.play_more }}</a>
     </div>
-    <div class="panel" style="padding:0;overflow:hidden">
+    <div class="panel table-scroll" style="padding:0">
       <table class="profile-table">
         <thead><tr><th>{{ t.th_game }}</th><th>{{ t.th_best }}</th><th>{{ t.th_plays }}</th><th></th></tr></thead>
         <tbody id="rows"><tr><td colspan="4" class="muted tiny" style="padding:20px">{{ t.loading }}</td></tr></tbody>
