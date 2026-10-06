@@ -93,6 +93,7 @@ class WwPlayer(db.Model):
     last_seen = db.Column(db.Float, nullable=False, default=0)       # 轮询心跳(在线判定)
     joined_at = db.Column(db.Float, nullable=False, default=0)
     is_bot = db.Column(db.Boolean, nullable=False, default=False)    # 机器人(单人测试/凑数,自动行动)
+    is_judge = db.Column(db.Boolean, nullable=False, default=False)  # 法官(主持人):无身份牌,不参与游戏
 
 
 class WwEvent(db.Model):

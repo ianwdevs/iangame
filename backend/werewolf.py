@@ -97,15 +97,22 @@ def config_valid(c, n):
 
 
 def _players(room):
+    """全部成员(含法官与机器人)——重名检查/展示用"""
     return WwPlayer.query.filter_by(room_id=room.id).order_by(WwPlayer.seat).all()
 
 
+def _game_players(room):
+    """参与游戏的玩家(法官除外)——发牌/计票/胜负用"""
+    return [p for p in _players(room) if not p.is_judge]
+
+
 def _player_count(room):
-    return WwPlayer.query.filter_by(room_id=room.id).count()
+    """游戏玩家人数(法官不占名额)"""
+    return sum(1 for p in _players(room) if not p.is_judge)
 
 
 def _alive(room):
-    return [p for p in _players(room) if p.alive]
+    return [p for p in _players(room) if p.alive and not p.is_judge]
 
 
 def _alive_with_role(room, role):
@@ -151,6 +158,10 @@ def ensure_schema():
         if 'is_bot' not in cols:
             conn.execute(text('ALTER TABLE ww_players ADD COLUMN is_bot BOOLEAN NOT NULL DEFAULT 0'))
             conn.commit()
+        cols = [r[1] for r in conn.execute(text('PRAGMA table_info(ww_players)'))]
+        if 'is_judge' not in cols:
+            conn.execute(text('ALTER TABLE ww_players ADD COLUMN is_judge BOOLEAN NOT NULL DEFAULT 0'))
+            conn.commit()
 
 
 # ---------------- 机器人(单人测试/凑数) ----------------
@@ -158,7 +169,7 @@ def ensure_schema():
 def add_bot(room):
     """主持人加一个机器人(bot1..botN 不重名),仅在 waiting 阶段"""
     players = _players(room)
-    if len(players) >= MAX_PLAYERS:
+    if _player_count(room) >= MAX_PLAYERS:
         return 'ww_err_full'
     used = {p.name for p in players}
     name = None
@@ -258,8 +269,9 @@ def create_room(name):
                   config_json='', status='active', created_at=now, updated_at=now)
     db.session.add(room)
     db.session.flush()  # 取 room.id
-    host = WwPlayer(room_id=room.id, seat=1, name=name, token=secrets.token_hex(16),
-                    last_seen=now, joined_at=now)
+    # 创建者是法官(主持人):无身份牌、不占玩家名额、不参与游戏
+    host = WwPlayer(room_id=room.id, seat=0, name=name, token=secrets.token_hex(16),
+                    last_seen=now, joined_at=now, is_judge=True)
     db.session.add(host)
     db.session.flush()
     room.host_player_id = host.id
@@ -288,7 +300,7 @@ def join_room(code, name, token=''):
         return None, None, 'ww_err_started'
     if any(p.name == name for p in players):
         return None, None, 'ww_err_dup_name'
-    if len(players) >= MAX_PLAYERS:
+    if _player_count(room) >= MAX_PLAYERS:
         return None, None, 'ww_err_full'
     now = _now()
     p = WwPlayer(room_id=room.id, seat=max([x.seat for x in players], default=0) + 1,
@@ -339,7 +351,7 @@ def _deal(room):
     c = _cfg(room)
     pool = ['wolf'] * c['wolf'] + [g for g in GODS for _ in range(c[g])] + ['villager'] * c['villager']
     random.shuffle(pool)
-    players = _players(room)
+    players = _game_players(room)   # 法官不发牌
     for p, role in zip(players, pool):
         p.role = role
         p.alive = True
@@ -592,6 +604,7 @@ def get_state(room, me):
     for p in players:
         d = {'id': p.id, 'seat': p.seat, 'name': p.name, 'alive': p.alive,
              'is_police': p.is_police, 'is_host': p.id == room.host_player_id,
+             'is_judge': bool(p.is_judge),
              'is_bot': bool(p.is_bot), 'online': p.is_bot or p.last_seen > online_cut}
         if room.phase == 'police_run' and p.alive:
             d['run'] = p.id in (pol.get('run') or [])
@@ -599,13 +612,14 @@ def get_state(room, me):
 
     # ---- me ----
     me_d = {
-        'id': me.id, 'name': me.name, 'seat': me.seat, 'alive': me.alive,
-        'is_police': me.is_police, 'is_host': is_host,
-        'role': me.role if started else '', 'camp': ROLE_CAMP.get(me.role, '') if started else '',
+        'id': me.id, 'name': me.name, 'seat': me.seat, 'alive': me.alive and not me.is_judge,
+        'is_police': me.is_police, 'is_host': is_host, 'is_judge': bool(me.is_judge),
+        'role': (me.role if started and not me.is_judge else ''),
+        'camp': ROLE_CAMP.get(me.role, '') if started and not me.is_judge else '',
         'hunter_used': me.hunter_used, 'badge_done': me.badge_done,
         'can': '',
         # 狼人白天可自爆(讨论/投票/PK)
-        'can_explode': bool(started and me.alive and me.role == 'wolf'
+        'can_explode': bool(started and me.alive and not me.is_judge and me.role == 'wolf'
                             and room.phase in ('day_talk', 'vote_cast', 'vote_pk')),
     }
     acts = []
@@ -616,15 +630,17 @@ def get_state(room, me):
         me_d['needs'] = 'hunter_shoot'
     elif me.id in (pend.get('badge') or []):
         me_d['needs'] = 'badge_pass'
-    # 我的阶段性行动提示
-    if room.phase == 'police_run' and me.alive:
+    # 我的阶段性行动提示(法官不参与任何玩家行动)
+    if me.is_judge or not me.alive:
+        pass
+    elif room.phase == 'police_run':
         me_d['can'] = 'police_run'
-    elif room.phase in NIGHT_PHASES and me.alive:
+    elif room.phase in NIGHT_PHASES:
         if me in _night_actors(room, room.phase):
             # 狼队目标可反复修改直到阶段结束;其他角色提交一次即完成
             if room.phase == 'night_wolf' or not _my_night_done(room, me, n):
                 me_d['can'] = room.phase
-    elif room.phase in ('police_vote', 'police_pk', 'vote_cast', 'vote_pk') and me.alive:
+    elif room.phase in ('police_vote', 'police_pk', 'vote_cast', 'vote_pk'):
         if not _can_vote(room, me, pol):
             me_d['can'] = ''
         elif str(me.id) not in votes:
@@ -687,7 +703,7 @@ def get_state(room, me):
             'code': room.code, 'phase': room.phase, 'day_no': room.day_no,
             'status': room.status, 'winner': room.winner or '',
             'host_id': room.host_player_id, 'talk_end': room.talk_end or 0,
-            'count': len(players), 'min': MIN_PLAYERS, 'max': MAX_PLAYERS,
+            'count': _player_count(room), 'min': MIN_PLAYERS, 'max': MAX_PLAYERS,
             'config': _cfg(room),
             'version': room.updated_at,
         },
@@ -697,10 +713,10 @@ def get_state(room, me):
         'night_progress': night_prog,
         'events': ev_list,
     }
-    # 主持人:全程上帝视角;普通玩家:仅 game_over 后身份揭示
+    # 主持人(法官):全程上帝视角;普通玩家:仅 game_over 后身份揭示
     if (is_host and started) or room.phase == 'game_over':
         state['all_roles'] = [{'id': p.id, 'name': p.name, 'role': p.role,
-                               'alive': p.alive, 'is_police': p.is_police} for p in players]
+                               'alive': p.alive, 'is_police': p.is_police} for p in _game_players(room)]
     return state
 
 
@@ -820,9 +836,17 @@ def do_action(room, me, action, target=0, extra=None):
     if action == 'transfer_host':
         if not is_host:
             return 'ww_err_host_only'
+        # 法官=本局固定主持人;只在 waiting 阶段可转让(换人重新开局)
+        if ph != 'waiting':
+            return 'ww_err_not_now'
         t = db.session.get(WwPlayer, int(target or 0))
         if not t or t.room_id != room.id:
             return 'ww_err_target'
+        # 法官身份随主持权移交:新主持变法官,原法官转普通玩家(排到末位)
+        t.is_judge = True
+        t.seat = 0
+        me.is_judge = False
+        me.seat = max([x.seat for x in _players(room) if x.id != me.id], default=0) + 1
         room.host_player_id = t.id
         _evt(room, 'host', me, t, phase=ph)
         _touch(room)
@@ -913,14 +937,14 @@ def do_action(room, me, action, target=0, extra=None):
         return None
 
     if action in ('police_vote', 'day_vote'):
-        if ph not in ('police_vote', 'police_pk', 'vote_cast', 'vote_pk') or not me.alive:
+        if ph not in ('police_vote', 'police_pk', 'vote_cast', 'vote_pk') or not me.alive or me.is_judge:
             return 'ww_err_not_now'
         if not _can_vote(room, me, _police(room)):
             return 'ww_err_not_now'
         t = int(target or 0)
         if t:
             tp = db.session.get(WwPlayer, t)
-            if not tp or tp.room_id != room.id or not tp.alive:
+            if not tp or tp.room_id != room.id or not tp.alive or tp.is_judge:
                 return 'ww_err_target'
         votes = _votes(room)
         votes[str(me.id)] = t
@@ -957,7 +981,7 @@ def do_action(room, me, action, target=0, extra=None):
         tp = None
         if t:
             tp = db.session.get(WwPlayer, t)
-            if not tp or tp.room_id != room.id or not tp.alive:
+            if not tp or tp.room_id != room.id or not tp.alive or tp.is_judge:
                 return 'ww_err_target'
         me.hunter_used = True
         pend['shoot'] = [x for x in pend['shoot'] if x != me.id]
@@ -978,7 +1002,7 @@ def do_action(room, me, action, target=0, extra=None):
         tp = None
         if t:
             tp = db.session.get(WwPlayer, t)
-            if not tp or tp.room_id != room.id or not tp.alive:
+            if not tp or tp.room_id != room.id or not tp.alive or tp.is_judge:
                 return 'ww_err_target'
         me.is_police = False
         me.badge_done = True
@@ -996,10 +1020,29 @@ def do_action(room, me, action, target=0, extra=None):
     return 'ww_err_action'
 
 
+def _bots_pending(room):
+    """机器人自动处理待触发技能(猎人开枪/警徽移交),法官模式下不处理会卡住流程"""
+    pend = _pending(room)
+    for pid in list(pend.get('shoot') or []):
+        b = db.session.get(WwPlayer, pid)
+        if b and b.is_bot:
+            tgts = [p.id for p in _alive(room) if p.id != b.id]
+            t = random.choice(tgts) if tgts and random.random() < 0.7 else 0
+            do_action(room, b, 'hunter_shoot', t)
+    pend = _pending(room)
+    for pid in list(pend.get('badge') or []):
+        b = db.session.get(WwPlayer, pid)
+        if b and b.is_bot:
+            tgts = [p.id for p in _alive(room) if p.id != b.id]
+            t = random.choice(tgts) if tgts and random.random() < 0.7 else 0
+            do_action(room, b, 'badge_pass', t)
+
+
 def _host_advance(room, extra):
     ph = room.phase
-    # 推进前先让机器人补齐当前阶段的行动(夜晚/投票/上警)
+    # 推进前先让机器人补齐当前阶段的行动(夜晚/投票/上警/技能)
     _bots_auto(room)
+    _bots_pending(room)
     ph = room.phase
     if ph == 'police_run':
         pol = _police(room)
@@ -1068,13 +1111,13 @@ def _night_act(room, me, target, extra):
     if ph == 'night_guard':
         if me.role != 'guard':
             return 'ww_err_not_now'
-        if t and (t not in players or not players[t].alive or t == n.get('last_guard')):
+        if t and (t not in players or not players[t].alive or players[t].is_judge or t == n.get('last_guard')):
             return 'ww_err_target'
         n['guard'] = t
     elif ph == 'night_wolf':
         if me.role != 'wolf':
             return 'ww_err_not_now'
-        if t and (t not in players or not players[t].alive):
+        if t and (t not in players or not players[t].alive or players[t].is_judge):
             return 'ww_err_target'
         n['wolf'] = t  # 狼队共同目标,后提交覆盖(可改)
     elif ph == 'night_witch':
@@ -1092,7 +1135,7 @@ def _night_act(room, me, target, extra):
         elif act == 'poison':
             if n.get('poison_used'):
                 return 'ww_err_potion'
-            if not t or t not in players or not players[t].alive:
+            if not t or t not in players or not players[t].alive or players[t].is_judge:
                 return 'ww_err_target'
             n['poison_used'] = True
             n['witch'] = {'act': 'poison', 'target': t}
@@ -1102,7 +1145,7 @@ def _night_act(room, me, target, extra):
     elif ph == 'night_seer':
         if me.role != 'seer':
             return 'ww_err_not_now'
-        if not t or t not in players or not players[t].alive:
+        if not t or t not in players or not players[t].alive or players[t].is_judge:
             return 'ww_err_target'
         if any(_loads(e.data_json, {}).get('target') == t for e in
                WwEvent.query.filter_by(room_id=room.id, type='check', actor_id=me.id).all()):

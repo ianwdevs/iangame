@@ -246,6 +246,15 @@
     S.players.forEach(function (p) {
       var d = el('div', 'ww-seat' + (p.alive ? '' : ' dead'));
       var tags = '';
+      if (p.is_judge) {
+        tags += '<span class="tag-mini host">' + t('ww_judge') + '</span>';
+        d.innerHTML = '<div class="avatar" style="width:36px;height:36px;font-size:15px;background:linear-gradient(135deg,#ffd54a,#ff7847)">' + esc(p.name.charAt(0).toUpperCase()) + '</div>' +
+          '<div class="nm">' + (p.id === S.me.id ? '<b>' + esc(p.name) + '</b>' : esc(p.name)) + '</div>' +
+          '<div class="tags">' + tags + '</div>';
+        if (p.id === S.me.id) d.style.borderColor = '#ffd54a';
+        g.appendChild(d);
+        return;
+      }
       if (p.is_host) tags += '<span class="tag-mini host">👑 ' + esc(t('ww_host_tag')) + '</span>';
       if (p.is_bot) tags += '<span class="tag-mini">🤖</span>';
       if (p.is_police) tags += '<span class="tag-mini police">👮</span>';
@@ -393,8 +402,12 @@
 
   // ---------- dealing ----------
   function renderDealing() {
-    // 我的角色卡
-    if (S.me.role) {
+    // 法官:无身份牌,只主持
+    if (S.me.is_judge) {
+      var jh = el('div', 'ww-banner');
+      jh.innerHTML = '<div class="ph">' + t('ww_judge') + '</div><div class="sub">' + t('ww_judge_hint') + '</div>';
+      main.appendChild(jh);
+    } else if (S.me.role) {
       var h = el('h4', '', '🃏 ' + t('ww_your_role'));
       h.style.textAlign = 'center';
       main.appendChild(h);
@@ -523,6 +536,8 @@
           });
         }
       }
+    } else if (S.me.is_judge) {
+      p.appendChild(el('p', 'muted', '⚖️ ' + t('ww_judge_hint')));
     } else if (S.me.alive) {
       p.appendChild(el('p', 'muted', '😴 ' + t('ww_evt_night')));
       if (S.me.role) p.appendChild(roleCard(S.me.role, true));
