@@ -332,9 +332,16 @@ def leave_room(room, me):
 
 
 def cleanup_stale():
-    """惰性清理:abandoned 房间立即删;其余房间全员心跳超 ROOM_TTL 删。"""
+    """惰性清理:abandoned 立即删;waiting 房 2h 无进展删(防后台标签页一直轮询导致僵尸房);
+    其余房间(游戏/复盘中)全员心跳超 ROOM_TTL 删。"""
     changed = False
     for room in WwRoom.query.filter_by(status='abandoned').all():
+        WwEvent.query.filter_by(room_id=room.id).delete()
+        WwPlayer.query.filter_by(room_id=room.id).delete()
+        db.session.delete(room)
+        changed = True
+    wait_cutoff = _now() - 2 * 3600
+    for room in WwRoom.query.filter(WwRoom.created_at < wait_cutoff, WwRoom.phase == 'waiting').all():
         WwEvent.query.filter_by(room_id=room.id).delete()
         WwPlayer.query.filter_by(room_id=room.id).delete()
         db.session.delete(room)
