@@ -53,8 +53,7 @@
       if (hitstop>0){ hitstop--; return; }
       // ---- 玩家输入 ----
       var f=p1;
-      if (f.stun>0) f.stun--;
-      else {
+      if (f.stun<=0) {
         if (f.state==='idle' || f.state==='walk') {
           f.vx = 0;
           if (keys['a']||keys['ArrowLeft']){ f.vx=-3.5; f.facing=-1; f.state='walk'; }
@@ -91,6 +90,7 @@
           def.hp = Math.max(0, def.hp - a.dmg);
           def.vx = att.facing * a.kb; def.vy = -4; def.onGround=false; def.state='hurt'; def.stateT=0; def.stun = a.rec;
           def.hurtT = 12;
+          if (def===p2){ aiDecision='attack'; aiRevenge=true; }   // AI 被打后立刻转攻击还手
           att.energy = Math.min(100, att.energy + a.e*10 + 8);
           hitstop = a.dmg>15?10:5;
           spark(def.x, def.y-def.h/2, a.color, a.dmg>15?20:10);
@@ -112,6 +112,7 @@
 
     function updateFighter(f) {
       if (f.hurtT>0) f.hurtT--;
+      if (f.stun>0) f.stun--;   // 双方硬直统一递减(否则 AI 被打一次就永久卡死不还手)
       // 重力
       if (!f.onGround) f.vy += GRAV;
       f.x += f.vx; f.y += f.vy;
@@ -131,21 +132,23 @@
     }
 
     // 简易 AI:接近→攻击→偶尔后撤;血少时更激进;有气时放必杀
-    var aiT = 0, aiDecision = 'idle';
+    var aiT = 0, aiDecision = 'idle', aiRevenge = false;
     function aiThink(ai, tgt, dt){
       aiT++;
       var dist = Math.abs(ai.x - tgt.x);
       var facing = tgt.x > ai.x ? 1 : -1;
       ai.facing = facing;
       if (ai.stun>0 || ai.state==='atk' || ai.state==='hurt') return;
-      // 周期决策
-      if (aiT % 20 === 0){
+      // 被打后优先还手:强制保持攻击决策直到出手一次,不被周期决策冲掉
+      if (aiRevenge) aiDecision = 'attack';
+      else if (aiT % 15 === 0){
         var r = Math.random();
-        if (dist > 120) aiDecision = r<0.8?'approach':'wait';
-        else if (dist > 70) aiDecision = r<0.5?'approach':(r<0.75?'attack':'retreat');
-        else aiDecision = r<0.55?'attack':(r<0.8?'retreat':'approach');
+        if (dist > 120) aiDecision = r<0.9?'approach':'wait';
+        else if (dist > 85) aiDecision = r<0.5?'approach':(r<0.85?'attack':'retreat');
+        else aiDecision = r<0.75?'attack':(r<0.9?'retreat':'approach');
         // 血少激进
         if (ai.hp < 35 && ai.energy>=50 && dist<120) aiDecision='special';
+        else if (ai.energy>=100 && dist<110) aiDecision='special';   // 满气主动放必杀
       }
       // 执行
       if (ai.state==='jump') return;
@@ -153,10 +156,11 @@
       else if (aiDecision==='retreat'){ ai.vx = -facing*2.5; ai.state='walk'; }
       else if (aiDecision==='wait'){ ai.vx*=0.7; ai.state='idle'; }
       else if (aiDecision==='attack'){
-        if (dist < 60){ startAtk(ai, Math.random()<0.6?'punch':'kick'); }
+        // 拳程约 90/kick 约 102,不必贴脸,进入射程就出手
+        if (dist < 85){ startAtk(ai, Math.random()<0.6?'punch':'kick'); aiRevenge = false; }
         else { ai.vx = facing*2.8; ai.state='walk'; }
       } else if (aiDecision==='special'){
-        if (dist < 110){ startAtk(ai,'special'); }
+        if (dist < 110){ startAtk(ai,'special'); aiRevenge = false; }
         else { ai.vx=facing*3; ai.state='walk'; }
       }
     }
@@ -178,6 +182,7 @@
       round++;
       p1.hp=p1.maxhp; p2.hp=p2.maxhp; p1.x=W*0.3; p2.x=W*0.7; p1.y=p2.y=GY; p1.vx=p2.vx=0; p1.vy=p2.vy=0;
       p1.state=p2.state='idle'; p1.stateT=p2.stateT=0; p1.atk=p2.atk=null; p1.energy=p2.energy=0;
+      p1.stun=p2.stun=0; p1.hurtT=p2.hurtT=0;
     }
 
     function spark(x,y,col,n){ for(var i=0;i<n;i++){var a=Math.random()*7,sp=2+Math.random()*5;particles.push({x:x,y:y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-2,life:25,color:col,r:3});} }

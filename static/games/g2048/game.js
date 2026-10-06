@@ -74,21 +74,24 @@
 
     function draw() {
       ctx.fillStyle = '#060912'; ctx.fillRect(0, 0, W, H);
-      var size = (W - PAD * (N + 1)) / N;
+      // 以短边为基准算格子并整体居中:画布 1100x660 非正方形,按宽布局会溢出底部
+      var size = (Math.min(W, H) - PAD * (N + 1)) / N;
+      var ox = (W - (size * N + PAD * (N + 1))) / 2;
+      var oy = (H - (size * N + PAD * (N + 1))) / 2;
       // 背板格
       for (var r = 0; r < N; r++) for (var c = 0; c < N; c++) {
-        var x = PAD + c * (size + PAD), y = PAD + r * (size + PAD);
+        var x = ox + PAD + c * (size + PAD), y = oy + PAD + r * (size + PAD);
         roundRect(x, y, size, size, 10); ctx.fillStyle = '#111a2e'; ctx.fill();
       }
       // 数字格
       for (var r = 0; r < N; r++) for (var c = 0; c < N; c++) {
         var v = board[r][c]; if (!v) continue;
-        var x = PAD + c * (size + PAD), y = PAD + r * (size + PAD);
+        var x = ox + PAD + c * (size + PAD), y = oy + PAD + r * (size + PAD);
         ctx.shadowBlur = v >= 128 ? 16 : 6; ctx.shadowColor = TILE_COLORS[v] || '#fff';
         roundRect(x, y, size, size, 10); ctx.fillStyle = TILE_COLORS[v] || '#eaf0fb'; ctx.fill();
         ctx.shadowBlur = 0;
         ctx.fillStyle = v <= 4 ? '#8b97b3' : '#060912';
-        ctx.font = 'bold ' + (v < 100 ? 46 : v < 1000 ? 38 : 30) + 'px Orbitron, sans-serif';
+        ctx.font = 'bold ' + Math.round(v < 100 ? size*.42 : v < 1000 ? size*.32 : size*.26) + 'px Orbitron, sans-serif';
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText(v, x + size/2, y + size/2 + 2);
       }
