@@ -81,6 +81,14 @@ iangame/
 3. 重启服务(种子数据只在空库时灌入;改种子需删 `data/iangame.db` 重建,或手动 INSERT)。
 4. 访问 `/play/<slug>` 验证。
 
+**例外:多人房间制游戏(狼人杀 `werewolf`)** — 不走 canvas 契约:
+- 独立路由 `/werewolf`(大厅) + `/werewolf/<code>`(房间页),模板 `werewolf*.html`,逻辑在 `static/js/werewolf.js`。
+- 游戏状态机在 `backend/werewolf.py`(纯逻辑,不依赖 Flask 请求上下文,错误返回 i18n key);`app.py` 只挂薄路由(`/api/ww/create|join|state|action`)。
+- 三张表 `ww_rooms / ww_players / ww_events`(房间 json 字段存当夜行动/投票/竞选/待处理死亡);免登录身份 = 昵称 + 随机 token(localStorage `ian:ww:<code>`)。
+- 实时性靠 1.5s 轮询 `GET /api/ww/state`(回合制够用,零部署改动);写操作统一 `POST /api/ww/action`,服务端按 phase+角色+主持人校验。
+- 可见性裁剪在服务端做:玩家只可见自己的牌,主持人全程上帝视角,secret 事件(验人/用药/刀口)game_over 前仅当事人与主持人可见。
+- 大厅卡片:`games.html`/`index.html` 对 `slug == 'werewolf'` 特判链接指向 `/werewolf`。
+
 ---
 
 ## 3. 后端开发规范
