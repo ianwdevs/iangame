@@ -142,6 +142,15 @@ def create_app(config_class=Config):
         uid = session.get('uid')
         g.user = db.session.get(User, uid) if uid else None
 
+    # 静态资源版本号(文件 mtime):URL 随内容变化,浏览器强缓存(max-age=14400)
+    # 下次部署自动失效,避免用户拿着旧 JS/CSS 运行新页面(狼人杀上线时踩过)
+    def _sv(path):
+        try:
+            import os
+            return str(int(os.path.getmtime(os.path.join(app.static_folder, path))))
+        except OSError:
+            return '0'
+
     @app.context_processor
     def _ctx():
         lang = getattr(g, 'lang', 'zh')
@@ -161,6 +170,7 @@ def create_app(config_class=Config):
             lang_names=LANG_NAMES,
             t=STRINGS.get(lang) or STRINGS['zh'],
             games_meta=gmeta,
+            sv=_sv,
         )
 
     # ---- 语言切换:设 cookie 后回跳 ----

@@ -382,6 +382,18 @@ canvas { display: block; }
 }
 
 /* ---------- 狼人杀(Werewolf) ---------- */
+/* 首页 banner 推广位 */
+.ww-banner-promo { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 18px; padding: 16px 20px; border-radius: var(--radius); text-decoration: none; background: linear-gradient(120deg, rgba(255,46,99,.16), rgba(124,58,237,.14) 55%, rgba(6,9,18,.65)); border: 1px solid rgba(255,46,99,.35); transition: border-color .18s, box-shadow .18s, transform .18s; }
+.ww-banner-promo:hover { border-color: rgba(255,46,99,.75); box-shadow: 0 0 26px rgba(255,46,99,.22); transform: translateY(-1px); }
+.ww-promo-text { display: flex; flex-direction: column; gap: 3px; }
+.ww-promo-text b { font-family: var(--ff-title); font-size: 17px; color: var(--text); }
+.ww-promo-text span { color: var(--text-2); font-size: 13px; }
+@media (max-width: 520px) {
+  .ww-banner-promo { flex-direction: column; align-items: stretch; text-align: center; padding: 14px 16px; }
+  .ww-promo-text { align-items: center; }
+}
+
+
 .ww-lobby-card { max-width: 460px; margin: 40px auto; }
 .ww-code-input { letter-spacing: 12px; font-size: 24px; text-align: center; font-family: var(--ff-title); }
 .ww-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
