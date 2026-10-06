@@ -184,7 +184,6 @@ def add_bot(room):
     p = WwPlayer(room_id=room.id, seat=max([x.seat for x in players], default=0) + 1,
                  name=name, token='', last_seen=now, joined_at=now, is_bot=True)
     db.session.add(p)
-    room.config_json = ''
     db.session.flush()
     _evt(room, 'join', p, None, {'seat': p.seat, 'bot': True}, phase='waiting')
     db.session.commit()
@@ -256,7 +255,7 @@ def _bots_auto(room):
 # ---------------- 房间生命周期 ----------------
 
 def create_room(name):
-    if not NAME_RE.match(name or ''):
+    if not isinstance(name, str) or not NAME_RE.match(name):
         return None, None, 'ww_err_name'
     for _ in range(50):  # 房间号冲突重试
         code = str(random.randint(1000, 9999))
@@ -281,8 +280,11 @@ def create_room(name):
 
 def join_room(code, name, token=''):
     """加入/重连:带 token 且匹配 → 恢复原身份(任何阶段);否则新玩家仅 waiting 可加入"""
-    if not NAME_RE.match(name or ''):
+    if not isinstance(name, str) or not NAME_RE.match(name):
         return None, None, 'ww_err_name'
+    if not isinstance(code, str):
+        return None, None, 'ww_err_room'
+    token = token if isinstance(token, str) else ''
     room = WwRoom.query.filter_by(code=(code or '').strip()).first()
     if not room or room.status != 'active':
         return None, None, 'ww_err_room'
@@ -306,8 +308,7 @@ def join_room(code, name, token=''):
     p = WwPlayer(room_id=room.id, seat=max([x.seat for x in players], default=0) + 1,
                  name=name, token=secrets.token_hex(16), last_seen=now, joined_at=now)
     db.session.add(p)
-    # 人数变化 → 回到当前人数的标准板(主持人此前的微调作废)
-    room.config_json = ''
+    # 主持人显式自定义的配置(config_json)保留,人数变化在 start 时重算村民数
     db.session.flush()
     _evt(room, 'join', p, None, {'seat': p.seat}, phase='waiting')
     _touch(room)
@@ -326,7 +327,6 @@ def leave_room(room, me):
     if room.phase == 'waiting':
         db.session.delete(me)
         _evt(room, 'leave', me, None, {'seat': me.seat}, phase='waiting')
-        room.config_json = ''
         db.session.commit()
     return None
 
@@ -494,7 +494,6 @@ def _kill(room, p, cause):
         pend.setdefault('shoot', []).append(p.id)
     if p.is_police and not p.badge_done:
         pend.setdefault('badge', []).append(p.id)
-        p.badge_done = False
     room.pending_json = json.dumps(pend)
     _check_winner(room)
 
@@ -559,7 +558,7 @@ def _end_police_vote(room):
     if len(leaders) == 1:
         sheriff = players[leaders[0]]
         sheriff.is_police = True
-        sheriff.badge_done = True
+        sheriff.badge_done = False   # 警徽待安置:死亡时触发移交/撕毁
         _evt(room, 'police', None, sheriff)
         _enter_night(room)
     elif not leaders or pol.get('round', 1) >= 2:
@@ -588,7 +587,10 @@ def _end_day_vote(room):
         if not room.winner and not _pending_done(room):
             pass  # 停在 exile 等待猎人/警徽
     else:
-        if room.phase == 'vote_cast':  # 首轮平票 → PK
+        if not leaders:
+            _evt(room, 'vote_none')   # 零有效票(全员弃):无人放逐,直接入夜
+            _enter_night(room)
+        elif room.phase == 'vote_cast':  # 首轮平票 → PK
             pol = {'cands': leaders, 'round': 2, 'run': []}
             room.police_json = json.dumps(pol)
             room.votes_json = ''
@@ -658,6 +660,8 @@ def get_state(room, me):
             me_d['can'] = ''
         elif str(me.id) not in votes:
             me_d['can'] = room.phase
+    # 夜晚当前阶段已行动标记(前端显示"已提交"状态)
+    me_d['night_done'] = bool(room.phase in NIGHT_PHASES and _my_night_done(room, me, n))
     # 角色私有信息
     if started and me.role == 'witch':
         me_d['potions'] = {'heal': not n.get('heal_used', False), 'poison': not n.get('poison_used', False)}
@@ -717,7 +721,7 @@ def get_state(room, me):
             'status': room.status, 'winner': room.winner or '',
             'host_id': room.host_player_id, 'talk_end': room.talk_end or 0,
             'count': _player_count(room), 'min': MIN_PLAYERS, 'max': MAX_PLAYERS,
-            'config': _cfg(room),
+            'config': _cfg(room), 'config_custom': bool(room.config_json),
             'version': room.updated_at,
         },
         'me': me_d,
@@ -784,7 +788,13 @@ def _host_actions(room, pend):
 # ---------------- 动作入口 ----------------
 
 def do_action(room, me, action, target=0, extra=None):
-    extra = extra or {}
+    if not isinstance(action, str) or not action:
+        return 'ww_err_action'
+    extra = extra if isinstance(extra, dict) else {}
+    try:
+        target = int(target or 0)
+    except (TypeError, ValueError):
+        return 'ww_err_param'
     is_host = me.id == room.host_player_id
     ph = room.phase
 
@@ -795,8 +805,12 @@ def do_action(room, me, action, target=0, extra=None):
         n = _player_count(room)
         if n < MIN_PLAYERS or n > MAX_PLAYERS:
             return 'ww_err_players'
-        if not config_valid(_cfg(room), n):
+        c = _cfg(room)
+        # 人数变化后重算村民并校验(自定义配置不再被加入玩家覆盖)
+        c['villager'] = n - int(c.get('wolf', 0)) - sum(int(c.get(g, 0)) for g in GODS)
+        if not config_valid(c, n):
             return 'ww_err_config'
+        room.config_json = json.dumps(c)
         _deal(room)
         _touch(room)
         return None
@@ -813,7 +827,13 @@ def do_action(room, me, action, target=0, extra=None):
     if action == 'adjust_config':
         if not is_host or ph != 'waiting':
             return 'ww_err_host_only'
-        c = extra.get('config') or {}
+        if extra.get('reset'):
+            room.config_json = ''   # 显式恢复当前人数的标准板
+            _touch(room)
+            return None
+        c = extra.get('config')
+        if not isinstance(c, dict):
+            return 'ww_err_config'
         n = _player_count(room)
         clean = {}
         try:
@@ -837,7 +857,6 @@ def do_action(room, me, action, target=0, extra=None):
             return 'ww_err_target'
         if ph == 'waiting':
             db.session.delete(t)
-            room.config_json = ''
             _evt(room, 'leave', t, None, {'seat': t.seat}, phase='waiting')
         else:
             t.token = ''   # 被踢者 token 失效,无法再进入
@@ -956,13 +975,21 @@ def do_action(room, me, action, target=0, extra=None):
     if action in ('police_vote', 'day_vote'):
         if ph not in ('police_vote', 'police_pk', 'vote_cast', 'vote_pk') or not me.alive or me.is_judge:
             return 'ww_err_not_now'
-        if not _can_vote(room, me, _police(room)):
+        pol = _police(room)
+        if not _can_vote(room, me, pol):
             return 'ww_err_not_now'
         t = int(target or 0)
         if t:
             tp = db.session.get(WwPlayer, t)
             if not tp or tp.room_id != room.id or not tp.alive or tp.is_judge:
                 return 'ww_err_target'
+            # 候选范围强制:警长票只能投候选人,PK 票只能投本轮 PK 候选
+            if ph in ('police_vote', 'police_pk'):
+                if t not in (pol.get('cands') or pol.get('run') or []):
+                    return 'ww_err_target'
+            elif ph == 'vote_pk':
+                if t not in (pol.get('cands') or []):
+                    return 'ww_err_target'
         votes = _votes(room)
         votes[str(me.id)] = t
         room.votes_json = json.dumps(votes)
@@ -1070,7 +1097,7 @@ def _host_advance(room, extra):
         elif len(run) == 1:
             p = db.session.get(WwPlayer, run[0])
             p.is_police = True
-            p.badge_done = True
+            p.badge_done = False   # 警徽待安置:死亡时触发移交/撕毁
             _evt(room, 'police', None, p)
             _enter_night(room)
         else:
@@ -1128,6 +1155,8 @@ def _night_act(room, me, target, extra):
     if ph == 'night_guard':
         if me.role != 'guard':
             return 'ww_err_not_now'
+        if n.get('guard') is not None:
+            return 'ww_err_not_now'   # 当夜已提交,锁定
         if t and (t not in players or not players[t].alive or players[t].is_judge or t == n.get('last_guard')):
             return 'ww_err_target'
         n['guard'] = t
@@ -1140,6 +1169,8 @@ def _night_act(room, me, target, extra):
     elif ph == 'night_witch':
         if me.role != 'witch':
             return 'ww_err_not_now'
+        if n.get('witch') is not None:
+            return 'ww_err_not_now'   # 每晚限一瓶,当夜已用药不可再提交
         act = extra.get('act', 'skip')
         if act == 'heal':
             if n.get('heal_used'):
@@ -1162,6 +1193,8 @@ def _night_act(room, me, target, extra):
     elif ph == 'night_seer':
         if me.role != 'seer':
             return 'ww_err_not_now'
+        if n.get('seer') is not None:
+            return 'ww_err_not_now'   # 每夜只查验一次,不可重复或改目标
         if not t or t not in players or not players[t].alive or players[t].is_judge:
             return 'ww_err_target'
         if any(_loads(e.data_json, {}).get('target') == t for e in

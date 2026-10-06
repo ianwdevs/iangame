@@ -139,7 +139,7 @@
       lastPhase = S.room.phase;
     }
     var aliveCnt = 0;
-    S.players.forEach(function (p) { if (p.alive) aliveCnt++; });
+    S.players.forEach(function (p) { if (p.alive && !p.is_judge) aliveCnt++; });
     main.innerHTML = '';
     main.appendChild(banner(aliveCnt));
     var ph = S.room.phase;
@@ -169,6 +169,8 @@
     if (r.talk_end) right = '<span class="ww-timer" id="wwTimer"></span><span class="muted tiny">⏱ ' + t('ww_set_timer') + '</span>';
     var prog = '';
     if (S.night_progress) prog = ' · ' + fmt('ww_act_progress', S.night_progress);
+    var hasBot = S.players.some(function (x) { return x.is_bot; });
+    if (hasBot && r.phase.indexOf('night') === 0 && S.me.is_host) prog += ' · 🤖 ' + t('ww_bot_hint');
     if (S.me.is_host && r.phase !== 'waiting' && r.phase !== 'game_over') {
       var acts = hostActs();
       if (acts.length) {
@@ -253,6 +255,7 @@
       var tags = '';
       if (p.is_judge) {
         tags += '<span class="tag-mini host">' + t('ww_judge') + '</span>';
+        if (!p.online) tags += '<span class="tag-mini off">' + esc(t('ww_offline')) + '</span>';
         d.innerHTML = '<div class="avatar" style="width:36px;height:36px;font-size:15px;background:linear-gradient(135deg,#ffd54a,#ff7847)">' + esc(p.name.charAt(0).toUpperCase()) + '</div>' +
           '<div class="nm">' + (p.id === S.me.id ? '<b>' + esc(p.name) + '</b>' : esc(p.name)) + '</div>' +
           '<div class="tags">' + tags + '</div>';
@@ -362,8 +365,15 @@
     p.style.marginTop = '14px';
     p.style.borderTop = '1px solid var(--border)';
     p.style.paddingTop = '12px';
+    var isCustom = !!S.room.config_custom;
     p.innerHTML = '<h4>⚙️ ' + t('ww_role_config') +
-      ' <span class="muted tiny">' + t('ww_config_preset') + ' · ' + t('ww_config_custom') + ' ↓</span></h4>';
+      ' <span class="muted tiny">' + (isCustom ? '🔒 ' + t('ww_config_custom') : t('ww_config_preset')) + '</span></h4>';
+    if (isCustom) {
+      var rb = el('button', 'btn btn-ghost btn-sm', '↩ ' + t('ww_reset_preset'));
+      rb.style.margin = '6px 0';
+      rb.addEventListener('click', function () { act('adjust_config', 0, { reset: true }); });
+      p.appendChild(rb);
+    }
     var grid = el('div', 'flex gap-8');
     grid.style.flexWrap = 'wrap';
     var conf = { wolf: c.wolf || 2, seer: c.seer || 0, witch: c.witch || 0, hunter: c.hunter || 0, guard: c.guard || 0 };
@@ -452,19 +462,14 @@
     var p = el('div', 'panel');
     p.innerHTML = '<h4>🗳 ' + t('ww_phase_' + S.room.phase) +
       ' <span class="muted tiny">' + S.votes.progress + '/' + S.votes.total + '</span></h4>';
-    var voters = S.players.filter(function (x) { return x.alive && cands.indexOf(x.id) < 0; });
-    var meIn = S.me.alive && cands.indexOf(S.me.id) < 0;
+    var voters = S.players.filter(function (x) { return x.alive && !x.is_judge && cands.indexOf(x.id) < 0; });
+    var meIn = S.me.alive && !S.me.is_judge && cands.indexOf(S.me.id) < 0;
+    // 投票目标 = 本轮候选人(而非投票人列表)
+    var candPlayers = S.players.filter(function (x) { return x.alive && cands.indexOf(x.id) >= 0; });
     if (meIn) {
-      if (!S.votes.my) {
-        p.appendChild(el('p', 'muted tiny', t('ww_vote_target')));
-        p.appendChild(pickGrid(voters.filter(function (x) { return x.id !== S.me.id; }), 'vote',
-          t('ww_confirm'), function (v) { act('police_vote', v); }, { abstain: true }));
-      } else {
-        p.appendChild(el('p', 'muted tiny', '✓ ' + t('ww_voted') + ' · ' + (S.votes.my ? pidName(S.votes.my) : t('ww_vote_abstain'))));
-        p.appendChild(el('p', 'muted tiny', t('ww_can_change')));
-        p.appendChild(pickGrid(voters.filter(function (x) { return x.id !== S.me.id; }), 'vote',
-          t('ww_confirm'), function (v) { act('police_vote', v); }, { abstain: true }));
-      }
+      p.appendChild(el('p', 'muted tiny', '✓ ' + t('ww_voted') + (S.votes.my ? ' · ' + pidName(S.votes.my) : ' · ' + t('ww_vote_abstain'))));
+      p.appendChild(el('p', 'muted tiny', t('ww_can_change')));
+      p.appendChild(pickGrid(candPlayers, 'vote', t('ww_confirm'), function (v) { act('police_vote', v); }, { abstain: true }));
     } else {
       p.appendChild(el('p', 'muted tiny', '⏳ ' + t('ww_voted')));
       // PK 候选可退选
@@ -482,8 +487,14 @@
     var ph = S.room.phase;
     var p = el('div', 'panel');
     p.innerHTML = '<h4>🌙 ' + t('ww_phase_' + ph) + '</h4>';
-    var others = S.players.filter(function (x) { return x.alive && x.id !== S.me.id; });
+    var others = S.players.filter(function (x) { return x.alive && !x.is_judge && x.id !== S.me.id; });
 
+    if (S.me.night_done && S.me.can === ph) {
+      var done = el('div', 'ww-banner');
+      done.style.padding = '8px 14px';
+      done.innerHTML = '<div class="sub">✓ ' + t('ww_voted') + ' · ' + t('ww_can_change') + '</div>';
+      p.appendChild(done);
+    }
     if (S.me.can === ph) {
       if (ph === 'night_guard') {
         var lg = lastGuardBlocked();
@@ -503,7 +514,7 @@
         else p.appendChild(el('p', 'muted tiny', '☁️ ' + t('ww_night_no_death')));
         var bar = el('div', 'flex gap-8');
         bar.style.marginTop = '10px';
-        if (kill && pot.heal) {
+        if (kill && pot.heal && kill !== S.me.id) {
           var hb = el('button', 'btn btn-primary', '💊 ' + fmt('ww_witch_heal', { name: pidName(kill) }));
           hb.addEventListener('click', function () { act('night_act', 0, { act: 'heal' }); });
           bar.appendChild(hb);
@@ -559,6 +570,13 @@
     var b = el('button', 'btn btn-ghost btn-sm', label);
     b.style.marginTop = '10px';
     b.addEventListener('click', function () { act('night_act', 0); });
+    return b;
+  }
+  // 死亡技能放弃按钮(猎人不开枪/撕警徽):提交对应 action + target=0
+  function passBtn(label, action) {
+    var b = el('button', 'btn btn-ghost btn-sm', label);
+    b.style.marginTop = '10px';
+    b.addEventListener('click', function () { act(action, 0); });
     return b;
   }
   function lastGuardBlocked() {
@@ -658,15 +676,15 @@
     if (!S.me.needs) return;
     var p = el('div', 'panel');
     p.style.borderColor = 'rgba(255,46,99,.5)';
-    var others = S.players.filter(function (x) { return x.alive; });
+    var others = S.players.filter(function (x) { return x.alive && !x.is_judge; });
     if (S.me.needs === 'hunter_shoot') {
       p.innerHTML = '<h4>🏹 ' + t('ww_hunter_pick') + '</h4>';
       p.appendChild(pickGrid(others, 'night', '🏹', function (v) { act('hunter_shoot', v); }));
-      p.appendChild(skipBtn(t('ww_hunter_pass')));
+      p.appendChild(passBtn(t('ww_hunter_pass'), 'hunter_shoot'));
     } else if (S.me.needs === 'badge_pass') {
       p.innerHTML = '<h4>👮 ' + t('ww_badge_pick') + '</h4>';
       p.appendChild(pickGrid(others, 'night', '👑', function (v) { act('badge_pass', v); }));
-      p.appendChild(skipBtn(t('ww_badge_tear')));
+      p.appendChild(passBtn(t('ww_badge_tear'), 'badge_pass'));
     }
     main.appendChild(p);
   }
@@ -701,6 +719,7 @@
     join: 'ww_evt_join', leave: 'ww_evt_leave', kick: 'ww_evt_kick', host: 'ww_evt_host',
     close: 'ww_evt_close', win: 'ww_evt_win', vote_start: 'ww_evt_vote_start', vote_none: 'ww_evt_vote_none',
     kill: 'ww_evt_kill', heal: 'ww_evt_heal', poison: 'ww_evt_poison', guard: 'ww_evt_guard',
+    police_skip: 'ww_evt_police_skip',
     explode: 'ww_evt_explode',
   };
   function evtText(e) {

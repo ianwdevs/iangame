@@ -84,7 +84,15 @@
     setTimeout(function () { location.href = '/werewolf/' + r.room; }, 300);
   }
 
-  document.getElementById('wwCreate').addEventListener('click', function () {
+  function once(btn, fn) {   // 防双击:请求进行中禁用按钮
+    btn.addEventListener('click', function () {
+      if (btn.disabled) return;
+      btn.disabled = true;
+      setTimeout(function () { btn.disabled = false; }, 2500);
+      fn();
+    });
+  }
+  once(document.getElementById('wwCreate'), function () {
     var n = saveName();
     if (!n) { msg.className = 'form-msg err'; msg.textContent = T.ww_need_name; return; }
     window.IanAPI.post('/api/ww/create', { name: n }).then(function (r) {
@@ -92,7 +100,7 @@
       else { msg.className = 'form-msg err'; msg.textContent = (r && r.error) || ''; }
     });
   });
-  document.getElementById('wwJoin').addEventListener('click', function () {
+  once(document.getElementById('wwJoin'), function () {
     var n = saveName();
     var c = codeEl.value.trim();
     if (!n) { msg.className = 'form-msg err'; msg.textContent = T.ww_need_name; return; }
