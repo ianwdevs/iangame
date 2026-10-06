@@ -238,12 +238,16 @@ def create_app(config_class=Config):
     @app.route('/werewolf/<code>')
     def werewolf_room(code):
         # 房间不存在也进页面,由前端调 state 后提示并回大厅(免登录靠 token,不在此校验)
-        room = WwRoom.query.filter_by(code=(code or '').strip()).first()
-        return render_template('werewolf_room.html', ww_code=(code or '').strip()[:4],
+        room = WwRoom.query.filter_by(code=_ww_str(code)).first()
+        return render_template('werewolf_room.html', ww_code=_ww_str(code)[:4],
                                ww_exists=bool(room and room.status != 'abandoned'))
 
+    def _ww_str(v):
+        """ww 参数清洗:非字符串一律转空串,由下游格式校验拒绝(防类型异常 500)"""
+        return v.strip() if isinstance(v, str) else ''
+
     def _ww_room(code):
-        room = WwRoom.query.filter_by(code=(code or '').strip()[:4]).first()
+        room = WwRoom.query.filter_by(code=_ww_str(code)[:4]).first()
         # finished 房间保留 24h 供回看复盘;abandoned 才算关闭
         if not room or room.status == 'abandoned':
             return None
@@ -262,7 +266,9 @@ def create_app(config_class=Config):
     @csrf_required
     def api_ww_create():
         d = request.get_json(silent=True) or {}
-        room, player, err = ww.create_room((d.get('name') or '').strip())
+        if not isinstance(d, dict):
+            return jsonify(ok=False, error=tr('ww_err_name')), 400
+        room, player, err = ww.create_room(_ww_str(d.get('name')))
         if err:
             return jsonify(ok=False, error=tr(err)), 400
         # 低概率顺带清理过期房间
@@ -277,9 +283,11 @@ def create_app(config_class=Config):
     @csrf_required
     def api_ww_join():
         d = request.get_json(silent=True) or {}
-        room, player, err = ww.join_room((d.get('room') or '').strip(),
-                                         (d.get('name') or '').strip(),
-                                         (d.get('token') or ''))
+        if not isinstance(d, dict):
+            return jsonify(ok=False, error=tr('ww_err_name')), 400
+        room, player, err = ww.join_room(_ww_str(d.get('room')),
+                                         _ww_str(d.get('name')),
+                                         _ww_str(d.get('token')))
         if err:
             return jsonify(ok=False, error=tr(err)), 400
         return jsonify(ok=True, room=room.code, playerId=player.id, token=player.token)
@@ -296,9 +304,9 @@ def create_app(config_class=Config):
     @app.get('/api/ww/state')
     def api_ww_state():
         d = {
-            'room': request.args.get('room') or '',
+            'room': _ww_str(request.args.get('room')),
             'playerId': request.args.get('playerId') or 0,
-            'token': request.args.get('token') or '',
+            'token': _ww_str(request.args.get('token')),
         }
         room, me = _ww_auth(d)
         if not room:
@@ -311,6 +319,8 @@ def create_app(config_class=Config):
     @csrf_required
     def api_ww_action():
         d = request.get_json(silent=True) or {}
+        if not isinstance(d, dict):
+            return jsonify(ok=False, error=tr('ww_err_action')), 400
         room, me = _ww_auth(d)
         if not room:
             return jsonify(ok=False, error=tr('ww_err_room')), 404
