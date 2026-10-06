@@ -43,7 +43,16 @@
   try { rooms = JSON.parse(localStorage.getItem('ian:ww:rooms') || '[]'); } catch (e) {}
   rooms = rooms.filter(function (r) { return localStorage.getItem('ian:ww:' + r.code); });
   var resumeEl = document.getElementById('wwResume');
-  if (rooms.length) {
+  // 逐个向后端校验房间死活,已解散/不存在的自动从列表剔除
+  Promise.all(rooms.map(function (r) {
+    return fetch('/api/ww/exists?room=' + encodeURIComponent(r.code), { credentials: 'same-origin' })
+      .then(function (x) { return x.json(); })
+      .then(function (d) { return (d && d.exists) ? r : null; })
+      .catch(function () { return r; });  // 网络异常时保守保留
+  })).then(function (checked) {
+    rooms = checked.filter(Boolean);
+    localStorage.setItem('ian:ww:rooms', JSON.stringify(rooms.slice(-8)));
+    if (!rooms.length) return;
     resumeEl.classList.remove('hide');
     rooms.slice(-3).reverse().forEach(function (r) {
       var b = document.createElement('button');
@@ -53,7 +62,7 @@
       b.addEventListener('click', function () { location.href = '/werewolf/' + r.code; });
       resumeEl.appendChild(b);
     });
-  }
+  });
 
   codeEl.addEventListener('input', function () { codeEl.value = codeEl.value.replace(/\D/g, ''); });
 

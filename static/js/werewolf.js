@@ -81,6 +81,11 @@
   }
   function roomClosed(errMsg) {
     clearInterval(timer);
+    // 同步清理"继续上次房间"索引,死房不再出现在大厅恢复列表
+    try {
+      var rs = JSON.parse(localStorage.getItem('ian:ww:rooms') || '[]');
+      localStorage.setItem('ian:ww:rooms', JSON.stringify(rs.filter(function (r) { return r.code !== CODE; })));
+    } catch (e) {}
     main.innerHTML = '';
     var w = el('div', 'ww-join-wrap panel');
     w.innerHTML = '<h4>' + esc(errMsg || t('ww_room_closed')) + '</h4>' +

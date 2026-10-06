@@ -284,6 +284,15 @@ def create_app(config_class=Config):
             return jsonify(ok=False, error=tr(err)), 400
         return jsonify(ok=True, room=room.code, playerId=player.id, token=player.token)
 
+    @app.get('/api/ww/exists')
+    def api_ww_exists():
+        """房间存在性轻量检查(无需 token):大厅"继续上次房间"列表据此剔除死房"""
+        code = (request.args.get('room') or '').strip()[:4]
+        room = WwRoom.query.filter_by(code=code).first()
+        alive = bool(room and room.status != 'abandoned')
+        return jsonify(ok=True, exists=alive,
+                       phase=room.phase if alive else '', status=room.status if room else '')
+
     @app.get('/api/ww/state')
     def api_ww_state():
         d = {

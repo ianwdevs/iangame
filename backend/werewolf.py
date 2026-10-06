@@ -315,12 +315,12 @@ def join_room(code, name, token=''):
 
 
 def leave_room(room, me):
-    """退出:主持人退=解散;waiting 阶段普通玩家退=移除;游戏中退出仅自然离线"""
+    """退出:法官退=解散(物理删除,成员即刻收到"房间不存在");
+    waiting 阶段普通玩家退=移除;游戏中退出仅自然离线"""
     if me.id == room.host_player_id:
-        room.status = 'abandoned'
-        for p in _players(room):
-            p.token = ''
-        _evt(room, 'close', me, None, phase=room.phase)
+        WwEvent.query.filter_by(room_id=room.id).delete()
+        WwPlayer.query.filter_by(room_id=room.id).delete()
+        db.session.delete(room)
         db.session.commit()
         return None
     if room.phase == 'waiting':
@@ -332,16 +332,22 @@ def leave_room(room, me):
 
 
 def cleanup_stale():
-    """惰性清理:全房间玩家 last_seen 距今超 ROOM_TTL → 物理删除(房间/玩家/事件)"""
+    """惰性清理:abandoned 房间立即删;其余房间全员心跳超 ROOM_TTL 删。"""
+    changed = False
+    for room in WwRoom.query.filter_by(status='abandoned').all():
+        WwEvent.query.filter_by(room_id=room.id).delete()
+        WwPlayer.query.filter_by(room_id=room.id).delete()
+        db.session.delete(room)
+        changed = True
     cutoff = _now() - ROOM_TTL
-    rooms = WwRoom.query.filter(WwRoom.created_at < cutoff).all()
-    for room in rooms:
+    for room in WwRoom.query.filter(WwRoom.created_at < cutoff).all():
         last = db.session.query(db.func.max(WwPlayer.last_seen)).filter_by(room_id=room.id).scalar() or 0
         if last < cutoff:
             WwEvent.query.filter_by(room_id=room.id).delete()
             WwPlayer.query.filter_by(room_id=room.id).delete()
             db.session.delete(room)
-    if rooms:
+            changed = True
+    if changed:
         db.session.commit()
 
 
@@ -787,6 +793,10 @@ def do_action(room, me, action, target=0, extra=None):
         _deal(room)
         _touch(room)
         return None
+
+    if action == 'leave':
+        # 法官=解散房间(物理删除);waiting 阶段玩家=退出
+        return leave_room(room, me)
 
     if action == 'add_bot':
         if not is_host or ph != 'waiting':
