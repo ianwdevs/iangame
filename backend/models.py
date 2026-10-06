@@ -161,6 +161,15 @@ SEED_GAMES = [
     {"slug": "werewolf", "name": "狼人杀", "category": "strategy", "icon": "🐺", "color": "#ff2e63",
      "desc": "面对面聚会神器:免登录建房,主持人上帝视角,手机翻牌看身份、夜晚行动、投票放逐,单局全程记录复盘",
      "controls": "创建/输入房间号加入·主持人推进流程·全员手机投票"},
+    {"slug": "truthordare", "name": "真心话大冒险", "category": "casual", "icon": "🎭", "color": "#ff2e63",
+     "desc": "聚会互动:转盘选出本轮幸运儿,真心话或大冒险二选一,内置 60 道题目随机抽",
+     "controls": "点击转盘开始·点击卡片二选一"},
+    {"slug": "numberbomb", "name": "数字炸弹", "category": "casual", "icon": "💣", "color": "#ffb627",
+     "desc": "1 到 100 之间藏着一颗炸弹,轮流报数收缩安全范围,猜中炸弹的人中招",
+     "controls": "数字键盘报数·点击 ✓ 确认"},
+    {"slug": "luckyrevolver", "name": "幸运左轮", "category": "casual", "icon": "🎯", "color": "#b537f2",
+     "desc": "六个弹巢只装一颗子弹,轮流扣扳机,六枪之内必出幸运儿",
+     "controls": "点击扣扳机·传给下一位"},
 ]
 
 CATEGORY_LABELS = {

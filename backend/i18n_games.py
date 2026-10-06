@@ -25,6 +25,9 @@ GAMES_META = {
         'plantguard-deluxe': ('Plant Guardians Deluxe', 'Deluxe tower defense: bezier-drawn plants, elemental reactions (ice/fire/poison/volt), aura buffs, 12 plants, 12 zombies, 12 levels + bosses', 'Pick a plant in the shop → click a tile to place · collect sun · shovel to remove'),
         'tankbattle-deluxe': ('Tank Battle Deluxe', 'Deluxe shooter: hand-drawn tanks, 3-star upgrades, 8 power-ups, 5 enemy AI types, 20 handcrafted levels + bosses', 'WASD/arrows to move · Space to fire · grab power-ups'),
         'werewolf': ('Werewolf', 'Party night essential: create a room without login, host gets the god view, flip your role card on your phone, night actions and voting, full game log and review', 'Create/enter room code · host drives the flow · everyone votes on their phone'),
+        'truthordare': ('Truth or Dare', "Party pick: spin the wheel to pick this round's lucky one, then choose truth or dare — 60 built-in prompts", 'Tap the wheel to start · tap a card to choose'),
+        'numberbomb': ('Number Bomb', 'A bomb hides between 1 and 100 — take turns guessing to shrink the safe range; whoever hits it loses', 'Type a number · tap ✓ to submit'),
+        'luckyrevolver': ('Lucky Revolver', 'Six chambers, one bullet — pull the trigger in turns; the lucky one shows up within six shots', 'Tap to pull the trigger · pass it on'),
     },
     'es': {
         'plantguard': ('Guardianes Vegetales', 'Despliega tu ejército vegetal y defiende el césped de oleadas de zombis', 'Clic en casillas vacías para plantar, recoge soles'),
@@ -44,6 +47,9 @@ GAMES_META = {
         'plantguard-deluxe': ('Guardianes Vegetales Deluxe', 'Tower defense deluxe: plantas dibujadas con curvas, reacciones elementales (hielo/fuego/veneno/rayo), auras, 12 plantas, 12 zombis, 12 niveles + jefes', 'Elige planta en la tienda → clic en casilla · recoge soles · pala para quitar'),
         'tankbattle-deluxe': ('Batalla de Tanques Deluxe', 'Shooter deluxe: tanques dibujados a mano, mejora de 3 estrellas, 8 power-ups, 5 IA enemigas, 20 niveles + jefes', 'WASD/flechas mover · Espacio disparar · recoge power-ups'),
         'werewolf': ('Hombre Lobo', 'Imprescindible para fiestas: crea sala sin registro, anfitrión con vista divina, carta de rol en el móvil, acciones nocturnas y votación, cronología completa', 'Crear/código de sala · el anfitrión dirige · todos votan en el móvil'),
+        'truthordare': ('Verdad o Reto', 'Dinámica de fiesta: gira la ruleta, elige afortunado y decide entre verdad o reto — 60 retos incluidos', 'Toca la ruleta · elige una carta'),
+        'numberbomb': ('Bomba Numérica', 'Una bomba se esconde entre 1 y 100: decidid números por turnos y reducid el rango; quien la pise, pierde', 'Teclado numérico · pulsa ✓'),
+        'luckyrevolver': ('Revólver de la Suerte', 'Seis recámaras, una bala: apretad el gatillo por turnos; el afortunado sale en seis disparos', 'Toca para disparar · pasa el móvil'),
     },
     'fr': {
         'plantguard': ('Gardiens Végétaux', 'Déployez votre armée végétale et tenez la pelouse face aux vagues de zombies', 'Clic sur une case vide pour planter, ramassez les soleils'),
@@ -63,6 +69,9 @@ GAMES_META = {
         'plantguard-deluxe': ('Gardiens Végétaux Deluxe', 'Tower defense deluxe : plantes dessinées, réactions élémentaires (glace/feu/poison/éclair), auras, 12 plantes, 12 zombies, 12 niveaux + boss', 'Choisissez une plante → clic sur une case · ramassez les soleils · pelle pour retirer'),
         'tankbattle-deluxe': ('Bataille de Chars Deluxe', 'Shooter deluxe : chars dessinés à la main, amélioration 3 étoiles, 8 bonus, 5 IA ennemies, 20 niveaux + boss', 'WASD/flèches bouger · Espace tirer · ramassez les bonus'),
         'werewolf': ('Loup-Garou', 'Incontournable en soirée : salon sans compte, hôte en vue divine, carte de rôle sur mobile, actions nocturnes et votes, journal complet', 'Créer/code de salon · l’hôte mène · tous votent sur mobile'),
+        'truthordare': ('Action ou Vérité', "Anim de soirée : la roue désigne l'heureux élu, action ou vérité — 60 défis inclus", 'Touchez la roue · choisissez une carte'),
+        'numberbomb': ('Bombe Numérique', 'Une bombe se cache entre 1 et 100 : proposez des nombres à tour de rôle, celui qui tombe dessus a perdu', 'Clavier numérique · appuyez sur ✓'),
+        'luckyrevolver': ('Revolver Chanceux', "Six chambres, une balle : tirez à tour de rôle, l'heureux élu sort en six coups", 'Touchez pour tirer · passez le téléphone'),
     },
     'de': {
         'plantguard': ('Pflanzenwächter', 'Stelle deine Pflanzenarmee auf und halte den Rasen gegen Zombie-Wellen', 'Klicke freie Felder zum Pflanzen, sammle Sonnen'),
@@ -82,6 +91,9 @@ GAMES_META = {
         'plantguard-deluxe': ('Pflanzenwächter Deluxe', 'Deluxe-Tower-Defense: gezeichnete Pflanzen, Elementarreaktionen (Eis/Feuer/Gift/Blitz), Auren, 12 Pflanzen, 12 Zombies, 12 Level + Bosse', 'Pflanze im Shop wählen → Feld anklicken · Sonnen sammeln · Schaufel zum Entfernen'),
         'tankbattle-deluxe': ('Panzerduell Deluxe', 'Deluxe-Shooter: handgezeichnete Panzer, 3-Sterne-Upgrades, 8 Power-ups, 5 Gegner-KIs, 20 Level + Bosse', 'WASD/Pfeile bewegen · Leertaste feuern · Power-ups einsammeln'),
         'werewolf': ('Werwolf', 'Party-Highlight: Raum ohne Anmeldung, Gastgeber mit Gottesblick, Rollenkarte auf dem Handy, Nachtaktionen & Abstimmung, komplettes Spielprotokoll', 'Raum erstellen/Code · Gastgeber steuert · alle stimmen am Handy ab'),
+        'truthordare': ('Wahrheit oder Pflicht', 'Party-Spiel: Das Rad bestimmt den Glücklichen — Wahrheit oder Pflicht, 60 Aufgaben inklusive', 'Rad antippen · Karte wählen'),
+        'numberbomb': ('Zahlenbombe', 'Eine Bombe versteckt sich zwischen 1 und 100 — reihum raten und den Bereich verkleinern; wer sie trifft, verliert', 'Zahl eingeben · ✓ antippen'),
+        'luckyrevolver': ('Glücks-Revolver', 'Sechs Kammern, eine Kugel — reihum abdrücken; der Glückliche fällt in sechs Schüssen', 'Abdrücken antippen · weitergeben'),
     },
     'it': {
         'plantguard': ('Guardiani Vegetali', 'Schiera il tuo esercito vegetale e difendi il prato dalle ondate di zombie', 'Clicca le celle vuote per piantare, raccogli i soli'),
@@ -101,6 +113,9 @@ GAMES_META = {
         'plantguard-deluxe': ('Guardiani Vegetali Deluxe', 'Tower defense deluxe: piante disegnate, reazioni elementali (ghiocco/fuoco/veleno/fulmine), aure, 12 piante, 12 zombie, 12 livelli + boss', 'Scegli pianta → clic su cella · raccogli soli · pala per rimuovere'),
         'tankbattle-deluxe': ('Battaglia di Carri Deluxe', 'Shooter deluxe: carri disegnati a mano, potenziamenti a 3 stelle, 8 power-up, 5 IA nemiche, 20 livelli + boss', 'WASD/frecce muovi · Spazio spara · raccogli power-up'),
         'werewolf': ('Lupo Mannaro', 'Imperdibile alle feste: stanza senza registrazione, host con vista divina, carta del ruolo sul telefono, azioni notturne e voto, cronologia completa', 'Crea/codice stanza · l’host guida · tutti votano dal telefono'),
+        'truthordare': ('Obbligo o Verità', 'Animata: la ruota sceglie il fortunato di turno tra obbligo o verità — 60 prove incluse', 'Tocca la ruota · scegli una carta'),
+        'numberbomb': ('Bomba Numerica', 'Una bomba si nasconde tra 1 e 100: a turno indovinate per restringere il range; chi la colpisce perde', 'Tastiera numerica · tocca ✓'),
+        'luckyrevolver': ('Rivoltella Fortunata', 'Sei camere, un proiettile: premete il grilletto a turno; il fortunato esce entro sei colpi', 'Tocca per sparare · passa il telefono'),
     },
     'pt': {
         'plantguard': ('Guardiões Vegetais', 'Posicione seu exército vegetal e defenda o gramado contra ondas de zumbis', 'Clique em células vazias para plantar, colete sóis'),
@@ -120,6 +135,9 @@ GAMES_META = {
         'plantguard-deluxe': ('Guardiões Vegetais Deluxe', 'Tower defense deluxe: plantas desenhadas, reações elementais (gelo/fogo/veneno/raio), auras, 12 plantas, 12 zumbis, 12 níveis + chefes', 'Escolha planta → clique na célula · colete sóis · pá para remover'),
         'tankbattle-deluxe': ('Batalha de Tanques Deluxe', 'Shooter deluxe: tanques desenhados à mão, upgrade de 3 estrelas, 8 power-ups, 5 IAs inimigas, 20 níveis + chefes', 'WASD/setas mover · Espaço atirar · pegue power-ups'),
         'werewolf': ('Lobisomem', 'Imperdível em festas: crie sala sem registro, anfitrião com visão divina, carta de papel no celular, ações noturnas e votação, histórico completo', 'Criar/código de sala · anfitrião conduz · todos votam no celular'),
+        'truthordare': ('Verdade ou Desafio', 'Dinâmica de festa: a roleta escolhe o sortudo da rodada — verdade ou desafio, 60 prompts incluídos', 'Toque na roleta · escolha uma carta'),
+        'numberbomb': ('Bomba Numérica', 'Uma bomba se esconde entre 1 e 100: digam números por turnos e estreitem a faixa; quem acertar, perde', 'Teclado numérico · toque ✓'),
+        'luckyrevolver': ('Revólver da Sorte', 'Seis câmaras, uma bala: apertem o gatilho em turnos; o sortudo sai em até seis tiros', 'Toque para atirar · passe o celular'),
     },
 }
 
