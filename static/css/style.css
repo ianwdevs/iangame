@@ -381,6 +381,80 @@ canvas { display: block; }
   .section { padding: 32px 0; }
 }
 
+/* ---------- 狼人杀(Werewolf) ---------- */
+.ww-lobby-card { max-width: 460px; margin: 40px auto; }
+.ww-code-input { letter-spacing: 12px; font-size: 24px; text-align: center; font-family: var(--ff-title); }
+.ww-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+.ww-code-chip { display: flex; align-items: center; gap: 10px; background: var(--bg-card); border: 1px solid var(--border-2); border-radius: 12px; padding: 8px 14px; }
+.ww-code-chip b { font-family: var(--ff-title); font-size: 22px; letter-spacing: 4px; color: var(--neon-cyan); }
+.ww-role-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; font-weight: 700; font-size: 13px; border: 1px solid var(--border-2); background: var(--bg-card); }
+.ww-role-chip.wolf { color: #ff2e63; border-color: rgba(255,46,99,.5); }
+.ww-role-chip.village { color: #2ee6a6; border-color: rgba(46,230,166,.5); }
+
+.ww-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 16px 0; padding: 14px 18px; border-radius: var(--radius); background: linear-gradient(135deg, rgba(124,58,237,.18), rgba(13,19,32,.7)); border: 1px solid var(--border); }
+.ww-banner.night { background: linear-gradient(135deg, rgba(10,14,40,.9), rgba(6,9,18,.9)); border-color: rgba(0,224,255,.3); }
+.ww-banner .ph { font-family: var(--ff-title); font-size: 18px; font-weight: 800; }
+.ww-banner .sub { color: var(--text-2); font-size: 13px; }
+
+.ww-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+.ww-seat { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 6px; border-radius: 12px; background: var(--bg-card); border: 1px solid var(--border); text-align: center; position: relative; }
+.ww-seat.dead { opacity: .45; filter: grayscale(.8); }
+.ww-seat .nm { font-weight: 700; font-size: 14px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ww-seat .tags { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+.ww-seat .tag-mini { font-size: 10px; padding: 1px 6px; border-radius: 999px; border: 1px solid var(--border); color: var(--text-2); }
+.ww-seat .tag-mini.host { color: #ffd54a; border-color: rgba(255,213,74,.4); }
+.ww-seat .tag-mini.police { color: #00e0ff; border-color: rgba(0,224,255,.4); }
+.ww-seat .tag-mini.off { color: var(--text-3); }
+.ww-seat .rl { font-size: 12px; font-weight: 700; }
+.ww-seat .rl.wolf { color: #ff2e63; } .ww-seat .rl.village { color: #2ee6a6; }
+.ww-seat .ops { display: flex; gap: 4px; }
+
+/* 3D 翻牌角色卡 */
+.ww-card { perspective: 1200px; max-width: 320px; margin: 24px auto; cursor: pointer; }
+.ww-card-inner { position: relative; width: 100%; aspect-ratio: 3/4.2; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.2,.7,.3,1); }
+.ww-card.flipped .ww-card-inner { transform: rotateY(180deg); }
+.ww-card-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px; border: 1px solid var(--border-2); }
+.ww-card-back { background: linear-gradient(160deg, #1b1040, #0d0a1a 70%); box-shadow: var(--glow-purple); }
+.ww-card-back .pat { font-size: 64px; filter: drop-shadow(0 0 18px rgba(181,55,242,.8)); }
+.ww-card-front { transform: rotateY(180deg); background: linear-gradient(160deg, #0d1320, #060912); }
+.ww-card-front.wolf { background: linear-gradient(160deg, #33081b, #0d0a12); }
+.ww-card-front .ico { font-size: 56px; filter: drop-shadow(0 0 14px currentColor); }
+.ww-card-front .rname { font-family: var(--ff-title); font-size: 26px; font-weight: 800; }
+.ww-card-front .camp { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; padding: 3px 12px; border-radius: 999px; border: 1px solid; }
+.ww-card-front .desc { color: var(--text-2); font-size: 13px; line-height: 1.5; text-align: center; }
+
+/* 投票/选人网格 */
+.ww-pick { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+.ww-pick .pk { padding: 12px 6px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text); font-weight: 600; cursor: pointer; transition: all .15s; font-size: 13px; }
+.ww-pick .pk small { display: block; color: var(--text-3); font-weight: 400; font-size: 11px; margin-top: 2px; }
+.ww-pick .pk:hover { border-color: var(--neon-cyan); }
+.ww-pick .pk.sel { border-color: var(--neon-cyan); background: rgba(0,224,255,.12); box-shadow: var(--glow-cyan); }
+.ww-pick .pk:disabled { opacity: .4; cursor: not-allowed; }
+
+.ww-acts { display: flex; gap: 8px; flex-wrap: wrap; }
+.ww-host-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding: 12px 14px; border-radius: 12px; border: 1px dashed rgba(255,213,74,.4); background: rgba(255,213,74,.05); margin: 12px 0; }
+.ww-host-bar .lb { color: #ffd54a; font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+
+/* 复盘时间线 */
+.ww-timeline { position: relative; padding-left: 18px; }
+.ww-timeline::before { content: ''; position: absolute; left: 5px; top: 4px; bottom: 4px; width: 2px; background: linear-gradient(var(--neon-blue), transparent); }
+.ww-tl-day { font-family: var(--ff-title); font-weight: 700; color: var(--neon-cyan); margin: 14px 0 6px; font-size: 14px; }
+.ww-tl-item { position: relative; padding: 4px 0 4px 10px; color: var(--text-2); font-size: 13px; }
+.ww-tl-item::before { content: ''; position: absolute; left: -17px; top: 11px; width: 8px; height: 8px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--neon-blue); }
+.ww-tl-item.secret { color: #b39ddb; font-style: italic; }
+.ww-votes-bar { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.ww-votes-bar .bar { height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan)); min-width: 6px; }
+.ww-timer { font-family: var(--ff-title); font-size: 26px; font-weight: 800; color: #ffb627; font-variant-numeric: tabular-nums; }
+.ww-join-wrap { max-width: 420px; margin: 48px auto; }
+
+@media (max-width: 520px) {
+  .ww-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .ww-pick { grid-template-columns: repeat(3, 1fr); }
+  .ww-code-input { letter-spacing: 8px; font-size: 20px; }
+  .ww-banner { padding: 10px 12px; }
+  .ww-banner .ph { font-size: 15px; }
+}
+
 /* ---------- 滚动条 ---------- */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(--bg); }

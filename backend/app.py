@@ -1,6 +1,7 @@
 import re
 import time
 import hmac
+import random
 import hashlib
 from functools import wraps
 
@@ -16,8 +17,10 @@ from sqlalchemy.exc import IntegrityError
 from config import Config
 from extensions import db
 from models import User, Game, Score, Favorite, LoginAttempt, SEED_GAMES, CATEGORY_LABELS, SLUG_RENAMES
+from models import WwRoom, WwPlayer
 from i18n import LANGS, LANG_NAMES, STRINGS, detect_lang, tr, COOKIE_NAME as LANG_COOKIE, COOKIE_MAX_AGE as LANG_COOKIE_AGE
 from i18n_games import get_game_meta, CATEGORY_LABELS_I18N
+import werewolf as ww
 
 _USERNAME_RE = re.compile(r'^[\w\u4e00-\u9fa5]{2,20}$')
 
@@ -27,6 +30,7 @@ _USERNAME_BLACKLIST = {
     'register', 'api', 'static', 'games', 'play', 'profile',
     'iangame', 'support', 'help', 'test', 'guest', 'user',
     'me', 'settings', 'config', 'console', 'superuser', 'operator',
+    'werewolf',
 }
 
 # ============================================================
@@ -213,6 +217,89 @@ def create_app(config_class=Config):
     @login_required
     def profile():
         return render_template('profile.html')
+
+    # ================= 狼人杀(多人免登录房间游戏) =================
+    @app.route('/werewolf')
+    def werewolf_lobby():
+        return render_template('werewolf.html')
+
+    @app.route('/werewolf/<code>')
+    def werewolf_room(code):
+        # 房间不存在也进页面,由前端调 state 后提示并回大厅(免登录靠 token,不在此校验)
+        room = WwRoom.query.filter_by(code=(code or '').strip()).first()
+        return render_template('werewolf_room.html', ww_code=(code or '').strip()[:4],
+                               ww_exists=bool(room and room.status != 'abandoned'))
+
+    def _ww_room(code):
+        room = WwRoom.query.filter_by(code=(code or '').strip()[:4]).first()
+        # finished 房间保留 24h 供回看复盘;abandoned 才算关闭
+        if not room or room.status == 'abandoned':
+            return None
+        return room
+
+    def _ww_auth(d):
+        room = _ww_room(d.get('room') or '')
+        if not room:
+            return None, None
+        me = ww.auth_player(room, d.get('playerId') or 0, d.get('token') or '')
+        if not me:
+            return room, None
+        return room, me
+
+    @app.post('/api/ww/create')
+    @csrf_required
+    def api_ww_create():
+        d = request.get_json(silent=True) or {}
+        room, player, err = ww.create_room((d.get('name') or '').strip())
+        if err:
+            return jsonify(ok=False, error=tr(err)), 400
+        # 低概率顺带清理过期房间
+        if random.random() < 0.05:
+            try:
+                ww.cleanup_stale()
+            except Exception:
+                pass
+        return jsonify(ok=True, room=room.code, playerId=player.id, token=player.token)
+
+    @app.post('/api/ww/join')
+    @csrf_required
+    def api_ww_join():
+        d = request.get_json(silent=True) or {}
+        room, player, err = ww.join_room((d.get('room') or '').strip(),
+                                         (d.get('name') or '').strip(),
+                                         (d.get('token') or ''))
+        if err:
+            return jsonify(ok=False, error=tr(err)), 400
+        return jsonify(ok=True, room=room.code, playerId=player.id, token=player.token)
+
+    @app.get('/api/ww/state')
+    def api_ww_state():
+        d = {
+            'room': request.args.get('room') or '',
+            'playerId': request.args.get('playerId') or 0,
+            'token': request.args.get('token') or '',
+        }
+        room, me = _ww_auth(d)
+        if not room:
+            return jsonify(ok=False, error=tr('ww_err_room')), 404
+        if not me:
+            return jsonify(ok=False, error=tr('ww_err_auth')), 401
+        return jsonify(ww.get_state(room, me))
+
+    @app.post('/api/ww/action')
+    @csrf_required
+    def api_ww_action():
+        d = request.get_json(silent=True) or {}
+        room, me = _ww_auth(d)
+        if not room:
+            return jsonify(ok=False, error=tr('ww_err_room')), 404
+        if not me:
+            return jsonify(ok=False, error=tr('ww_err_auth')), 401
+        err = ww.do_action(room, me, d.get('action') or '',
+                           d.get('target') or 0, d.get('extra') or {})
+        if err:
+            return jsonify(ok=False, error=tr(err)), 400
+        return jsonify(ww.get_state(room, me))
 
     # ================= API =================
     @app.post('/api/register')

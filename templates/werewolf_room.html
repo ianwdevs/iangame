@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}{{ t.ww_title }} {{ ww_code }} · iangame{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="section" style="padding:20px 0 0">
+    <div class="between" style="flex-wrap:wrap;gap:12px">
+      <div class="flex" style="gap:12px;align-items:center">
+        <a class="btn btn-ghost btn-sm" href="/werewolf">← {{ t.ww_back_lobby }}</a>
+        <h1 class="section-title" style="font-size:22px">🐺 {{ t.ww_title }}</h1>
+      </div>
+      <div class="ww-code-chip">
+        <span class="muted tiny">{{ t.ww_room_label }}</span><b id="wwCode">{{ ww_code }}</b>
+        <button class="btn btn-ghost btn-sm" id="wwCopy">{{ t.ww_copy }}</button>
+      </div>
+    </div>
+  </div>
+  <div id="wwMain" style="padding-bottom:48px"><div class="muted" style="text-align:center;padding:60px 0">…</div></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  var WW_CODE = {{ ww_code|tojson }};
+  var WW_EXISTS = {{ ww_exists|tojson }};
+</script>
+<script src="/static/js/werewolf.js?v=1"></script>
+{% endblock %}

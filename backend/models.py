@@ -53,6 +53,63 @@ class LoginAttempt(db.Model):
     ts = db.Column(db.Float, nullable=False)  # 失败时间戳(epoch 秒)
 
 
+# ============================================================
+# 狼人杀(Werewolf):房间 / 玩家 / 事件 三表
+# 免登录:玩家身份 = 昵称 + 随机 token(localStorage 保存,重连复用)
+# 房间状态(阶段/当晚行动/投票/竞选/待处理死亡)集中存 room 的 json 字段,
+# 多 gunicorn worker 经 SQLite 共享;轮询读、动作写。
+# ============================================================
+class WwRoom(db.Model):
+    __tablename__ = 'ww_rooms'
+    id = db.Column(db.Integer, primary_key=True)
+    code = db.Column(db.String(4), unique=True, nullable=False, index=True)  # 4位数字房间号
+    phase = db.Column(db.String(16), nullable=False, default='waiting')
+    day_no = db.Column(db.Integer, nullable=False, default=0)       # 第几夜/第几天,0=未开始
+    host_player_id = db.Column(db.Integer, nullable=False, default=0)
+    config_json = db.Column(db.Text, nullable=False, default='')    # 角色配置 {wolf:n, seer:0/1,...}
+    winner = db.Column(db.String(16), nullable=True)                # wolf/village,未结束为 null
+    status = db.Column(db.String(16), nullable=False, default='active')  # active/finished
+    night_json = db.Column(db.Text, nullable=False, default='')     # 当晚行动(guard/wolf/witch/seer)
+    votes_json = db.Column(db.Text, nullable=False, default='')     # 当前投票 {voter: target|0弃票}
+    police_json = db.Column(db.Text, nullable=False, default='')    # 警长竞选(上警名单/候选/轮次)
+    pending_json = db.Column(db.Text, nullable=False, default='')   # 待处理死亡(猎人开枪/警徽移交)
+    talk_end = db.Column(db.Float, nullable=True)                   # 讨论截止 epoch(倒计时)
+    created_at = db.Column(db.Float, nullable=False, default=0)
+    updated_at = db.Column(db.Float, nullable=False, default=0)     # 兼作状态版本号(轮询比对)
+
+
+class WwPlayer(db.Model):
+    __tablename__ = 'ww_players'
+    id = db.Column(db.Integer, primary_key=True)
+    room_id = db.Column(db.Integer, db.ForeignKey('ww_rooms.id'), nullable=False, index=True)
+    seat = db.Column(db.Integer, nullable=False, default=0)         # 座位号(加入顺序)
+    name = db.Column(db.String(12), nullable=False)
+    token = db.Column(db.String(32), nullable=False, default='')    # 踢人后置空即失效
+    role = db.Column(db.String(16), nullable=False, default='')     # 发牌前为空
+    alive = db.Column(db.Boolean, nullable=False, default=True)
+    is_police = db.Column(db.Boolean, nullable=False, default=False)
+    hunter_used = db.Column(db.Boolean, nullable=False, default=False)  # 猎人技能是否已用
+    badge_done = db.Column(db.Boolean, nullable=False, default=True)    # 警长死亡后是否已处理警徽
+    last_seen = db.Column(db.Float, nullable=False, default=0)       # 轮询心跳(在线判定)
+    joined_at = db.Column(db.Float, nullable=False, default=0)
+
+
+class WwEvent(db.Model):
+    """单局游戏环节记录:按天分组时间线,复盘用。secret 事件(验人/用药明细/
+    刀口死因)结算后仅当事人与主持人可见,game_over 后全公开。"""
+    __tablename__ = 'ww_events'
+    id = db.Column(db.Integer, primary_key=True)
+    room_id = db.Column(db.Integer, db.ForeignKey('ww_rooms.id'), nullable=False, index=True)
+    day_no = db.Column(db.Integer, nullable=False, default=0)
+    phase = db.Column(db.String(16), nullable=False, default='')
+    type = db.Column(db.String(24), nullable=False, default='')     # deal/police/kill/heal/poison/check/vote/exile/shoot/badge/death/win...
+    actor_id = db.Column(db.Integer, nullable=True)
+    target_id = db.Column(db.Integer, nullable=True)
+    data_json = db.Column(db.Text, nullable=False, default='')      # 结构化补充(票型/结果)
+    secret = db.Column(db.Boolean, nullable=False, default=False)
+    ts = db.Column(db.Float, nullable=False, default=0)
+
+
 # 16 款游戏种子数据
 # SLUG_RENAMES:去商标改 slug 的历史映射,_seed() 据此迁移旧数据,旧 play 链接据此 301
 SLUG_RENAMES = {
@@ -99,6 +156,9 @@ SEED_GAMES = [
     {"slug": "tankbattle-deluxe", "name": "坦克大战精致版", "category": "shooter", "icon": "🛡️", "color": "#39d98a",
      "desc": "精致射击·坦克贝塞尔自绘·3星成长·8道具·5种敌坦差异化AI·20关手工地图+Boss",
      "controls": "WASD/方向键移动·空格开炮·拾取道具强化"},
+    {"slug": "werewolf", "name": "狼人杀", "category": "strategy", "icon": "🐺", "color": "#ff2e63",
+     "desc": "面对面聚会神器:免登录建房,主持人上帝视角,手机翻牌看身份、夜晚行动、投票放逐,单局全程记录复盘",
+     "controls": "创建/输入房间号加入·主持人推进流程·全员手机投票"},
 ]
 
 CATEGORY_LABELS = {

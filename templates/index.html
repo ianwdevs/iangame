@@ -29,7 +29,7 @@
     <div class="game-grid">
       {% for g in hot_games %}
       {% set gm = games_meta[g.slug] %}
-      <a class="game-card" href="{{ url_for('play', slug=g.slug) }}" style="--cover:{{ g.color }}">
+      <a class="game-card" href="{{ '/werewolf' if g.slug == 'werewolf' else url_for('play', slug=g.slug) }}" style="--cover:{{ g.color }}">
         <div class="game-cover">
           <span class="tag">{{ category_labels.get(g.category, g.category) }}</span>
           {{ g.icon }}
@@ -58,7 +58,7 @@
     <div class="game-grid compact" id="allGrid">
       {% for g in all_games %}
       {% set gm = games_meta[g.slug] %}
-      <a class="game-card" data-cat="{{ g.category }}" href="{{ url_for('play', slug=g.slug) }}" style="--cover:{{ g.color }}">
+      <a class="game-card" data-cat="{{ g.category }}" href="{{ '/werewolf' if g.slug == 'werewolf' else url_for('play', slug=g.slug) }}" style="--cover:{{ g.color }}">
         <div class="game-cover">
           <span class="tag">{{ category_labels.get(g.category, g.category) }}</span>
           {{ g.icon }}

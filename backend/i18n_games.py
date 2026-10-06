@@ -24,6 +24,7 @@ GAMES_META = {
         'starfall': ('Starfall Defense', 'Sci-fi path tower defense: 5 turret types counter 6 enemy types across a 7-level campaign with bosses and 3 difficulties', 'Pick a turret card → click to build · click turret to upgrade/sell · 1-5 hotkeys · Tab fast-forward'),
         'plantguard-deluxe': ('Plant Guardians Deluxe', 'Deluxe tower defense: bezier-drawn plants, elemental reactions (ice/fire/poison/volt), aura buffs, 12 plants, 12 zombies, 12 levels + bosses', 'Pick a plant in the shop → click a tile to place · collect sun · shovel to remove'),
         'tankbattle-deluxe': ('Tank Battle Deluxe', 'Deluxe shooter: hand-drawn tanks, 3-star upgrades, 8 power-ups, 5 enemy AI types, 20 handcrafted levels + bosses', 'WASD/arrows to move · Space to fire · grab power-ups'),
+        'werewolf': ('Werewolf', 'Party night essential: create a room without login, host gets the god view, flip your role card on your phone, night actions and voting, full game log and review', 'Create/enter room code · host drives the flow · everyone votes on their phone'),
     },
     'es': {
         'plantguard': ('Guardianes Vegetales', 'Despliega tu ejército vegetal y defiende el césped de oleadas de zombis', 'Clic en casillas vacías para plantar, recoge soles'),
@@ -42,6 +43,7 @@ GAMES_META = {
         'starfall': ('Defensa Starfall', 'Tower defense espacial: 5 torretas contra 6 enemigos, 7 niveles con jefes y 3 dificultades', 'Elige torreta → clic para construir · clic en torreta para mejorar/vender · 1-5 atajos · Tab acelerar'),
         'plantguard-deluxe': ('Guardianes Vegetales Deluxe', 'Tower defense deluxe: plantas dibujadas con curvas, reacciones elementales (hielo/fuego/veneno/rayo), auras, 12 plantas, 12 zombis, 12 niveles + jefes', 'Elige planta en la tienda → clic en casilla · recoge soles · pala para quitar'),
         'tankbattle-deluxe': ('Batalla de Tanques Deluxe', 'Shooter deluxe: tanques dibujados a mano, mejora de 3 estrellas, 8 power-ups, 5 IA enemigas, 20 niveles + jefes', 'WASD/flechas mover · Espacio disparar · recoge power-ups'),
+        'werewolf': ('Hombre Lobo', 'Imprescindible para fiestas: crea sala sin registro, anfitrión con vista divina, carta de rol en el móvil, acciones nocturnas y votación, cronología completa', 'Crear/código de sala · el anfitrión dirige · todos votan en el móvil'),
     },
     'fr': {
         'plantguard': ('Gardiens Végétaux', 'Déployez votre armée végétale et tenez la pelouse face aux vagues de zombies', 'Clic sur une case vide pour planter, ramassez les soleils'),
@@ -60,6 +62,7 @@ GAMES_META = {
         'starfall': ('Défense Starfall', 'Tower defense spatial : 5 tourelles contre 6 ennemis, 7 niveaux avec boss et 3 difficultés', 'Choisissez une tourelle → clic pour poser · clic pour améliorer/vendre · 1-5 raccourcis · Tab accélérer'),
         'plantguard-deluxe': ('Gardiens Végétaux Deluxe', 'Tower defense deluxe : plantes dessinées, réactions élémentaires (glace/feu/poison/éclair), auras, 12 plantes, 12 zombies, 12 niveaux + boss', 'Choisissez une plante → clic sur une case · ramassez les soleils · pelle pour retirer'),
         'tankbattle-deluxe': ('Bataille de Chars Deluxe', 'Shooter deluxe : chars dessinés à la main, amélioration 3 étoiles, 8 bonus, 5 IA ennemies, 20 niveaux + boss', 'WASD/flèches bouger · Espace tirer · ramassez les bonus'),
+        'werewolf': ('Loup-Garou', 'Incontournable en soirée : salon sans compte, hôte en vue divine, carte de rôle sur mobile, actions nocturnes et votes, journal complet', 'Créer/code de salon · l’hôte mène · tous votent sur mobile'),
     },
     'de': {
         'plantguard': ('Pflanzenwächter', 'Stelle deine Pflanzenarmee auf und halte den Rasen gegen Zombie-Wellen', 'Klicke freie Felder zum Pflanzen, sammle Sonnen'),
@@ -78,6 +81,7 @@ GAMES_META = {
         'starfall': ('Starfall-Verteidigung', 'Sci-Fi-Tower-Defense: 5 Geschütztürme gegen 6 Gegnertypen, 7 Level mit Bossen und 3 Schwierigkeiten', 'Turm wählen → Klick bauen · Turm anklicken für Upgrade/Verkauf · 1-5 Hotkeys · Tab schnell'),
         'plantguard-deluxe': ('Pflanzenwächter Deluxe', 'Deluxe-Tower-Defense: gezeichnete Pflanzen, Elementarreaktionen (Eis/Feuer/Gift/Blitz), Auren, 12 Pflanzen, 12 Zombies, 12 Level + Bosse', 'Pflanze im Shop wählen → Feld anklicken · Sonnen sammeln · Schaufel zum Entfernen'),
         'tankbattle-deluxe': ('Panzerduell Deluxe', 'Deluxe-Shooter: handgezeichnete Panzer, 3-Sterne-Upgrades, 8 Power-ups, 5 Gegner-KIs, 20 Level + Bosse', 'WASD/Pfeile bewegen · Leertaste feuern · Power-ups einsammeln'),
+        'werewolf': ('Werwolf', 'Party-Highlight: Raum ohne Anmeldung, Gastgeber mit Gottesblick, Rollenkarte auf dem Handy, Nachtaktionen & Abstimmung, komplettes Spielprotokoll', 'Raum erstellen/Code · Gastgeber steuert · alle stimmen am Handy ab'),
     },
     'it': {
         'plantguard': ('Guardiani Vegetali', 'Schiera il tuo esercito vegetale e difendi il prato dalle ondate di zombie', 'Clicca le celle vuote per piantare, raccogli i soli'),
@@ -96,6 +100,7 @@ GAMES_META = {
         'starfall': ('Difesa Starfall', 'Tower defense spaziale: 5 torrette contro 6 nemici, 7 livelli con boss e 3 difficoltà', 'Scegli torretta → clic per costruire · clic per potenziare/vendere · 1-5 tasti · Tab veloce'),
         'plantguard-deluxe': ('Guardiani Vegetali Deluxe', 'Tower defense deluxe: piante disegnate, reazioni elementali (ghiocco/fuoco/veleno/fulmine), aure, 12 piante, 12 zombie, 12 livelli + boss', 'Scegli pianta → clic su cella · raccogli soli · pala per rimuovere'),
         'tankbattle-deluxe': ('Battaglia di Carri Deluxe', 'Shooter deluxe: carri disegnati a mano, potenziamenti a 3 stelle, 8 power-up, 5 IA nemiche, 20 livelli + boss', 'WASD/frecce muovi · Spazio spara · raccogli power-up'),
+        'werewolf': ('Lupo Mannaro', 'Imperdibile alle feste: stanza senza registrazione, host con vista divina, carta del ruolo sul telefono, azioni notturne e voto, cronologia completa', 'Crea/codice stanza · l’host guida · tutti votano dal telefono'),
     },
     'pt': {
         'plantguard': ('Guardiões Vegetais', 'Posicione seu exército vegetal e defenda o gramado contra ondas de zumbis', 'Clique em células vazias para plantar, colete sóis'),
@@ -114,6 +119,7 @@ GAMES_META = {
         'starfall': ('Defesa Starfall', 'Tower defense espacial: 5 torres contra 6 inimigos, 7 níveis com chefes e 3 dificuldades', 'Escolha torre → clique para construir · clique para melhorar/vender · 1-5 atalhos · Tab acelerar'),
         'plantguard-deluxe': ('Guardiões Vegetais Deluxe', 'Tower defense deluxe: plantas desenhadas, reações elementais (gelo/fogo/veneno/raio), auras, 12 plantas, 12 zumbis, 12 níveis + chefes', 'Escolha planta → clique na célula · colete sóis · pá para remover'),
         'tankbattle-deluxe': ('Batalha de Tanques Deluxe', 'Shooter deluxe: tanques desenhados à mão, upgrade de 3 estrelas, 8 power-ups, 5 IAs inimigas, 20 níveis + chefes', 'WASD/setas mover · Espaço atirar · pegue power-ups'),
+        'werewolf': ('Lobisomem', 'Imperdível em festas: crie sala sem registro, anfitrião com visão divina, carta de papel no celular, ações noturnas e votação, histórico completo', 'Criar/código de sala · anfitrião conduz · todos votam no celular'),
     },
 }
 

@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %}{{ t.ww_title }} · iangame{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="ww-lobby-card auth-card">
+    <a class="brand" href="{{ url_for('index') }}"><span class="hex">⬡</span><span><b>IAN</b>GAME</span></a>
+    <h2>🐺 {{ t.ww_title }}</h2>
+    <p class="muted tiny" style="text-align:center;margin:-8px 0 18px">{{ t.ww_sub }}</p>
+
+    <div class="field">
+      <label>{{ t.ww_nickname }}</label>
+      <input type="text" id="wwName" maxlength="12" placeholder="{{ t.ww_nickname }}" autocomplete="nickname">
+    </div>
+
+    <button class="btn btn-primary btn-block" id="wwCreate">🏨 {{ t.ww_create }}</button>
+    <p class="muted tiny" style="text-align:center;margin:6px 0 14px">{{ t.ww_create_hint }}</p>
+
+    <div class="flex gap-8" style="margin-top:6px">
+      <input type="text" id="wwCode" class="ww-code-input" maxlength="4" inputmode="numeric"
+             placeholder="{{ t.ww_code_ph }}" style="flex:1">
+      <button class="btn btn-ghost" id="wwJoin">{{ t.ww_join }}</button>
+    </div>
+    <p class="muted tiny" style="text-align:center;margin:6px 0 0">{{ t.ww_join_hint }}</p>
+
+    <div id="wwResume" class="hide" style="margin-top:16px"></div>
+    <div class="form-msg" id="wwMsg"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  var T = window.IAN_T;
+  var msg = document.getElementById('wwMsg');
+  var nameEl = document.getElementById('wwName');
+  var codeEl = document.getElementById('wwCode');
+  nameEl.value = localStorage.getItem('ian:ww:name') || '';
+
+  // 上次房间恢复(localStorage 索引)
+  var rooms = [];
+  try { rooms = JSON.parse(localStorage.getItem('ian:ww:rooms') || '[]'); } catch (e) {}
+  rooms = rooms.filter(function (r) { return localStorage.getItem('ian:ww:' + r.code); });
+  var resumeEl = document.getElementById('wwResume');
+  if (rooms.length) {
+    resumeEl.classList.remove('hide');
+    rooms.slice(-3).reverse().forEach(function (r) {
+      var b = document.createElement('button');
+      b.className = 'btn btn-ghost btn-sm btn-block';
+      b.style.marginBottom = '6px';
+      b.textContent = '▶ ' + T.ww_resume + ' · ' + r.code + ' (' + (r.name || '') + ')';
+      b.addEventListener('click', function () { location.href = '/werewolf/' + r.code; });
+      resumeEl.appendChild(b);
+    });
+  }
+
+  codeEl.addEventListener('input', function () { codeEl.value = codeEl.value.replace(/\D/g, ''); });
+
+  function saveName() {
+    var n = nameEl.value.trim();
+    localStorage.setItem('ian:ww:name', n);
+    return n;
+  }
+  function trackRoom(code, name) {
+    rooms = rooms.filter(function (r) { return r.code !== code; });
+    rooms.push({ code: code, name: name });
+    localStorage.setItem('ian:ww:rooms', JSON.stringify(rooms.slice(-8)));
+  }
+  function enter(r) {
+    msg.className = 'form-msg ok';
+    msg.textContent = '✓ ' + r.room;
+    localStorage.setItem('ian:ww:' + r.room, JSON.stringify({ playerId: r.playerId, token: r.token, name: nameEl.value.trim() }));
+    trackRoom(r.room, nameEl.value.trim());
+    setTimeout(function () { location.href = '/werewolf/' + r.room; }, 300);
+  }
+
+  document.getElementById('wwCreate').addEventListener('click', function () {
+    var n = saveName();
+    if (!n) { msg.className = 'form-msg err'; msg.textContent = T.ww_need_name; return; }
+    window.IanAPI.post('/api/ww/create', { name: n }).then(function (r) {
+      if (r && r.ok) enter(r);
+      else { msg.className = 'form-msg err'; msg.textContent = (r && r.error) || ''; }
+    });
+  });
+  document.getElementById('wwJoin').addEventListener('click', function () {
+    var n = saveName();
+    var c = codeEl.value.trim();
+    if (!n) { msg.className = 'form-msg err'; msg.textContent = T.ww_need_name; return; }
+    if (!/^\d{4}$/.test(c)) { msg.className = 'form-msg err'; msg.textContent = T.ww_need_code; return; }
+    var saved = null;
+    try { saved = JSON.parse(localStorage.getItem('ian:ww:' + c) || 'null'); } catch (e) {}
+    window.IanAPI.post('/api/ww/join', { room: c, name: n, token: saved ? saved.token : '' }).then(function (r) {
+      if (r && r.ok) enter(r);
+      else { msg.className = 'form-msg err'; msg.textContent = (r && r.error) || ''; }
+    });
+  });
+})();
+</script>
+{% endblock %}

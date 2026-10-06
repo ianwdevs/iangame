@@ -37,6 +37,8 @@
   }
 
   var IanAPI = {
+    get:     jget,   // 通用 GET(返回 Promise<json>)
+    post:    jpost,  // 通用 POST(同源 JSON,带 CSRF 所需的默认头)
     me:      function () { return jget('/api/me'); },
     games:   function () { return jget('/api/games'); },
     leaderboard: function (slug) { return jget('/api/leaderboard/' + encodeURIComponent(slug)); },
