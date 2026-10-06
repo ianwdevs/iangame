@@ -667,6 +667,7 @@ WW_STRINGS = {
         'ww_err_host_only': '只有主持人可以操作', 'ww_err_players': '人数需 6-12 人',
         'ww_err_config': '角色配置不合法', 'ww_err_target': '目标无效',
         'ww_err_not_now': '当前不能进行此操作', 'ww_err_pending': '还有玩家未完成操作',
+        'ww_explode_btn': '💥 自爆', 'ww_explode_confirm': '确认自爆?你的狼人身份将公开,当天白天作废并立即入夜', 'ww_evt_explode': '{actor} 自爆!身份是狼人 🐺,直接进入黑夜',
         'ww_err_potion': '药水已用完', 'ww_err_action': '未知操作',
     },
     'en': {
@@ -747,6 +748,7 @@ WW_STRINGS = {
         'ww_err_host_only': 'Host only', 'ww_err_players': 'Need 6-12 players',
         'ww_err_config': 'Invalid role setup', 'ww_err_target': 'Invalid target',
         'ww_err_not_now': 'Not allowed right now', 'ww_err_pending': 'Some players haven\u2019t finished',
+        'ww_explode_btn': '💥 Explode', 'ww_explode_confirm': 'Explode now? Your wolf identity is revealed, the day ends and night falls immediately', 'ww_evt_explode': '{actor} exploded! Revealed as a WEREWOLF — night falls now',
         'ww_err_potion': 'Potion already used', 'ww_err_action': 'Unknown action',
     },
     'es': {
@@ -827,6 +829,7 @@ WW_STRINGS = {
         'ww_err_host_only': 'Solo el anfitrión', 'ww_err_players': 'Se necesitan 6-12 jugadores',
         'ww_err_config': 'Configuración inválida', 'ww_err_target': 'Objetivo inválido',
         'ww_err_not_now': 'No permitido ahora', 'ww_err_pending': 'Faltan jugadores por actuar',
+        'ww_explode_btn': '💥 Explotar', 'ww_explode_confirm': '¿Explotar? Tu identidad lobo se revela, el día termina y cae la noche', 'ww_evt_explode': '¡{actor} explotó! Era LOBO — anochece de inmediato',
         'ww_err_potion': 'Poción ya usada', 'ww_err_action': 'Acción desconocida',
     },
     'fr': {
@@ -907,6 +910,7 @@ WW_STRINGS = {
         'ww_err_host_only': 'Hôte uniquement', 'ww_err_players': 'Il faut 6-12 joueurs',
         'ww_err_config': 'Configuration invalide', 'ww_err_target': 'Cible invalide',
         'ww_err_not_now': 'Action impossible maintenant', 'ww_err_pending': 'Des joueurs n\u2019ont pas fini',
+        'ww_explode_btn': '💥 Exploser', 'ww_explode_confirm': 'Exploser ? Votre identité de loup est révélée, la journée s’achève et la nuit tombe', 'ww_evt_explode': '{actor} a explosé ! C’était un LOUP — la nuit tombe',
         'ww_err_potion': 'Potion déjà utilisée', 'ww_err_action': 'Action inconnue',
     },
     'de': {
@@ -987,6 +991,7 @@ WW_STRINGS = {
         'ww_err_host_only': 'Nur Gastgeber', 'ww_err_players': '6-12 Spieler nötig',
         'ww_err_config': 'Ungültiges Setup', 'ww_err_target': 'Ungültiges Ziel',
         'ww_err_not_now': 'Jetzt nicht erlaubt', 'ww_err_pending': 'Spieler noch nicht fertig',
+        'ww_explode_btn': '💥 Explodieren', 'ww_explode_confirm': 'Explodieren? Deine Wolfidentität wird aufgedeckt, der Tag endet und die Nacht bricht herein', 'ww_evt_explode': '{actor} ist explodiert! Ein WERWOLF — die Nacht beginnt',
         'ww_err_potion': 'Trank bereits verbraucht', 'ww_err_action': 'Unbekannte Aktion',
     },
     'it': {
@@ -1067,6 +1072,7 @@ WW_STRINGS = {
         'ww_err_host_only': 'Solo host', 'ww_err_players': 'Servono 6-12 giocatori',
         'ww_err_config': 'Configurazione non valida', 'ww_err_target': 'Bersaglio non valido',
         'ww_err_not_now': 'Non consentito ora', 'ww_err_pending': 'Giocatori in attesa',
+        'ww_explode_btn': '💥 Esplodi', 'ww_explode_confirm': 'Esplodere? La tua identità di lupo viene rivelata, il giorno finisce e arriva la notte', 'ww_evt_explode': '{actor} è esploso! Era un LUPO — arriva la notte',
         'ww_err_potion': 'Pozione già usata', 'ww_err_action': 'Azione sconosciuta',
     },
     'pt': {
@@ -1147,6 +1153,7 @@ WW_STRINGS = {
         'ww_err_host_only': 'Somente anfitrião', 'ww_err_players': 'Precisa de 6-12 jogadores',
         'ww_err_config': 'Configuração inválida', 'ww_err_target': 'Alvo inválido',
         'ww_err_not_now': 'Não permitido agora', 'ww_err_pending': 'Jogadores ainda não terminaram',
+        'ww_explode_btn': '💥 Explodir', 'ww_explode_confirm': 'Explodir? Sua identidade de lobo é revelada, o dia acaba e a noite chega', 'ww_evt_explode': '{actor} explodiu! Era um LOBO — a noite chega',
         'ww_err_potion': 'Poção já usada', 'ww_err_action': 'Ação desconhecida',
     },
 }

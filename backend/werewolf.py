@@ -505,6 +505,9 @@ def get_state(room, me):
         'role': me.role if started else '', 'camp': ROLE_CAMP.get(me.role, '') if started else '',
         'hunter_used': me.hunter_used, 'badge_done': me.badge_done,
         'can': '',
+        # 狼人白天可自爆(讨论/投票/PK)
+        'can_explode': bool(started and me.alive and me.role == 'wolf'
+                            and room.phase in ('day_talk', 'vote_cast', 'vote_pk')),
     }
     acts = []
     if is_host:
@@ -818,6 +821,24 @@ def do_action(room, me, action, target=0, extra=None):
         votes = _votes(room)
         votes[str(me.id)] = t
         room.votes_json = json.dumps(votes)
+        _touch(room)
+        return None
+
+    if action == 'wolf_explode':
+        # 狼人自爆(白天讨论/投票/PK 阶段):身份公开、当天作废、直接入夜
+        if not me.alive or me.role != 'wolf':
+            return 'ww_err_not_now'
+        if ph not in ('day_talk', 'vote_cast', 'vote_pk'):
+            return 'ww_err_not_now'
+        _evt(room, 'explode', me, me, phase=ph)
+        if me.is_police:  # 自爆直接入夜,警长身份随之撕毁,不走 pending
+            me.is_police = False
+            me.badge_done = True
+            _evt(room, 'badge_tear', me, phase=ph)
+        room.votes_json = ''
+        _kill(room, me, 'explode')   # 公开死亡 + 胜负判定
+        if not room.winner:
+            _enter_night(room)
         _touch(room)
         return None
 

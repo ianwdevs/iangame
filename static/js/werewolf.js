@@ -560,8 +560,21 @@
     var p = el('div', 'panel');
     p.innerHTML = '<h4>💬 ' + t('ww_phase_day_talk') + '</h4>';
     p.appendChild(el('p', 'muted tiny', S.me.is_host ? t('ww_set_timer') : '💬'));
+    p.appendChild(explodeBtn());
     p.appendChild(seatGrid({ showRole: S.me.is_host && !!S.all_roles }));
     main.appendChild(p);
+  }
+  // 狼人自爆按钮(白天阶段)
+  function explodeBtn() {
+    var w = el('div', '');
+    if (!S.me.can_explode) return w;
+    var b = el('button', 'btn btn-danger btn-block', t('ww_explode_btn'));
+    b.style.marginTop = '10px';
+    b.addEventListener('click', function () {
+      if (confirm(t('ww_explode_confirm'))) act('wolf_explode');
+    });
+    w.appendChild(b);
+    return w;
   }
 
   // ---------- 放逐投票 ----------
@@ -581,6 +594,7 @@
     } else {
       p.appendChild(el('p', 'muted', '⏳ ' + t('ww_voted')));
     }
+    p.appendChild(explodeBtn());
     p.appendChild(seatGrid({}));
     main.appendChild(p);
   }
@@ -662,6 +676,7 @@
     join: 'ww_evt_join', leave: 'ww_evt_leave', kick: 'ww_evt_kick', host: 'ww_evt_host',
     close: 'ww_evt_close', win: 'ww_evt_win', vote_start: 'ww_evt_vote_start', vote_none: 'ww_evt_vote_none',
     kill: 'ww_evt_kill', heal: 'ww_evt_heal', poison: 'ww_evt_poison', guard: 'ww_evt_guard',
+    explode: 'ww_evt_explode',
   };
   function evtText(e) {
     if (e.type === 'check') {
