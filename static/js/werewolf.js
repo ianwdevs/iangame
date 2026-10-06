@@ -247,6 +247,7 @@
       var d = el('div', 'ww-seat' + (p.alive ? '' : ' dead'));
       var tags = '';
       if (p.is_host) tags += '<span class="tag-mini host">👑 ' + esc(t('ww_host_tag')) + '</span>';
+      if (p.is_bot) tags += '<span class="tag-mini">🤖</span>';
       if (p.is_police) tags += '<span class="tag-mini police">👮</span>';
       if (!p.online) tags += '<span class="tag-mini off">' + esc(t('ww_offline')) + '</span>';
       if (opt.showRole && byId[p.id]) {
@@ -320,6 +321,10 @@
     var bar = el('div', 'flex gap-8');
     bar.style.marginTop = '12px';
     if (S.me.is_host) {
+      var bb = el('button', 'btn btn-ghost', t('ww_add_bot'));
+      bb.disabled = r.count >= r.max;
+      bb.addEventListener('click', function () { act('add_bot'); });
+      bar.appendChild(bb);
       var sb = el('button', 'btn btn-primary', '🚀 ' + t('ww_start'));
       sb.disabled = r.count < r.min;
       sb.addEventListener('click', function () { act('start'); });

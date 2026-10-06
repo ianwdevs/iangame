@@ -132,7 +132,7 @@ def _evt(room, etype, actor=None, target=None, data=None, secret=False, phase=No
 
 
 def auth_player(room, player_id, token):
-    """token 校验(踢人后 token 置空即失效)"""
+    """token 校验(踢人后 token 置空即失效;机器人 token 为空串,永不匹配)"""
     try:
         pid = int(player_id)
     except (TypeError, ValueError):
@@ -141,6 +141,105 @@ def auth_player(room, player_id, token):
     if p and p.room_id == room.id and p.token and p.token == token:
         return p
     return None
+
+
+def ensure_schema():
+    """轻量迁移:SQLite create_all 不给旧表补列,手工 ALTER(幂等)。"""
+    from sqlalchemy import text
+    with db.engine.connect() as conn:
+        cols = [r[1] for r in conn.execute(text('PRAGMA table_info(ww_players)'))]
+        if 'is_bot' not in cols:
+            conn.execute(text('ALTER TABLE ww_players ADD COLUMN is_bot BOOLEAN NOT NULL DEFAULT 0'))
+            conn.commit()
+
+
+# ---------------- 机器人(单人测试/凑数) ----------------
+
+def add_bot(room):
+    """主持人加一个机器人(bot1..botN 不重名),仅在 waiting 阶段"""
+    players = _players(room)
+    if len(players) >= MAX_PLAYERS:
+        return 'ww_err_full'
+    used = {p.name for p in players}
+    name = None
+    for i in range(1, MAX_PLAYERS + 1):
+        cand = 'bot%d' % i
+        if cand not in used:
+            name = cand
+            break
+    if name is None:
+        return 'ww_err_full'
+    now = _now()
+    p = WwPlayer(room_id=room.id, seat=max([x.seat for x in players], default=0) + 1,
+                 name=name, token='', last_seen=now, joined_at=now, is_bot=True)
+    db.session.add(p)
+    room.config_json = ''
+    db.session.flush()
+    _evt(room, 'join', p, None, {'seat': p.seat, 'bot': True}, phase='waiting')
+    db.session.commit()
+    return None
+
+
+def _bots_auto(room):
+    """主持人推进阶段时,让应行动而未行动的机器人自动补行动(随机)。
+    复用 do_action 的全部校验与事件写入,非法随机结果重试后放弃(视为空过)。"""
+    ph = room.phase
+    if ph not in ('police_run', 'police_vote', 'police_pk',
+                  'night_guard', 'night_wolf', 'night_witch', 'night_seer',
+                  'vote_cast', 'vote_pk'):
+        return
+    bots = [p for p in _players(room) if p.is_bot and p.alive]
+    if not bots:
+        return
+    votes = _votes(room)
+    pol = _police(room)
+    n = _night(room)
+    role_of = {'night_guard': 'guard', 'night_wolf': 'wolf', 'night_witch': 'witch', 'night_seer': 'seer'}
+
+    def alive_ids(b):
+        return [p.id for p in _alive(room) if p.id != b.id]
+
+    def try_act(b, action, extra=None):
+        ids = alive_ids(b)
+        for _ in range(4):
+            tgt = random.choice(ids) if ids and random.random() < 0.85 else 0
+            if do_action(room, b, action, tgt, extra or {}) is None:
+                return True
+        # 目标连续非法(如守卫连守)→ 显式空过
+        do_action(room, b, action, 0, extra or {})
+        return False
+
+    for b in bots:
+        if ph == 'police_run':
+            if b.id not in (pol.get('run') or []) and random.random() < 0.4:
+                do_action(room, b, 'police_run')
+        elif ph in ('police_vote', 'police_pk'):
+            cands = pol.get('cands') or pol.get('run') or []
+            if b.id not in cands and str(b.id) not in votes:
+                try_act(b, 'police_vote')
+        elif ph == 'vote_pk':
+            cands = pol.get('cands') or []
+            if b.id not in cands and str(b.id) not in votes:
+                try_act(b, 'day_vote')
+        elif ph == 'vote_cast':
+            if str(b.id) not in votes:
+                try_act(b, 'day_vote')
+        elif ph in NIGHT_PHASES and b.role == role_of[ph]:
+            done = (n.get('wolf') is not None) if ph == 'night_wolf' else _my_night_done(room, b, n)
+            if not done:
+                if ph == 'night_witch':
+                    kill = n.get('wolf') or 0
+                    pot = []
+                    if kill and kill != b.id and not n.get('heal_used'):
+                        pot.append({'act': 'heal'})
+                    if not n.get('poison_used') and random.random() < 0.3:
+                        pot.append({'act': 'poison'})
+                    pot.append(None)
+                    pick = random.choice(pot)
+                    do_action(room, b, 'night_act', 0, pick or {'act': 'skip'})
+                else:
+                    try_act(b, 'night_act')
+        votes = _votes(room)  # 重读,后续 bot 看到前面 bot 的票
 
 
 # ---------------- 房间生命周期 ----------------
@@ -493,7 +592,7 @@ def get_state(room, me):
     for p in players:
         d = {'id': p.id, 'seat': p.seat, 'name': p.name, 'alive': p.alive,
              'is_police': p.is_police, 'is_host': p.id == room.host_player_id,
-             'online': p.last_seen > online_cut}
+             'is_bot': bool(p.is_bot), 'online': p.is_bot or p.last_seen > online_cut}
         if room.phase == 'police_run' and p.alive:
             d['run'] = p.id in (pol.get('run') or [])
         p_list.append(d)
@@ -672,6 +771,11 @@ def do_action(room, me, action, target=0, extra=None):
         _deal(room)
         _touch(room)
         return None
+
+    if action == 'add_bot':
+        if not is_host or ph != 'waiting':
+            return 'ww_err_host_only'
+        return add_bot(room)
 
     if action == 'adjust_config':
         if not is_host or ph != 'waiting':
@@ -893,6 +997,9 @@ def do_action(room, me, action, target=0, extra=None):
 
 
 def _host_advance(room, extra):
+    ph = room.phase
+    # 推进前先让机器人补齐当前阶段的行动(夜晚/投票/上警)
+    _bots_auto(room)
     ph = room.phase
     if ph == 'police_run':
         pol = _police(room)

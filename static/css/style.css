@@ -395,7 +395,8 @@ canvas { display: block; }
 
 
 .ww-lobby-card { max-width: 460px; margin: 40px auto; }
-.ww-code-input { letter-spacing: 12px; font-size: 24px; text-align: center; font-family: var(--ff-title); }
+/* 房号输入:flex 内必须 min-width:0,否则 input 默认 min-content(size≈20字符)会撑破容器 */
+.ww-code-input { letter-spacing: 10px; font-size: 22px; text-align: center; font-family: var(--ff-title); min-width: 0; flex: 1; width: 100%; }
 .ww-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
 .ww-code-chip { display: flex; align-items: center; gap: 10px; background: var(--bg-card); border: 1px solid var(--border-2); border-radius: 12px; padding: 8px 14px; }
 .ww-code-chip b { font-family: var(--ff-title); font-size: 22px; letter-spacing: 4px; color: var(--neon-cyan); }

@@ -125,6 +125,8 @@ def create_app(config_class=Config):
     with app.app_context():
         db.create_all()
         _seed()
+        # 狼人杀轻量迁移(旧库补列,幂等)
+        ww.ensure_schema()
 
     # ---- 安全响应头统一由 Nginx 设置(避免反代时与 Nginx 重复叠加)----
     @app.after_request
