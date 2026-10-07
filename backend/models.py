@@ -170,6 +170,12 @@ SEED_GAMES = [
     {"slug": "luckyrevolver", "name": "幸运左轮", "category": "casual", "icon": "🎯", "color": "#b537f2",
      "desc": "六个弹巢只装一颗子弹,轮流扣扳机,六枪之内必出幸运儿",
      "controls": "点击扣扳机·传给下一位"},
+    {"slug": "scmahjong", "name": "四川麻将", "category": "mahjong", "icon": "🀄", "color": "#2d8f6f",
+     "desc": "血战到底:定缺换三张,不能吃只能碰杠胡,一炮多响,胡者离局战至最后,根/龙七对/杠上开花",
+     "controls": "点牌打出·碰/杠/胡按钮决断·先定缺再换三张"},
+    {"slug": "stdmahjong", "name": "标准麻将", "category": "mahjong", "icon": "🀅", "color": "#b04b3f",
+     "desc": "136 张含字牌国标休闲玩法:可吃碰杠胡,清一色/混一色/七对/役牌刻/断幺九/门清计番",
+     "controls": "点牌打出·吃(仅上家)/碰/杠/胡按钮决断"},
 ]
 
 CATEGORY_LABELS = {
@@ -179,4 +185,5 @@ CATEGORY_LABELS = {
     'battle': '对战',
     'defense': '塔防',
     'strategy': '策略',
+    'mahjong': '麻将',
 }

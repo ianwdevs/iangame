@@ -28,6 +28,8 @@ GAMES_META = {
         'truthordare': ('Truth or Dare', "Party pick: spin the wheel to pick this round's lucky one, then choose truth or dare — 60 built-in prompts", 'Tap the wheel to start · tap a card to choose'),
         'numberbomb': ('Number Bomb', 'A bomb hides between 1 and 100 — take turns guessing to shrink the safe range; whoever hits it loses', 'Type a number · tap ✓ to submit'),
         'luckyrevolver': ('Lucky Revolver', 'Six chambers, one bullet — pull the trigger in turns; the lucky one shows up within six shots', 'Tap to pull the trigger · pass it on'),
+        'scmahjong': ('Sichuan Mahjong', 'Blood Battle: pick a missing suit and swap three tiles; no chows — pong, kong and win only, multiple winners per discard, fight to the last', 'Tap a tile to discard · pong/kong/win buttons · set missing suit then swap three'),
+        'stdmahjong': ('Standard Mahjong', '136-tile classic casual rules with honors: chow (left player only), pong, kong and win; flush, half-flush, seven pairs and more scoring', 'Tap a tile to discard · chow/pong/kong/win buttons'),
     },
     'es': {
         'plantguard': ('Guardianes Vegetales', 'Despliega tu ejército vegetal y defiende el césped de oleadas de zombis', 'Clic en casillas vacías para plantar, recoge soles'),
@@ -50,6 +52,8 @@ GAMES_META = {
         'truthordare': ('Verdad o Reto', 'Dinámica de fiesta: gira la ruleta, elige afortunado y decide entre verdad o reto — 60 retos incluidos', 'Toca la ruleta · elige una carta'),
         'numberbomb': ('Bomba Numérica', 'Una bomba se esconde entre 1 y 100: decidid números por turnos y reducid el rango; quien la pise, pierde', 'Teclado numérico · pulsa ✓'),
         'luckyrevolver': ('Revólver de la Suerte', 'Seis recámaras, una bala: apretad el gatillo por turnos; el afortunado sale en seis disparos', 'Toca para disparar · pasa el móvil'),
+        'scmahjong': ('Mahjong de Sichuan', 'Batalla a muerte: elige un palo ausente y cambia tres fichas; sin chows, solo pong, kong y ganar; varios ganadores por descarte, hasta el final', 'Toca una ficha para descartarla · botones pong/kong/ganar · define el palo ausente y cambia tres'),
+        'stdmahjong': ('Mahjong Estándar', 'Reglas casuales clásicas de 136 fichas con honores: chow (solo del jugador anterior), pong, kong y ganar; escalas, semilimpias, siete parejas y más', 'Toca una ficha para descartarla · botones chow/pong/kong/ganar'),
     },
     'fr': {
         'plantguard': ('Gardiens Végétaux', 'Déployez votre armée végétale et tenez la pelouse face aux vagues de zombies', 'Clic sur une case vide pour planter, ramassez les soleils'),
@@ -72,6 +76,8 @@ GAMES_META = {
         'truthordare': ('Action ou Vérité', "Anim de soirée : la roue désigne l'heureux élu, action ou vérité — 60 défis inclus", 'Touchez la roue · choisissez une carte'),
         'numberbomb': ('Bombe Numérique', 'Une bombe se cache entre 1 et 100 : proposez des nombres à tour de rôle, celui qui tombe dessus a perdu', 'Clavier numérique · appuyez sur ✓'),
         'luckyrevolver': ('Revolver Chanceux', "Six chambres, une balle : tirez à tour de rôle, l'heureux élu sort en six coups", 'Touchez pour tirer · passez le téléphone'),
+        'scmahjong': ('Mahjong du Sichuan', 'Bataille sanglante : choisissez une couleur absente et échangez trois tuiles ; pas de chow — pung, kong et victoire seulement, plusieurs gagnants par discard, jusqu’au bout', 'Touchez une tuile pour la défausser · boutons pung/kong/gagner · couleur absente puis échange de trois'),
+        'stdmahjong': ('Mahjong Standard', 'Règles décontractées classiques 136 tuiles avec honneurs : chow (joueur de gauche seulement), pung, kong et victoire ; pleine/main mélangée, sept paires et plus', 'Touchez une tuile pour la défausser · boutons chow/pung/kong/gagner'),
     },
     'de': {
         'plantguard': ('Pflanzenwächter', 'Stelle deine Pflanzenarmee auf und halte den Rasen gegen Zombie-Wellen', 'Klicke freie Felder zum Pflanzen, sammle Sonnen'),
@@ -94,6 +100,8 @@ GAMES_META = {
         'truthordare': ('Wahrheit oder Pflicht', 'Party-Spiel: Das Rad bestimmt den Glücklichen — Wahrheit oder Pflicht, 60 Aufgaben inklusive', 'Rad antippen · Karte wählen'),
         'numberbomb': ('Zahlenbombe', 'Eine Bombe versteckt sich zwischen 1 und 100 — reihum raten und den Bereich verkleinern; wer sie trifft, verliert', 'Zahl eingeben · ✓ antippen'),
         'luckyrevolver': ('Glücks-Revolver', 'Sechs Kammern, eine Kugel — reihum abdrücken; der Glückliche fällt in sechs Schüssen', 'Abdrücken antippen · weitergeben'),
+        'scmahjong': ('Sichuan-Mahjong', 'Blutschlacht: Wähle eine fehlende Farbe und tausche drei Steine; kein Chow — nur Pung, Kong und Gewinn, mehrere Gewinner pro Abwurf, bis zum letzten', 'Stein antippen zum Abwerfen · Pung/Kong/Gewinnen-Buttons · Fehlfarbe wählen, dann drei tauschen'),
+        'stdmahjong': ('Standard-Mahjong', 'Klassische Casual-Regeln mit 136 Steinen inkl. Ehrensteine: Chow (nur vom linken Spieler), Pung, Kong und Gewinn; Reine Hand, halbreine Hand, Sieben Paare und mehr', 'Stein antippen zum Abwerfen · Chow/Pung/Kong/Gewinnen-Buttons'),
     },
     'it': {
         'plantguard': ('Guardiani Vegetali', 'Schiera il tuo esercito vegetale e difendi il prato dalle ondate di zombie', 'Clicca le celle vuote per piantare, raccogli i soli'),
@@ -116,6 +124,8 @@ GAMES_META = {
         'truthordare': ('Obbligo o Verità', 'Animata: la ruota sceglie il fortunato di turno tra obbligo o verità — 60 prove incluse', 'Tocca la ruota · scegli una carta'),
         'numberbomb': ('Bomba Numerica', 'Una bomba si nasconde tra 1 e 100: a turno indovinate per restringere il range; chi la colpisce perde', 'Tastiera numerica · tocca ✓'),
         'luckyrevolver': ('Rivoltella Fortunata', 'Sei camere, un proiettile: premete il grilletto a turno; il fortunato esce entro sei colpi', 'Tocca per sparare · passa il telefono'),
+        'scmahjong': ('Mahjong del Sichuan', 'Battaglia all’ultimo sangue: scegli un seme mancante e scambia tre tessere; niente chow — solo pong, kong e vittoria, più vincitori per scarto, fino alla fine', 'Tocca una tessera per scartarla · pulsanti pong/kong/vittoria · scegli il seme mancante poi scambia tre'),
+        'stdmahjong': ('Mahjong Standard', 'Regole classiche casual a 136 tessere con onori: chow (solo dal giocatore a sinistra), pong, kong e vittoria; scala pura, semipura, sette coppie e altro', 'Tocca una tessera per scartarla · pulsanti chow/pong/kong/vittoria'),
     },
     'pt': {
         'plantguard': ('Guardiões Vegetais', 'Posicione seu exército vegetal e defenda o gramado contra ondas de zumbis', 'Clique em células vazias para plantar, colete sóis'),
@@ -138,6 +148,8 @@ GAMES_META = {
         'truthordare': ('Verdade ou Desafio', 'Dinâmica de festa: a roleta escolhe o sortudo da rodada — verdade ou desafio, 60 prompts incluídos', 'Toque na roleta · escolha uma carta'),
         'numberbomb': ('Bomba Numérica', 'Uma bomba se esconde entre 1 e 100: digam números por turnos e estreitem a faixa; quem acertar, perde', 'Teclado numérico · toque ✓'),
         'luckyrevolver': ('Revólver da Sorte', 'Seis câmaras, uma bala: apertem o gatilho em turnos; o sortudo sai em até seis tiros', 'Toque para atirar · passe o celular'),
+        'scmahjong': ('Mahjong de Sichuan', 'Batalha até o fim: escolha um naipe ausente e troque três peças; sem chow — só pong, kong e vitória, vários vencedores por descarte, até o último', 'Toque numa peça para descartar · botões pong/kong/vitória · defina o naipe ausente e troque três'),
+        'stdmahjong': ('Mahjong Padrão', 'Regras casuais clássicas de 136 peças com honras: chow (só do jogador à esquerda), pong, kong e vitória; mão pura, semipura, sete pares e mais', 'Toque numa peça para descartar · botões chow/pong/kong/vitória'),
     },
 }
 
