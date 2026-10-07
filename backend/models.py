@@ -112,6 +112,62 @@ class WwEvent(db.Model):
     ts = db.Column(db.Float, nullable=False, default=0)
 
 
+class MjRoom(db.Model):
+    """在线麻将房间(四川/标准),4 人房制,服务端权威状态机"""
+    __tablename__ = 'mj_rooms'
+    id = db.Column(db.Integer, primary_key=True)
+    code = db.Column(db.String(4), unique=True, nullable=False, index=True)
+    mode = db.Column(db.String(4), nullable=False, default='sc')    # sc=四川 std=标准
+    phase = db.Column(db.String(12), nullable=False, default='waiting')
+    hand_no = db.Column(db.Integer, nullable=False, default=0)
+    dealer = db.Column(db.Integer, nullable=False, default=0)
+    turn = db.Column(db.Integer, nullable=False, default=0)
+    wall_json = db.Column(db.Text, nullable=False, default='')       # 牌墙(有序,从尾摸)
+    last_json = db.Column(db.Text, nullable=False, default='')       # 最近打出的牌 {id, seat}
+    flags_json = db.Column(db.Text, nullable=False, default='')      # gangDraw/seaBottom/firstDiscard/pendingGang
+    pending_json = db.Column(db.Text, nullable=False, default='')    # 叫牌窗口 {type, tile, from, cands, resp}
+    deadline = db.Column(db.Float, nullable=True)                    # 当前等待截止 epoch(超时自动)
+    bot_at = db.Column(db.Float, nullable=True)                      # 机器人下次行动 epoch
+    status = db.Column(db.String(10), nullable=False, default='active')
+    created_at = db.Column(db.Float, nullable=False, default=0)
+    updated_at = db.Column(db.Float, nullable=False, default=0)
+
+
+class MjPlayer(db.Model):
+    __tablename__ = 'mj_players'
+    id = db.Column(db.Integer, primary_key=True)
+    room_id = db.Column(db.Integer, db.ForeignKey('mj_rooms.id'), nullable=False, index=True)
+    seat = db.Column(db.Integer, nullable=False, default=0)
+    name = db.Column(db.String(12), nullable=False)
+    token = db.Column(db.String(32), nullable=False, default='')
+    is_bot = db.Column(db.Boolean, nullable=False, default=False)
+    is_host = db.Column(db.Boolean, nullable=False, default=False)
+    hand_json = db.Column(db.Text, nullable=False, default='[]')     # 手牌 id 列表(仅本人可见)
+    melds_json = db.Column(db.Text, nullable=False, default='[]')    # 副露 [{type, tile, from}]
+    discards_json = db.Column(db.Text, nullable=False, default='[]')
+    huan3_json = db.Column(db.Text, nullable=False, default='')      # 换三张选牌(未确认为空)
+    que = db.Column(db.Integer, nullable=False, default=-1)          # 定缺门 0万1条2筒
+    out = db.Column(db.Boolean, nullable=False, default=False)       # 已胡离局(血战)
+    win = db.Column(db.Boolean, nullable=False, default=False)
+    win_detail_json = db.Column(db.Text, nullable=False, default='')
+    score = db.Column(db.Integer, nullable=False, default=0)         # 跨局累计积分
+    last_seen = db.Column(db.Float, nullable=False, default=0)
+    joined_at = db.Column(db.Float, nullable=False, default=0)
+
+
+class MjEvent(db.Model):
+    """在线麻将行动记录(时间线)"""
+    __tablename__ = 'mj_events'
+    id = db.Column(db.Integer, primary_key=True)
+    room_id = db.Column(db.Integer, db.ForeignKey('mj_rooms.id'), nullable=False, index=True)
+    hand_no = db.Column(db.Integer, nullable=False, default=0)
+    type = db.Column(db.String(16), nullable=False, default='')
+    actor = db.Column(db.Integer, nullable=True)                     # seat
+    data_json = db.Column(db.Text, nullable=False, default='')
+    text = db.Column(db.String(120), nullable=False, default='')
+    ts = db.Column(db.Float, nullable=False, default=0)
+
+
 # 16 款游戏种子数据
 # SLUG_RENAMES:去商标改 slug 的历史映射,_seed() 据此迁移旧数据,旧 play 链接据此 301
 SLUG_RENAMES = {
@@ -158,7 +214,7 @@ SEED_GAMES = [
     {"slug": "tankbattle-deluxe", "name": "坦克大战精致版", "category": "shooter", "icon": "🛡️", "color": "#39d98a",
      "desc": "精致射击·坦克贝塞尔自绘·3星成长·8道具·5种敌坦差异化AI·20关手工地图+Boss",
      "controls": "WASD/方向键移动·空格开炮·拾取道具强化"},
-    {"slug": "werewolf", "name": "狼人杀", "category": "strategy", "icon": "🐺", "color": "#ff2e63",
+    {"slug": "werewolf", "name": "狼人杀", "category": "multiplayer", "icon": "🐺", "color": "#ff2e63",
      "desc": "面对面聚会神器:免登录建房,主持人上帝视角,手机翻牌看身份、夜晚行动、投票放逐,单局全程记录复盘",
      "controls": "创建/输入房间号加入·主持人推进流程·全员手机投票"},
     {"slug": "truthordare", "name": "真心话大冒险", "category": "casual", "icon": "🎭", "color": "#ff2e63",
@@ -176,6 +232,12 @@ SEED_GAMES = [
     {"slug": "stdmahjong", "name": "标准麻将", "category": "mahjong", "icon": "🀅", "color": "#b04b3f",
      "desc": "136 张含字牌国标休闲玩法:可吃碰杠胡,清一色/混一色/七对/役牌刻/断幺九/门清计番",
      "controls": "点牌打出·吃(仅上家)/碰/杠/胡按钮决断"},
+    {"slug": "scmahjong-online", "name": "四川麻将·多人", "category": "multiplayer", "icon": "🀆", "color": "#1f8a70",
+     "desc": "血战到底真人房:免登录开 4 人房(可加机器人),定缺换三张碰杠胡,一炮多响胡者离局,手机传牌实时对战",
+     "controls": "创建/输房间号加入·点牌打出·碰杠胡按钮决断"},
+    {"slug": "stdmahjong-online", "name": "标准麻将·多人", "category": "multiplayer", "icon": "🀇", "color": "#8a4b1f",
+     "desc": "标准麻将来真人房:免登录开 4 人房(可加机器人),可吃(上家)碰杠胡,番型结算手机实时对战",
+     "controls": "创建/输房间号加入·点牌打出·吃碰杠胡按钮决断"},
 ]
 
 CATEGORY_LABELS = {
@@ -186,4 +248,5 @@ CATEGORY_LABELS = {
     'defense': '塔防',
     'strategy': '策略',
     'mahjong': '麻将',
+    'multiplayer': '多人',
 }

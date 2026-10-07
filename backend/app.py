@@ -16,11 +16,13 @@ from sqlalchemy.exc import IntegrityError
 
 from config import Config
 from extensions import db
-from models import User, Game, Score, Favorite, LoginAttempt, SEED_GAMES, CATEGORY_LABELS, SLUG_RENAMES
+from models import (User, Game, Score, Favorite, LoginAttempt, SEED_GAMES, CATEGORY_LABELS,
+                    SLUG_RENAMES, WwRoom, MjRoom, MjPlayer)
 from models import WwRoom, WwPlayer
 from i18n import LANGS, LANG_NAMES, STRINGS, detect_lang, tr, COOKIE_NAME as LANG_COOKIE, COOKIE_MAX_AGE as LANG_COOKIE_AGE
 from i18n_games import get_game_meta, CATEGORY_LABELS_I18N
 import werewolf as ww
+import mjonline as mj
 
 _USERNAME_RE = re.compile(r'^[\w\u4e00-\u9fa5]{2,20}$')
 
@@ -30,7 +32,7 @@ _USERNAME_BLACKLIST = {
     'register', 'api', 'static', 'games', 'play', 'profile',
     'iangame', 'support', 'help', 'test', 'guest', 'user',
     'me', 'settings', 'config', 'console', 'superuser', 'operator',
-    'werewolf',
+    'werewolf', 'mjonline',
 }
 
 # ============================================================
@@ -331,6 +333,117 @@ def create_app(config_class=Config):
         if err:
             return jsonify(ok=False, error=tr(err)), 400
         return jsonify(ww.get_state(room, me))
+
+    # ================= 在线麻将(多人免登录房间游戏) =================
+    @app.route('/mjonline')
+    @app.route('/mjonline/<mode>')
+    def mjonline_lobby(mode='sc'):
+        if mode not in ('sc', 'std'):
+            mode = 'sc'
+        return render_template('mahjong_online.html', mj_mode=mode)
+
+    @app.route('/mjonline/<mode>/<code>')
+    def mjonline_room(mode, code):
+        if mode not in ('sc', 'std'):
+            mode = 'sc'
+        room = MjRoom.query.filter_by(code=_ww_str(code)[:4]).first()
+        return render_template('mahjong_room.html', mj_mode=mode,
+                               mj_code=_ww_str(code)[:4],
+                               mj_exists=bool(room))
+
+    def _mj_room(code):
+        return MjRoom.query.filter_by(code=_ww_str(code)[:4]).first()
+
+    def _mj_auth(d):
+        room = _mj_room(d.get('room') or '')
+        if not room:
+            return None, None
+        try:
+            pid = int(d.get('playerId') or 0)
+        except (TypeError, ValueError):
+            pid = 0
+        me = MjPlayer.query.filter_by(room_id=room.id, id=pid,
+                                      token=_ww_str(d.get('token'))).first()
+        return room, me
+
+    @app.post('/api/mj/create')
+    @csrf_required
+    def api_mj_create():
+        d = request.get_json(silent=True) or {}
+        if not isinstance(d, dict):
+            return jsonify(ok=False, error=tr('ww_err_name')), 400
+        mode = d.get('mode') if isinstance(d.get('mode'), str) else 'sc'
+        if mode not in ('sc', 'std'):
+            mode = 'sc'
+        name = _ww_str(d.get('name'))[:12]
+        if not name:
+            return jsonify(ok=False, error=tr('ww_err_name')), 400
+        room, player = mj.create_room(name, mode)
+        if random.random() < 0.05:
+            try:
+                mj.cleanup_stale()
+            except Exception:
+                pass
+        return jsonify(ok=True, room=room.code, playerId=player.id, token=player.token)
+
+    @app.post('/api/mj/join')
+    @csrf_required
+    def api_mj_join():
+        d = request.get_json(silent=True) or {}
+        if not isinstance(d, dict):
+            return jsonify(ok=False, error=tr('ww_err_name')), 400
+        room = _mj_room(d.get('room') or '')
+        if not room:
+            return jsonify(ok=False, error=tr('ww_err_room')), 404
+        name = _ww_str(d.get('name'))[:12]
+        if not name:
+            return jsonify(ok=False, error=tr('ww_err_name')), 400
+        me, err = mj.join_room(room, name)
+        if err:
+            return jsonify(ok=False, error=err), 400
+        return jsonify(ok=True, room=room.code, playerId=me.id, token=me.token, mode=room.mode)
+
+    @app.get('/api/mj/exists')
+    def api_mj_exists():
+        code = _ww_str(request.args.get('room'))[:4]
+        room = MjRoom.query.filter_by(code=code).first()
+        return jsonify(ok=True, exists=bool(room), phase=room.phase if room else '',
+                       mode=room.mode if room else '')
+
+    @app.get('/api/mj/state')
+    def api_mj_state():
+        d = {
+            'room': _ww_str(request.args.get('room')),
+            'playerId': request.args.get('playerId') or 0,
+            'token': _ww_str(request.args.get('token')),
+        }
+        room, me = _mj_auth(d)
+        if not room:
+            return jsonify(ok=False, error=tr('ww_err_room')), 404
+        if not me:
+            return jsonify(ok=False, error=tr('ww_err_auth')), 401
+        return jsonify(mj.get_state(room, me))
+
+    @app.post('/api/mj/action')
+    @csrf_required
+    def api_mj_action():
+        d = request.get_json(silent=True) or {}
+        if not isinstance(d, dict):
+            return jsonify(ok=False, error=tr('ww_err_action')), 400
+        room, me = _mj_auth(d)
+        if not room:
+            return jsonify(ok=False, error=tr('ww_err_room')), 404
+        if not me:
+            return jsonify(ok=False, error=tr('ww_err_auth')), 401
+        extra = d.get('extra') if isinstance(d.get('extra'), dict) else {}
+        err = mj.do_action(room, me, d.get('action') or '',
+                           tile=extra.get('tile') if isinstance(extra.get('tile'), (int, str)) else None,
+                           suit=extra.get('suit'),
+                           tiles=extra.get('tiles') if isinstance(extra.get('tiles'), list) else None)
+        if err:
+            return jsonify(ok=False, error=err), 400
+        return jsonify(mj.get_state(room, me))
+
 
     # ================= API =================
     @app.post('/api/register')

@@ -30,6 +30,8 @@ GAMES_META = {
         'luckyrevolver': ('Lucky Revolver', 'Six chambers, one bullet — pull the trigger in turns; the lucky one shows up within six shots', 'Tap to pull the trigger · pass it on'),
         'scmahjong': ('Sichuan Mahjong', 'Blood Battle: pick a missing suit and swap three tiles; no chows — pong, kong and win only, multiple winners per discard, fight to the last', 'Tap a tile to discard · pong/kong/win buttons · set missing suit then swap three'),
         'stdmahjong': ('Standard Mahjong', '136-tile classic casual rules with honors: chow (left player only), pong, kong and win; flush, half-flush, seven pairs and more scoring', 'Tap a tile to discard · chow/pong/kong/win buttons'),
+        'scmahjong-online': ('Sichuan Mahjong · Online', 'Real-player rooms, no sign-up: host a 4-seat table (bots welcome), pick missing suit, swap three, pong/kong/win — fight to the last', 'Create or enter a room code · tap a tile to discard · pong/kong/win buttons'),
+        'stdmahjong-online': ('Standard Mahjong · Online', 'Real-player rooms, no sign-up: host a 4-seat table (bots welcome), chow (left player), pong, kong and win with fan scoring', 'Create or enter a room code · tap a tile to discard · chow/pong/kong/win buttons'),
     },
     'es': {
         'plantguard': ('Guardianes Vegetales', 'Despliega tu ejército vegetal y defiende el césped de oleadas de zombis', 'Clic en casillas vacías para plantar, recoge soles'),
@@ -54,6 +56,8 @@ GAMES_META = {
         'luckyrevolver': ('Revólver de la Suerte', 'Seis recámaras, una bala: apretad el gatillo por turnos; el afortunado sale en seis disparos', 'Toca para disparar · pasa el móvil'),
         'scmahjong': ('Mahjong de Sichuan', 'Batalla a muerte: elige un palo ausente y cambia tres fichas; sin chows, solo pong, kong y ganar; varios ganadores por descarte, hasta el final', 'Toca una ficha para descartarla · botones pong/kong/ganar · define el palo ausente y cambia tres'),
         'stdmahjong': ('Mahjong Estándar', 'Reglas casuales clásicas de 136 fichas con honores: chow (solo del jugador anterior), pong, kong y ganar; escalas, semilimpias, siete parejas y más', 'Toca una ficha para descartarla · botones chow/pong/kong/ganar'),
+        'scmahjong-online': ('Mahjong de Sichuan · Online', 'Salas con jugadores reales, sin registro: crea mesa de 4 (robots bienvenidos), palo ausente, cambia tres, pong/kong/gana, hasta el final', 'Crea o entra con código · toca una ficha para descartar · botones pong/kong/ganar'),
+        'stdmahjong-online': ('Mahjong Estándar · Online', 'Salas con jugadores reales, sin registro: mesa de 4 (robots bienvenidos), chow (jugador anterior), pong, kong y ganar con puntuación', 'Crea o entra con código · toca una ficha para descartar · botones chow/pong/kong/ganar'),
     },
     'fr': {
         'plantguard': ('Gardiens Végétaux', 'Déployez votre armée végétale et tenez la pelouse face aux vagues de zombies', 'Clic sur une case vide pour planter, ramassez les soleils'),
@@ -78,6 +82,8 @@ GAMES_META = {
         'luckyrevolver': ('Revolver Chanceux', "Six chambres, une balle : tirez à tour de rôle, l'heureux élu sort en six coups", 'Touchez pour tirer · passez le téléphone'),
         'scmahjong': ('Mahjong du Sichuan', 'Bataille sanglante : choisissez une couleur absente et échangez trois tuiles ; pas de chow — pung, kong et victoire seulement, plusieurs gagnants par discard, jusqu’au bout', 'Touchez une tuile pour la défausser · boutons pung/kong/gagner · couleur absente puis échange de trois'),
         'stdmahjong': ('Mahjong Standard', 'Règles décontractées classiques 136 tuiles avec honneurs : chow (joueur de gauche seulement), pung, kong et victoire ; pleine/main mélangée, sept paires et plus', 'Touchez une tuile pour la défausser · boutons chow/pung/kong/gagner'),
+        'scmahjong-online': ('Mahjong du Sichuan · En ligne', 'Salles avec de vrais joueurs, sans inscription : table de 4 (robots bienvenus), couleur absente, échange de trois, pung/kong/victoire jusqu’au bout', 'Créez ou rejoignez avec un code · touchez une tuile pour la défausser · boutons pung/kong/gagner'),
+        'stdmahjong-online': ('Mahjong Standard · En ligne', 'Salles avec de vrais joueurs, sans inscription : table de 4 (robots bienvenus), chow (joueur de gauche), pung, kong et victoire au score', 'Créez ou rejoignez avec un code · touchez une tuile pour la défausser · boutons chow/pung/kong/gagner'),
     },
     'de': {
         'plantguard': ('Pflanzenwächter', 'Stelle deine Pflanzenarmee auf und halte den Rasen gegen Zombie-Wellen', 'Klicke freie Felder zum Pflanzen, sammle Sonnen'),
@@ -102,6 +108,8 @@ GAMES_META = {
         'luckyrevolver': ('Glücks-Revolver', 'Sechs Kammern, eine Kugel — reihum abdrücken; der Glückliche fällt in sechs Schüssen', 'Abdrücken antippen · weitergeben'),
         'scmahjong': ('Sichuan-Mahjong', 'Blutschlacht: Wähle eine fehlende Farbe und tausche drei Steine; kein Chow — nur Pung, Kong und Gewinn, mehrere Gewinner pro Abwurf, bis zum letzten', 'Stein antippen zum Abwerfen · Pung/Kong/Gewinnen-Buttons · Fehlfarbe wählen, dann drei tauschen'),
         'stdmahjong': ('Standard-Mahjong', 'Klassische Casual-Regeln mit 136 Steinen inkl. Ehrensteine: Chow (nur vom linken Spieler), Pung, Kong und Gewinn; Reine Hand, halbreine Hand, Sieben Paare und mehr', 'Stein antippen zum Abwerfen · Chow/Pung/Kong/Gewinnen-Buttons'),
+        'scmahjong-online': ('Sichuan-Mahjong · Online', 'Echte Spieler, ohne Anmeldung: 4er-Tisch eröffnen (Bots willkommen), Fehlfarbe wählen, drei tauschen, Pung/Kong/Gewinn bis zum letzten', 'Raum erstellen oder Code eingeben · Stein antippen zum Abwerfen · Pung/Kong/Gewinnen-Buttons'),
+        'stdmahjong-online': ('Standard-Mahjong · Online', 'Echte Spieler, ohne Anmeldung: 4er-Tisch eröffnen (Bots willkommen), Chow (linker Spieler), Pung, Kong und Gewinn mit Punkte', 'Raum erstellen oder Code eingeben · Stein antippen zum Abwerfen · Chow/Pung/Kong/Gewinnen-Buttons'),
     },
     'it': {
         'plantguard': ('Guardiani Vegetali', 'Schiera il tuo esercito vegetale e difendi il prato dalle ondate di zombie', 'Clicca le celle vuote per piantare, raccogli i soli'),
@@ -126,6 +134,8 @@ GAMES_META = {
         'luckyrevolver': ('Rivoltella Fortunata', 'Sei camere, un proiettile: premete il grilletto a turno; il fortunato esce entro sei colpi', 'Tocca per sparare · passa il telefono'),
         'scmahjong': ('Mahjong del Sichuan', 'Battaglia all’ultimo sangue: scegli un seme mancante e scambia tre tessere; niente chow — solo pong, kong e vittoria, più vincitori per scarto, fino alla fine', 'Tocca una tessera per scartarla · pulsanti pong/kong/vittoria · scegli il seme mancante poi scambia tre'),
         'stdmahjong': ('Mahjong Standard', 'Regole classiche casual a 136 tessere con onori: chow (solo dal giocatore a sinistra), pong, kong e vittoria; scala pura, semipura, sette coppie e altro', 'Tocca una tessera per scartarla · pulsanti chow/pong/kong/vittoria'),
+        'scmahjong-online': ('Mahjong del Sichuan · Online', 'Stanze con veri giocatori, senza registrazione: tavolo da 4 (bot benvenuti), seme mancante, scambio di tre, pong/kong/vittoria fino alla fine', 'Crea o entra con un codice · tocca una tessera per scartarla · pulsanti pong/kong/vittoria'),
+        'stdmahjong-online': ('Mahjong Standard · Online', 'Stanze con veri giocatori, senza registrazione: tavolo da 4 (bot benvenuti), chow (giocatore a sinistra), pong, kong e vittoria a punti', 'Crea o entra con un codice · tocca una tessera per scartarla · pulsanti chow/pong/kong/vittoria'),
     },
     'pt': {
         'plantguard': ('Guardiões Vegetais', 'Posicione seu exército vegetal e defenda o gramado contra ondas de zumbis', 'Clique em células vazias para plantar, colete sóis'),
@@ -150,18 +160,20 @@ GAMES_META = {
         'luckyrevolver': ('Revólver da Sorte', 'Seis câmaras, uma bala: apertem o gatilho em turnos; o sortudo sai em até seis tiros', 'Toque para atirar · passe o celular'),
         'scmahjong': ('Mahjong de Sichuan', 'Batalha até o fim: escolha um naipe ausente e troque três peças; sem chow — só pong, kong e vitória, vários vencedores por descarte, até o último', 'Toque numa peça para descartar · botões pong/kong/vitória · defina o naipe ausente e troque três'),
         'stdmahjong': ('Mahjong Padrão', 'Regras casuais clássicas de 136 peças com honras: chow (só do jogador à esquerda), pong, kong e vitória; mão pura, semipura, sete pares e mais', 'Toque numa peça para descartar · botões chow/pong/kong/vitória'),
+        'scmahjong-online': ('Mahjong de Sichuan · Online', 'Salas com jogadores reais, sem cadastro: mesa de 4 (bots bem-vindos), naipe ausente, troca de três, pong/kong/vitória até o fim', 'Crie ou entre com um código · toque numa peça para descartar · botões pong/kong/vitória'),
+        'stdmahjong-online': ('Mahjong Padrão · Online', 'Salas com jogadores reais, sem cadastro: mesa de 4 (bots bem-vindos), chow (jogador à esquerda), pong, kong e vitória por pontos', 'Crie ou entre com um código · toque numa peça para descartar · botões chow/pong/kong/vitória'),
     },
 }
 
 # 分类标签翻译
 CATEGORY_LABELS_I18N = {
-    'zh': {'casual': '休闲', 'puzzle': '益智', 'shooter': '射击', 'battle': '对战', 'defense': '塔防', 'strategy': '策略'},
-    'en': {'casual': 'Casual', 'puzzle': 'Puzzle', 'shooter': 'Shooter', 'battle': 'Battle', 'defense': 'Defense', 'strategy': 'Strategy'},
-    'es': {'casual': 'Casual', 'puzzle': 'Puzles', 'shooter': 'Disparos', 'battle': 'Combate', 'defense': 'Defensa', 'strategy': 'Estrategia'},
-    'fr': {'casual': 'Décontracté', 'puzzle': 'Réflexion', 'shooter': 'Shooter', 'battle': 'Combat', 'defense': 'Défense', 'strategy': 'Stratégie'},
-    'de': {'casual': 'Gelegenheit', 'puzzle': 'Puzzle', 'shooter': 'Shooter', 'battle': 'Kampf', 'defense': 'Verteidigung', 'strategy': 'Strategie'},
-    'it': {'casual': 'Casual', 'puzzle': 'Puzzle', 'shooter': 'Sparatutto', 'battle': 'Combattimento', 'defense': 'Difesa', 'strategy': 'Strategia'},
-    'pt': {'casual': 'Casual', 'puzzle': 'Quebra-cabeça', 'shooter': 'Tiro', 'battle': 'Combate', 'defense': 'Defesa', 'strategy': 'Estratégia'},
+    'zh': {'casual': '休闲', 'puzzle': '益智', 'shooter': '射击', 'battle': '对战', 'defense': '塔防', 'strategy': '策略', 'mahjong': '麻将', 'multiplayer': '多人'},
+    'en': {'casual': 'Casual', 'puzzle': 'Puzzle', 'shooter': 'Shooter', 'battle': 'Battle', 'defense': 'Defense', 'strategy': 'Strategy', 'mahjong': 'Mahjong', 'multiplayer': 'Multiplayer'},
+    'es': {'casual': 'Casual', 'puzzle': 'Puzles', 'shooter': 'Disparos', 'battle': 'Combate', 'defense': 'Defensa', 'strategy': 'Estrategia', 'mahjong': 'Mahjong', 'multiplayer': 'Multijugador'},
+    'fr': {'casual': 'Décontracté', 'puzzle': 'Réflexion', 'shooter': 'Shooter', 'battle': 'Combat', 'defense': 'Défense', 'strategy': 'Stratégie', 'mahjong': 'Mahjong', 'multiplayer': 'Multijoueur'},
+    'de': {'casual': 'Gelegenheit', 'puzzle': 'Puzzle', 'shooter': 'Shooter', 'battle': 'Kampf', 'defense': 'Verteidigung', 'strategy': 'Strategie', 'mahjong': 'Mahjong', 'multiplayer': 'Mehrspieler'},
+    'it': {'casual': 'Casual', 'puzzle': 'Puzzle', 'shooter': 'Sparatutto', 'battle': 'Combattimento', 'defense': 'Difesa', 'strategy': 'Strategia', 'mahjong': 'Mahjong', 'multiplayer': 'Multigiocatore'},
+    'pt': {'casual': 'Casual', 'puzzle': 'Quebra-cabeça', 'shooter': 'Tiro', 'battle': 'Combate', 'defense': 'Defesa', 'strategy': 'Estratégia', 'mahjong': 'Mahjong', 'multiplayer': 'Multijogador'},
 }
 
 

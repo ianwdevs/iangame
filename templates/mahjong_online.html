@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block title %}{{ '四川麻将·多人' if mj_mode == 'sc' else '标准麻将·多人' }} · iangame{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="ww-lobby-card auth-card">
+    <a class="brand" href="{{ url_for('index') }}"><span class="hex">⬡</span><span><b>IAN</b>GAME</span></a>
+    <h2>🀄 {{ '四川麻将 · 血战到底' if mj_mode == 'sc' else '标准麻将' }} · 多人房间</h2>
+    <p class="muted tiny" style="text-align:center;margin:-8px 0 14px">
+      {{ '免登录 4 人真人房 · 定缺换三张 · 不能吃 · 胡者离局战至最后' if mj_mode == 'sc' else '免登录 4 人真人房 · 可吃碰杠胡 · 番型结算' }}
+    </p>
+
+    <div class="flex gap-8" style="justify-content:center;margin-bottom:14px">
+      <a class="btn btn-sm {{ 'btn-primary' if mj_mode == 'sc' else 'btn-ghost' }}" href="/mjonline/sc">🀆 四川</a>
+      <a class="btn btn-sm {{ 'btn-primary' if mj_mode == 'std' else 'btn-ghost' }}" href="/mjonline/std">🀇 标准</a>
+    </div>
+
+    <div class="field">
+      <label>昵称</label>
+      <input type="text" id="mjName" maxlength="12" placeholder="你的昵称" autocomplete="nickname">
+    </div>
+
+    <button class="btn btn-primary btn-block" id="mjCreate">🏨 创建房间</button>
+    <p class="muted tiny" style="text-align:center;margin:6px 0 14px">创建后可加机器人凑桌,人到齐开局</p>
+
+    <div class="flex gap-8" style="margin-top:6px">
+      <input type="text" id="mjCode" class="ww-code-input" maxlength="4" inputmode="numeric"
+             placeholder="输入 4 位房间号" style="flex:1">
+      <button class="btn btn-ghost" id="mjJoin">加入</button>
+    </div>
+    <p class="muted tiny" style="text-align:center;margin:6px 0 0">面对面互报房间号,四部手机同开一桌</p>
+
+    <div id="mjResume" class="hide" style="margin-top:16px"></div>
+    <div class="form-msg" id="mjMsg"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  var MODE = {{ mj_mode | tojson }};
+  var msg = document.getElementById('mjMsg');
+  var nameEl = document.getElementById('mjName');
+  var codeEl = document.getElementById('mjCode');
+  nameEl.value = localStorage.getItem('ian:mj:name') || '';
+
+  var rooms = [];
+  try { rooms = JSON.parse(localStorage.getItem('ian:mj:rooms') || '[]'); } catch (e) {}
+  rooms = rooms.filter(function (r) { return localStorage.getItem('ian:mj:' + r.code); });
+  var resumeEl = document.getElementById('mjResume');
+  Promise.all(rooms.map(function (r) {
+    return fetch('/api/mj/exists?room=' + encodeURIComponent(r.code), { credentials: 'same-origin' })
+      .then(function (x) { return x.json(); })
+      .then(function (d) { return (d && d.exists) ? r : null; })
+      .catch(function () { return r; });
+  })).then(function (checked) {
+    rooms = checked.filter(Boolean);
+    localStorage.setItem('ian:mj:rooms', JSON.stringify(rooms.slice(-8)));
+    if (!rooms.length) return;
+    resumeEl.classList.remove('hide');
+    rooms.slice(-3).reverse().forEach(function (r) {
+      var b = document.createElement('button');
+      b.className = 'btn btn-ghost btn-sm btn-block';
+      b.style.marginBottom = '6px';
+      b.textContent = '▶ 继续上次 · ' + r.code + ' (' + (r.name || '') + ')';
+      b.addEventListener('click', function () { location.href = '/mjonline/' + (r.mode || MODE) + '/' + r.code; });
+      resumeEl.appendChild(b);
+    });
+  });
+
+  codeEl.addEventListener('input', function () { codeEl.value = codeEl.value.replace(/\D/g, ''); });
+
+  // 从房间页跳回(?join=CODE): 预填房间号方便直接加入
+  try {
+    var jm = /[?&]join=(\d{1,4})/.exec(location.search);
+    if (jm) codeEl.value = jm[1];
+  } catch (e) {}
+
+  function saveName() {
+    var n = nameEl.value.trim();
+    localStorage.setItem('ian:mj:name', n);
+    return n;
+  }
+  function trackRoom(code, name) {
+    rooms = rooms.filter(function (r) { return r.code !== code; });
+    rooms.push({ code: code, name: name, mode: MODE });
+    localStorage.setItem('ian:mj:rooms', JSON.stringify(rooms.slice(-8)));
+  }
+  function enter(r) {
+    msg.className = 'form-msg ok';
+    msg.textContent = '✓ ' + r.room;
+    localStorage.setItem('ian:mj:' + r.room, JSON.stringify({ playerId: r.playerId, token: r.token, name: nameEl.value.trim() }));
+    trackRoom(r.room, nameEl.value.trim());
+    setTimeout(function () { location.href = '/mjonline/' + MODE + '/' + r.room; }, 300);
+  }
+  function once(btn, fn) {
+    btn.addEventListener('click', function () {
+      if (btn.disabled) return;
+      btn.disabled = true;
+      setTimeout(function () { btn.disabled = false; }, 2500);
+      fn();
+    });
+  }
+  once(document.getElementById('mjCreate'), function () {
+    var n = saveName();
+    if (!n) { msg.className = 'form-msg err'; msg.textContent = '请先输入昵称'; return; }
+    window.IanAPI.post('/api/mj/create', { name: n, mode: MODE }).then(function (r) {
+      if (r && r.ok) enter(r);
+      else { msg.className = 'form-msg err'; msg.textContent = (r && r.error) || '创建失败'; }
+    });
+  });
+  once(document.getElementById('mjJoin'), function () {
+    var n = saveName();
+    var c = codeEl.value.trim();
+    if (!n) { msg.className = 'form-msg err'; msg.textContent = '请先输入昵称'; return; }
+    if (!/^\d{4}$/.test(c)) { msg.className = 'form-msg err'; msg.textContent = '房间号是 4 位数字'; return; }
+    window.IanAPI.post('/api/mj/join', { room: c, name: n }).then(function (r) {
+      if (r && r.ok) { MODE = (r.mode || MODE); enter(r); }
+      else { msg.className = 'form-msg err'; msg.textContent = (r && r.error) || '加入失败'; }
+    });
+  });
+})();
+</script>
+{% endblock %}

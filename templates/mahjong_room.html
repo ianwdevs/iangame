@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}{{ '四川麻将·多人' if mj_mode == 'sc' else '标准麻将·多人' }} {{ mj_code }} · iangame{% endblock %}
+
+{% block content %}
+<div class="mj-room" id="mjRoom"
+     data-mode="{{ mj_mode }}" data-code="{{ mj_code }}" data-exists="{{ '1' if mj_exists else '0' }}">
+  <div class="mj-top">
+    <a class="btn btn-ghost btn-sm" href="/mjonline/{{ mj_mode }}">← 大厅</a>
+    <span class="mj-code-chip">房号 <b id="mjCodeShow">{{ mj_code }}</b></span>
+    <span class="muted tiny" id="mjMeta">…</span>
+  </div>
+
+  <!-- 对手三席 -->
+  <div class="mj-opps" id="mjOpps"></div>
+
+  <!-- 牌桌中央: 弃牌池 -->
+  <div class="mj-table" id="mjTable"></div>
+
+  <!-- 事件流 -->
+  <div class="mj-feed muted tiny" id="mjFeed"></div>
+
+  <!-- 我的信息 + 副露 -->
+  <div class="mj-me-row">
+    <div class="mj-me-info" id="mjMeInfo"></div>
+    <div class="mj-melds" id="mjMyMelds"></div>
+  </div>
+
+  <!-- 操作区: 定缺/换三张/叫牌按钮 -->
+  <div class="mj-actions" id="mjActions"></div>
+
+  <!-- 我的手牌 -->
+  <div class="mj-hand-wrap">
+    <div class="mj-ting tiny" id="mjTing"></div>
+    <div class="mj-hand" id="mjHand"></div>
+  </div>
+
+  <div class="form-msg" id="mjMsg"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/mjonline.js?v={{ sv('js/mjonline.js') }}"></script>
+{% endblock %}

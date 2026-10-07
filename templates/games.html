@@ -17,7 +17,7 @@
     <div class="game-grid" id="grid">
       {% for g in all_games %}
       {% set gm = games_meta[g.slug] %}
-      <a class="game-card" data-cat="{{ g.category }}" href="{{ '/werewolf' if g.slug == 'werewolf' else url_for('play', slug=g.slug) }}" style="--cover:{{ g.color }}">
+      <a class="game-card" data-cat="{{ g.category }}" href="{{ {'werewolf': '/werewolf', 'scmahjong-online': '/mjonline/sc', 'stdmahjong-online': '/mjonline/std'}.get(g.slug, url_for('play', slug=g.slug)) }}" style="--cover:{{ g.color }}">
         <div class="game-cover">
           <span class="tag">{{ category_labels.get(g.category, g.category) }}</span>
           {{ g.icon }}
