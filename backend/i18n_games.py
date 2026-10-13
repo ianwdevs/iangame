@@ -32,6 +32,7 @@ GAMES_META = {
         'stdmahjong': ('Standard Mahjong', '136-tile classic casual rules with honors: chow (left player only), pong, kong and win; flush, half-flush, seven pairs and more scoring', 'Tap a tile to discard · chow/pong/kong/win buttons'),
         'scmahjong-online': ('Sichuan Mahjong · Online', 'Real-player rooms, no sign-up: host a 4-seat table (bots welcome), pick missing suit, swap three, pong/kong/win — fight to the last', 'Create or enter a room code · tap a tile to discard · pong/kong/win buttons'),
         'stdmahjong-online': ('Standard Mahjong · Online', 'Real-player rooms, no sign-up: host a 4-seat table (bots welcome), chow (left player), pong, kong and win with fan scoring', 'Create or enter a room code · tap a tile to discard · chow/pong/kong/win buttons'),
+        'lianliankan': ('Tile Link', 'Classic pair-matching: 40 levels across 4 themed chapters — link two identical tiles with a line of at most 2 turns; gravity collapse and rock obstacles unfold as you go, with star ratings and a level map', 'Click two identical tiles to link & clear (max 2 turns) · H hint · S shuffle · P pause'),
     },
     'es': {
         'plantguard': ('Guardianes Vegetales', 'Despliega tu ejército vegetal y defiende el césped de oleadas de zombis', 'Clic en casillas vacías para plantar, recoge soles'),
@@ -58,6 +59,7 @@ GAMES_META = {
         'stdmahjong': ('Mahjong Estándar', 'Reglas casuales clásicas de 136 fichas con honores: chow (solo del jugador anterior), pong, kong y ganar; escalas, semilimpias, siete parejas y más', 'Toca una ficha para descartarla · botones chow/pong/kong/ganar'),
         'scmahjong-online': ('Mahjong de Sichuan · Online', 'Salas con jugadores reales, sin registro: crea mesa de 4 (robots bienvenidos), palo ausente, cambia tres, pong/kong/gana, hasta el final', 'Crea o entra con código · toca una ficha para descartar · botones pong/kong/ganar'),
         'stdmahjong-online': ('Mahjong Estándar · Online', 'Salas con jugadores reales, sin registro: mesa de 4 (robots bienvenidos), chow (jugador anterior), pong, kong y ganar con puntuación', 'Crea o entra con código · toca una ficha para descartar · botones chow/pong/kong/ganar'),
+        'lianliankan': ('Conecta Fichas', 'Emparejamiento clásico: 40 niveles en 4 capítulos temáticos — une dos fichas idénticas con una línea de hasta 2 giros; gravedad y rocas obstáculo aparecen poco a poco, con estrellas y mapa de niveles', 'Haz clic en dos fichas iguales para unirlas (máx. 2 giros) · H pista · S mezclar · P pausa'),
     },
     'fr': {
         'plantguard': ('Gardiens Végétaux', 'Déployez votre armée végétale et tenez la pelouse face aux vagues de zombies', 'Clic sur une case vide pour planter, ramassez les soleils'),
@@ -84,6 +86,7 @@ GAMES_META = {
         'stdmahjong': ('Mahjong Standard', 'Règles décontractées classiques 136 tuiles avec honneurs : chow (joueur de gauche seulement), pung, kong et victoire ; pleine/main mélangée, sept paires et plus', 'Touchez une tuile pour la défausser · boutons chow/pung/kong/gagner'),
         'scmahjong-online': ('Mahjong du Sichuan · En ligne', 'Salles avec de vrais joueurs, sans inscription : table de 4 (robots bienvenus), couleur absente, échange de trois, pung/kong/victoire jusqu’au bout', 'Créez ou rejoignez avec un code · touchez une tuile pour la défausser · boutons pung/kong/gagner'),
         'stdmahjong-online': ('Mahjong Standard · En ligne', 'Salles avec de vrais joueurs, sans inscription : table de 4 (robots bienvenus), chow (joueur de gauche), pung, kong et victoire au score', 'Créez ou rejoignez avec un code · touchez une tuile pour la défausser · boutons chow/pung/kong/gagner'),
+        'lianliankan': ('Lien de Tuiles', 'Paires classiques : 40 niveaux en 4 chapitres thématiques — reliez deux tuiles identiques par une ligne à 2 virages maximum ; gravité et rochers s’ajoutent progressivement, avec étoiles et carte des niveaux', 'Cliquez sur deux tuiles identiques pour les relier (2 virages max) · H indice · S mélanger · P pause'),
     },
     'de': {
         'plantguard': ('Pflanzenwächter', 'Stelle deine Pflanzenarmee auf und halte den Rasen gegen Zombie-Wellen', 'Klicke freie Felder zum Pflanzen, sammle Sonnen'),
@@ -110,6 +113,7 @@ GAMES_META = {
         'stdmahjong': ('Standard-Mahjong', 'Klassische Casual-Regeln mit 136 Steinen inkl. Ehrensteine: Chow (nur vom linken Spieler), Pung, Kong und Gewinn; Reine Hand, halbreine Hand, Sieben Paare und mehr', 'Stein antippen zum Abwerfen · Chow/Pung/Kong/Gewinnen-Buttons'),
         'scmahjong-online': ('Sichuan-Mahjong · Online', 'Echte Spieler, ohne Anmeldung: 4er-Tisch eröffnen (Bots willkommen), Fehlfarbe wählen, drei tauschen, Pung/Kong/Gewinn bis zum letzten', 'Raum erstellen oder Code eingeben · Stein antippen zum Abwerfen · Pung/Kong/Gewinnen-Buttons'),
         'stdmahjong-online': ('Standard-Mahjong · Online', 'Echte Spieler, ohne Anmeldung: 4er-Tisch eröffnen (Bots willkommen), Chow (linker Spieler), Pung, Kong und Gewinn mit Punkte', 'Raum erstellen oder Code eingeben · Stein antippen zum Abwerfen · Chow/Pung/Kong/Gewinnen-Buttons'),
+        'lianliankan': ('Kachel-Link', 'Klassisches Paar-Spiel: 40 Level in 4 Themenkapiteln — verbinden Sie zwei gleiche Kacheln mit einer Linie aus höchstens 2 Ecken; Schwerkraft und Fels-Hindernisse kommen dazu, mit Sternen und Level-Karte', 'Klicken Sie zwei gleiche Kacheln an, um sie zu verbinden (max. 2 Ecken) · H Tipp · S mischen · P Pause'),
     },
     'it': {
         'plantguard': ('Guardiani Vegetali', 'Schiera il tuo esercito vegetale e difendi il prato dalle ondate di zombie', 'Clicca le celle vuote per piantare, raccogli i soli'),
@@ -136,6 +140,7 @@ GAMES_META = {
         'stdmahjong': ('Mahjong Standard', 'Regole classiche casual a 136 tessere con onori: chow (solo dal giocatore a sinistra), pong, kong e vittoria; scala pura, semipura, sette coppie e altro', 'Tocca una tessera per scartarla · pulsanti chow/pong/kong/vittoria'),
         'scmahjong-online': ('Mahjong del Sichuan · Online', 'Stanze con veri giocatori, senza registrazione: tavolo da 4 (bot benvenuti), seme mancante, scambio di tre, pong/kong/vittoria fino alla fine', 'Crea o entra con un codice · tocca una tessera per scartarla · pulsanti pong/kong/vittoria'),
         'stdmahjong-online': ('Mahjong Standard · Online', 'Stanze con veri giocatori, senza registrazione: tavolo da 4 (bot benvenuti), chow (giocatore a sinistra), pong, kong e vittoria a punti', 'Crea o entra con un codice · tocca una tessera per scartarla · pulsanti chow/pong/kong/vittoria'),
+        'lianliankan': ('Collega Tessere', 'Abbinamento classico: 40 livelli in 4 capitoli a tema — collega due tessere identiche con una linea di massimo 2 curve; gravità e rocchi ostacolo entrano in scena, con stelle e mappa livelli', 'Clicca due tessere identiche per collegarle (max 2 curve) · H indizio · S mescola · P pausa'),
     },
     'pt': {
         'plantguard': ('Guardiões Vegetais', 'Posicione seu exército vegetal e defenda o gramado contra ondas de zumbis', 'Clique em células vazias para plantar, colete sóis'),
@@ -162,6 +167,7 @@ GAMES_META = {
         'stdmahjong': ('Mahjong Padrão', 'Regras casuais clássicas de 136 peças com honras: chow (só do jogador à esquerda), pong, kong e vitória; mão pura, semipura, sete pares e mais', 'Toque numa peça para descartar · botões chow/pong/kong/vitória'),
         'scmahjong-online': ('Mahjong de Sichuan · Online', 'Salas com jogadores reais, sem cadastro: mesa de 4 (bots bem-vindos), naipe ausente, troca de três, pong/kong/vitória até o fim', 'Crie ou entre com um código · toque numa peça para descartar · botões pong/kong/vitória'),
         'stdmahjong-online': ('Mahjong Padrão · Online', 'Salas com jogadores reais, sem cadastro: mesa de 4 (bots bem-vindos), chow (jogador à esquerda), pong, kong e vitória por pontos', 'Crie ou entre com um código · toque numa peça para descartar · botões chow/pong/kong/vitória'),
+        'lianliankan': ('Ligue Peças', 'Pares clássicos: 40 níveis em 4 capítulos temáticos — ligue duas peças iguais com uma linha de até 2 curvas; gravidade e pedras obstáculo entram em cena, com estrelas e mapa de fases', 'Clique em duas peças iguais para ligá-las (máx. 2 curvas) · H dica · S embaralhar · P pausa'),
     },
 }
 

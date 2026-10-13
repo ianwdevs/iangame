@@ -238,6 +238,9 @@ SEED_GAMES = [
     {"slug": "stdmahjong-online", "name": "标准麻将·多人", "category": "multiplayer", "icon": "🀇", "color": "#8a4b1f",
      "desc": "标准麻将来真人房:免登录开 4 人房(可加机器人),可吃(上家)碰杠胡,番型结算手机实时对战",
      "controls": "创建/输房间号加入·点牌打出·吃碰杠胡按钮决断"},
+    {"slug": "lianliankan", "name": "连连看", "category": "puzzle", "icon": "🔗", "color": "#2ee6a6",
+     "desc": "经典配对消除:40 关 4 大主题章节,两个相同图案折线连通即消除;重力坍缩与障碍石块渐次登场,三星评价与选关地图",
+     "controls": "点击两个相同图案连线消除(折点≤2)·H 提示 S 洗牌 P 暂停"},
 ]
 
 CATEGORY_LABELS = {
