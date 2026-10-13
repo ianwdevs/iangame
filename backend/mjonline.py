@@ -202,8 +202,17 @@ def calc_fans(hand, melds, self_drawn, sichuan, ctx=None):
                 yan += 1
         if yan:
             fans.append(['役牌刻×%d' % yan, yan])
-        duan = all(c[i] == 0 or (i // 10 < 3 and 2 <= i % 10 <= 8) for i in range(40)) and \
-            all(m['tile'] // 10 < 3 and 2 <= m['tile'] % 10 <= 8 for m in melds)
+        duan = all(c[i] == 0 or (i // 10 < 3 and 2 <= i % 10 <= 8) for i in range(40))
+        # 副露含幺九也不能断幺九(吃牌需逐张查,不能只查起始牌)
+        if duan:
+            for m in melds:
+                if m['type'] == 'chow':
+                    if any((m['tile'] + k) % 10 in (1, 9) for k in range(3)):
+                        duan = False
+                        break
+                elif m['tile'] // 10 == 3 or m['tile'] % 10 in (1, 9):
+                    duan = False
+                    break
         if duan and not w['seven']:
             fans.append(['断幺九', 1])
         concealed = all(m.get('from', -1) == -1 for m in melds)
@@ -260,6 +269,11 @@ def hand_quality(c, que):
 
 
 def ai_pick_discard(hand, que, melds, has_honors):
+    # 四川规则: 手里还有定缺花色时必须先打缺门牌
+    if que >= 0:
+        qs = [t for t in hand if t // 10 == que]
+        if qs:
+            return max(qs)
     best, best_q, seen = None, -1e9, set()
     for tid in hand:
         if tid in seen:
@@ -537,13 +551,21 @@ def act_huan3(room, me, tiles):
 
 
 def _auto_huan3(p):
+    """自动换三张选牌: 缺门 ≥3 取最大 3 张; 否则取另一门张数最多花色的最大 3 张(保证同花色)"""
     hand = _hand_of(p)
     que_tiles = sorted([t for t in hand if t // 10 == p.que], reverse=True)[:3]
-    pick = que_tiles
-    if len(pick) < 3:
-        others = sorted([t for t in hand if t // 10 != p.que])
-        pick = pick + others[:3 - len(pick)]
-    p.huan3_json = _dumps(pick[:3])
+    if len(que_tiles) == 3:
+        pick = que_tiles
+    else:
+        best_s, best_n = -1, -1
+        for s in range(3):
+            if s == p.que:
+                continue
+            n = sum(1 for t in hand if t // 10 == s)
+            if n > best_n:
+                best_s, best_n = s, n
+        pick = sorted([t for t in hand if t // 10 == best_s], reverse=True)[:3]
+    p.huan3_json = _dumps(pick)
     _evt(db.session.query(MjRoom).get(p.room_id), 'huan3', p.seat, '%s 自动换三张' % p.name)
 
 
@@ -624,6 +646,9 @@ def act_discard(room, me, tile):
     tile = int(tile or 0)
     if tile not in hand:
         return '所打之牌不在手中'
+    if room.mode == 'sc' and me.que >= 0:
+        if any(t // 10 == me.que for t in hand) and tile // 10 != me.que:
+            return '必须先打完定缺(%s)的牌' % SUIT_NAME[me.que]
     _do_discard(room, me, tile)
     db.session.commit()
     return None

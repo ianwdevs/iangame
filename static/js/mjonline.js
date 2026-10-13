@@ -75,7 +75,11 @@
     window.IanAPI.get('/api/mj/state?room=' + CODE + '&playerId=' + me.playerId + '&token=' + encodeURIComponent(me.token))
       .then(function (r) {
         if (r && r.ok === false) {
-          if (r.error === '房间不存在') { location.href = '/mjonline/' + MODE; return; }
+          if (r.error && r.error.indexOf('房间不存在') === 0) {
+            msg('房间已解散', true);
+            setTimeout(function () { location.href = '/mjonline/' + MODE; }, 900);
+            return;
+          }
           msg(r.error || '', true);
           return;
         }
@@ -93,6 +97,7 @@
   /* ---------------- 渲染 ---------------- */
   function render() {
     if (!S) return;
+    if (S.phase !== 'huan3') huan3Pick = [];   // 离开换三张阶段清掉实体下标,防跨局残留
     renderTop();
     renderOpps();
     renderTable();
@@ -181,9 +186,10 @@
     hand.innerHTML = '';
     var canPlay = S.phase === 'play' && S.my_options && S.my_options.my_turn && !meS.out && !meS.win;
     var huan3Mode = S.phase === 'huan3' && S.my_options && S.my_options.huan3;
-    (meS.hand || []).forEach(function (tid) {
+    // 手牌(换三张选择按实体下标,同名牌可分别选中)
+    (meS.hand || []).forEach(function (tid, idx) {
       var dim = meS.que >= 0 && ((tid / 10) | 0) === meS.que;
-      var h3 = huan3Mode && huan3Pick.indexOf(tid) >= 0;
+      var h3 = huan3Mode && huan3Pick.indexOf(idx) >= 0;
       hand.appendChild(tileEl(tid, {
         dim: dim && !huan3Mode,
         sel: (canPlay && selTile === tid) || h3,
@@ -192,9 +198,9 @@
             if (selTile === tid) { selTile = -1; act('discard', { tile: tid }); }
             else { selTile = tid; render(); }
           } else if (huan3Mode) {
-            var ix = huan3Pick.indexOf(tid);
+            var ix = huan3Pick.indexOf(idx);
             if (ix >= 0) huan3Pick.splice(ix, 1);
-            else if (huan3Pick.length < 3) huan3Pick.push(tid);
+            else if (huan3Pick.length < 3) huan3Pick.push(idx);
             else msg('最多选 3 张', true);
             render();
           }
@@ -268,10 +274,11 @@
       hint2.textContent = '换三张: 点手牌选 3 张同花色的牌换给对家 (已选 ' + huan3Pick.length + '/3)';
       box.appendChild(hint2);
       var okBtn = btn('🔄 换牌', 'btn-primary', function () {
+        var tiles = huan3Pick.map(function (ix) { return (S.me.hand || [])[ix]; });
         var suits = {};
-        huan3Pick.forEach(function (x) { suits[(x / 10) | 0] = 1; });
-        if (huan3Pick.length !== 3 || Object.keys(suits).length !== 1) { msg('需选 3 张同花色', true); return; }
-        act('huan3', { tiles: huan3Pick });
+        tiles.forEach(function (x) { suits[(x / 10) | 0] = 1; });
+        if (tiles.length !== 3 || Object.keys(suits).length !== 1) { msg('需选 3 张同花色', true); return; }
+        act('huan3', { tiles: tiles });
       });
       box.appendChild(okBtn);
       return;

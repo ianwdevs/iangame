@@ -170,15 +170,21 @@ window.MahjongCore = (function () {
         if (got) yan++;
       }
       if (yan) fans.push(['役牌刻×' + yan, yan]);
-      // 断幺九
+      // 断幺九(手牌+副露都不得含幺九/字牌; 吃牌需逐张查,不能只查起始牌)
       var duan = true;
       for (i = 0; i < 40; i++) {
         if (!c[i]) continue;
         if (tSuit(i) === 3 || tRank(i) === 1 || tRank(i) === 9) { duan = false; break; }
       }
       for (i = 0; i < pl.melds.length && duan; i++) {
-        var mt = pl.melds[i].tile;
-        if (tSuit(mt) === 3 || tRank(mt) === 1 || tRank(mt) === 9) duan = false;
+        var mm2 = pl.melds[i];
+        if (mm2.type === 'chow') {
+          for (var x3 = 0; x3 < 3; x3++) {
+            if (tRank(mm2.tile + x3) === 1 || tRank(mm2.tile + x3) === 9) { duan = false; break; }
+          }
+        } else if (tSuit(mm2.tile) === 3 || tRank(mm2.tile) === 1 || tRank(mm2.tile) === 9) {
+          duan = false;
+        }
       }
       if (duan && !w.seven) fans.push(['断幺九', 1]);
       // 门清: 无副露(暗杠不算破)
@@ -218,8 +224,19 @@ window.MahjongCore = (function () {
     return score;
   }
   function aiPickDiscard(pl) {
+    var t, k;
+    // 四川规则: 手里还有定缺花色时必须先打缺门牌
+    if (pl.que >= 0) {
+      var qs = [];
+      for (t = 0; t < pl.hand.length; t++) if (tSuit(pl.hand[t]) === pl.que) qs.push(pl.hand[t]);
+      if (qs.length) {
+        var qb = qs[0];
+        for (k = 1; k < qs.length; k++) if (qs[k] > qb) qb = qs[k];
+        return qb;
+      }
+    }
     var best = null, bestQ = -1e9, seen = {};
-    for (var t = 0; t < pl.hand.length; t++) {
+    for (t = 0; t < pl.hand.length; t++) {
       var id = pl.hand[t];
       if (seen[id]) continue;
       seen[id] = 1;
@@ -306,10 +323,22 @@ window.MahjongCore = (function () {
     var btns = [];            // 本帧可点按钮 {x,y,w,h,label,cb,kind}
     var rafId = 0, running = true, paused = false, destroyed = false;
     var timers = [];
+    var rectRatio = 1, frameNo = 0, portraitShown = false, portraitT0 = 0;
+    function refreshRect() {
+      try {
+        var rc = canvas.getBoundingClientRect();
+        if (rc.height > 0) rectRatio = rc.width / rc.height;
+      } catch (e) { /* headless */ }
+    }
+    window.addEventListener('resize', refreshRect);
     function later(fn, ms) {
       if (destroyed) return;
       if (game.speed === 0) ms = 0;
-      var id = setTimeout(function () { fn(); }, ms);
+      var id = setTimeout(function () {
+        if (destroyed) return;
+        if (paused) { later(fn, 300); return; }   // 暂停中: 推迟,逻辑与画面一起冻结
+        fn();
+      }, ms);
       timers.push(id);
       return id;
     }
@@ -413,6 +442,15 @@ window.MahjongCore = (function () {
     function doDiscard(p, id) {
       var ix = p.hand.indexOf(id);
       if (ix < 0) return;
+      // 四川规则: 手里还有定缺花色时必须先打缺门牌
+      if (cfg.sichuan && p.que >= 0) {
+        var hasQue = false;
+        for (var q = 0; q < p.hand.length; q++) if (tSuit(p.hand[q]) === p.que) { hasQue = true; break; }
+        if (hasQue && tSuit(id) !== p.que) {
+          if (!p.ai) log('必须先打完缺门(' + SUIT_NAME[p.que] + ')的牌');
+          return;
+        }
+      }
       p.hand.splice(ix, 1);
       p.discards.push(id);
       game.lastDiscard = { id: id, from: p.seat };
@@ -536,7 +574,8 @@ window.MahjongCore = (function () {
         for (var x = x0; x <= x0 + 2; x++) if (x !== tile && !c[x]) ok = false;
         if (ok) { a = x0; break; }
       }
-      remove2(p.hand, a); remove2(p.hand, a + 1); remove2(p.hand, a + 2);   // 弃牌那张不在手,no-op
+      // 只移除手里实有的两张(弃牌那张可能恰好在手,不能误删)
+      for (var x2 = a; x2 <= a + 2; x2++) if (x2 !== tile) remove2(p.hand, x2);
       p.melds.push({ type: 'chow', tile: a, from: from.seat });
       from.discards.pop();
       log(p.name + ' 吃 ' + tName(a) + tName(a + 1) + tName(a + 2));
@@ -705,35 +744,51 @@ window.MahjongCore = (function () {
         })(s);
       }
     }
+    // AI/自动换三张选牌: 缺门 ≥3 取最大 3 张; 否则取另一门里张数最多花色的最大 3 张(保证同花色)
+    function aiPickHuan3(p) {
+      var q3 = p.hand.filter(function (t) { return tSuit(t) === p.que; }).sort(function (a, b) { return b - a; }).slice(0, 3);
+      if (q3.length === 3) return q3;
+      var bestS = -1, bestN = -1;
+      for (var s = 0; s < 3; s++) {
+        if (s === p.que) continue;
+        var n = 0;
+        for (var i = 0; i < p.hand.length; i++) if (tSuit(p.hand[i]) === s) n++;
+        if (n > bestN) { bestN = n; bestS = s; }
+      }
+      return p.hand.filter(function (t) { return tSuit(t) === bestS; }).sort(function (a, b) { return b - a; }).slice(0, 3);
+    }
     function showHuan3() {
       var p = game.players[0];
       var pick = [];
-      // 预选缺门最大的 3 张
+      // 预选缺门最大的 3 张(缺门不足 3 张时不自动补异花色,避免混花)
       var q = p.hand.filter(function (t) { return tSuit(t) === p.que; }).sort(function (a, b) { return b - a; });
       pick = q.slice(0, 3);
-      if (pick.length < 3) pick = pick.concat(p.hand.filter(function (t) { return tSuit(t) !== p.que; }).slice(0, 3 - pick.length));
       game._huan3 = { pick: pick, confirmed: false };
       addButton(CX + 250, H / 2 - 20, 120, 52, '换牌', 'primary', function () {
         var h = game._huan3;
-        if (h.pick.length !== 3) return;
-        var ids = h.pick.slice();
-        for (var i = 0; i < 3; i++) remove2(p.hand, ids[i]);
-        // 对家换给: 简化为从牌墙补 3 张随机(对家 AI 的换牌同样处理)
-        for (var k = 0; k < 3; k++) { p.hand.push(game.wall.pop()); }
-        p.hand.sort(cmpTile);
-        for (var a = 1; a < 4; a++) {
-          var ap = game.players[a];
-          for (var x = 0; x < 3; x++) {
-            var q2 = ap.hand.filter(function (t) { return tSuit(t) === ap.que; });
-            var t2 = q2.length ? q2[q2.length - 1] : ap.hand[ap.hand.length - 1];
-            remove2(ap.hand, t2);
-            ap.hand.push(game.wall.pop());
-          }
-          ap.hand.sort(cmpTile);
+        if (h.pick.length !== 3) { log('需选满 3 张'); return; }
+        if (tSuit(h.pick[0]) !== tSuit(h.pick[1]) || tSuit(h.pick[0]) !== tSuit(h.pick[2])) {
+          log('换三张必须 3 张同花色');
+          return;
         }
+        // 四家各选 3 张,对家互换(0↔2, 1↔3),牌守恒不消耗牌墙
+        var gives = [];
+        for (var s = 0; s < 4; s++) {
+          var pl = game.players[s];
+          var chosen = (s === 0) ? h.pick.slice() : aiPickHuan3(pl);
+          for (var i = 0; i < 3; i++) remove2(pl.hand, chosen[i]);
+          gives.push(chosen);
+        }
+        for (var s2 = 0; s2 < 2; s2++) {
+          for (var k = 0; k < 3; k++) {
+            game.players[s2].hand.push(gives[s2 + 2][k]);
+            game.players[s2 + 2].hand.push(gives[s2][k]);
+          }
+        }
+        for (var a2 = 0; a2 < 4; a2++) game.players[a2].hand.sort(cmpTile);
         clearBtns();
         game.phase = 'draw';
-        log('换三张完成,庄家先摸牌');
+        log('换三张完成(对家互换),庄家先摸牌');
         scheduleStep(600);
       });
     }
@@ -864,6 +919,23 @@ window.MahjongCore = (function () {
       drawHuman();
       drawPanels();
       drawButtons();
+      drawPortraitHint();
+    }
+    // 竖屏时整桌等比缩得太小,给出一次性横屏建议(不阻断操作)
+    function drawPortraitHint() {
+      if (++frameNo % 30 === 0) refreshRect();
+      if (rectRatio >= 0.95) return;
+      if (!portraitShown) { portraitShown = true; portraitT0 = Date.now(); }
+      if (Date.now() - portraitT0 > 9000) return;
+      ctx.fillStyle = 'rgba(8,26,21,.94)';
+      roundRect(CX - 335, 60, 670, 46, 10);
+      ctx.fill();
+      ctx.strokeStyle = '#3f7a6a'; ctx.lineWidth = 1.5;
+      roundRect(CX - 335, 60, 670, 46, 10); ctx.stroke();
+      ctx.fillStyle = '#ffe9a8'; ctx.font = 'bold 17px sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('📱 竖屏画面较小,建议横屏或全屏获得最佳体验', CX, 83);
+      ctx.textBaseline = 'alphabetic';
     }
     function drawOpponents() {
       // seat2 top / seat1 right / seat3 left
@@ -1041,10 +1113,10 @@ window.MahjongCore = (function () {
         }
         return;
       }
-      if (game.over || p.win || game.phase !== 'discard') return;
+      if (game.over || p.win || game.phase !== 'discard' || game.turn !== 0) return;
       var hi = hitHand(x, y);
       if (hi < 0) { sel = -1; return; }
-      if (sel === hi) { doDiscard(p, p.hand[hi]); return; }
+      if (sel === hi) { sel = -1; doDiscard(p, p.hand[hi]); return; }
       sel = hi;
     }
     function hitHand(x, y) {
@@ -1084,6 +1156,7 @@ window.MahjongCore = (function () {
         if (rafId) cancelAnimationFrame(rafId);
         canvas.removeEventListener('pointerdown', onPointer);
         window.removeEventListener('keydown', onKey);
+        window.removeEventListener('resize', refreshRect);
       },
     };
     api._game = game;
