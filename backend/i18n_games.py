@@ -33,6 +33,7 @@ GAMES_META = {
         'scmahjong-online': ('Sichuan Mahjong · Online', 'Real-player rooms, no sign-up: host a 4-seat table (bots welcome), pick missing suit, swap three, pong/kong/win — fight to the last', 'Create or enter a room code · tap a tile to discard · pong/kong/win buttons'),
         'stdmahjong-online': ('Standard Mahjong · Online', 'Real-player rooms, no sign-up: host a 4-seat table (bots welcome), chow (left player), pong, kong and win with fan scoring', 'Create or enter a room code · tap a tile to discard · chow/pong/kong/win buttons'),
         'lianliankan': ('Tile Link', 'Classic pair-matching: 40 levels across 4 themed chapters — link two identical tiles with a line of at most 2 turns; gravity collapse and rock obstacles unfold as you go, with star ratings and a level map', 'Click two identical tiles to link & clear (max 2 turns) · H hint · S shuffle · P pause'),
+        'runeguard': ('RuneGuard', 'Tile-link × tower defense fused on one screen: match rune pairs below to cast spells onto the battlefield above, spend gold on turrets to guard the mage tower; 30 levels in 5 chapters, pick-1-of-3 weapon unlocks, boss levels drop ultimate runes', 'Click two identical runes to link & cast · click empty plots to build turrets · click a turret to upgrade/sell'),
     },
     'es': {
         'plantguard': ('Guardianes Vegetales', 'Despliega tu ejército vegetal y defiende el césped de oleadas de zombis', 'Clic en casillas vacías para plantar, recoge soles'),
@@ -60,6 +61,7 @@ GAMES_META = {
         'scmahjong-online': ('Mahjong de Sichuan · Online', 'Salas con jugadores reales, sin registro: crea mesa de 4 (robots bienvenidos), palo ausente, cambia tres, pong/kong/gana, hasta el final', 'Crea o entra con código · toca una ficha para descartar · botones pong/kong/ganar'),
         'stdmahjong-online': ('Mahjong Estándar · Online', 'Salas con jugadores reales, sin registro: mesa de 4 (robots bienvenidos), chow (jugador anterior), pong, kong y ganar con puntuación', 'Crea o entra con código · toca una ficha para descartar · botones chow/pong/kong/ganar'),
         'lianliankan': ('Conecta Fichas', 'Emparejamiento clásico: 40 niveles en 4 capítulos temáticos — une dos fichas idénticas con una línea de hasta 2 giros; gravedad y rocas obstáculo aparecen poco a poco, con estrellas y mapa de niveles', 'Haz clic en dos fichas iguales para unirlas (máx. 2 giros) · H pista · S mezclar · P pausa'),
+        'runeguard': ('Guardián de Runas', 'Parejas y tower defense en una sola pantalla: une runas idénticas abajo para lanzar hechizos al campo de batalla arriba y gasta oro en torretas; 30 niveles en 5 capítulos, desbloqueos de armas 1-de-3, los jefes sueltan runas definitivas', 'Clic en dos runas iguales para unirlas y lanzar · clic en parcelas vacías para construir · clic en torreta para mejorar/vender'),
     },
     'fr': {
         'plantguard': ('Gardiens Végétaux', 'Déployez votre armée végétale et tenez la pelouse face aux vagues de zombies', 'Clic sur une case vide pour planter, ramassez les soleils'),
@@ -87,6 +89,7 @@ GAMES_META = {
         'scmahjong-online': ('Mahjong du Sichuan · En ligne', 'Salles avec de vrais joueurs, sans inscription : table de 4 (robots bienvenus), couleur absente, échange de trois, pung/kong/victoire jusqu’au bout', 'Créez ou rejoignez avec un code · touchez une tuile pour la défausser · boutons pung/kong/gagner'),
         'stdmahjong-online': ('Mahjong Standard · En ligne', 'Salles avec de vrais joueurs, sans inscription : table de 4 (robots bienvenus), chow (joueur de gauche), pung, kong et victoire au score', 'Créez ou rejoignez avec un code · touchez une tuile pour la défausser · boutons chow/pung/kong/gagner'),
         'lianliankan': ('Lien de Tuiles', 'Paires classiques : 40 niveaux en 4 chapitres thématiques — reliez deux tuiles identiques par une ligne à 2 virages maximum ; gravité et rochers s’ajoutent progressivement, avec étoiles et carte des niveaux', 'Cliquez sur deux tuiles identiques pour les relier (2 virages max) · H indice · S mélanger · P pause'),
+        'runeguard': ('Garde des Runes', "Association et tower defense sur un seul écran : reliez deux runes identiques en bas pour lancer des sorts sur le champ de bataille en haut, et dépensez l'or en tourelles ; 30 niveaux, 5 chapitres, armes au choix 1-sur-3, boss aux runes ultimes", 'Cliquez sur deux runes identiques pour lancer · clic sur parcelle vide pour construire · clic sur tourelle pour améliorer/vendre'),
     },
     'de': {
         'plantguard': ('Pflanzenwächter', 'Stelle deine Pflanzenarmee auf und halte den Rasen gegen Zombie-Wellen', 'Klicke freie Felder zum Pflanzen, sammle Sonnen'),
@@ -114,6 +117,7 @@ GAMES_META = {
         'scmahjong-online': ('Sichuan-Mahjong · Online', 'Echte Spieler, ohne Anmeldung: 4er-Tisch eröffnen (Bots willkommen), Fehlfarbe wählen, drei tauschen, Pung/Kong/Gewinn bis zum letzten', 'Raum erstellen oder Code eingeben · Stein antippen zum Abwerfen · Pung/Kong/Gewinnen-Buttons'),
         'stdmahjong-online': ('Standard-Mahjong · Online', 'Echte Spieler, ohne Anmeldung: 4er-Tisch eröffnen (Bots willkommen), Chow (linker Spieler), Pung, Kong und Gewinn mit Punkte', 'Raum erstellen oder Code eingeben · Stein antippen zum Abwerfen · Chow/Pung/Kong/Gewinnen-Buttons'),
         'lianliankan': ('Kachel-Link', 'Klassisches Paar-Spiel: 40 Level in 4 Themenkapiteln — verbinden Sie zwei gleiche Kacheln mit einer Linie aus höchstens 2 Ecken; Schwerkraft und Fels-Hindernisse kommen dazu, mit Sternen und Level-Karte', 'Klicken Sie zwei gleiche Kacheln an, um sie zu verbinden (max. 2 Ecken) · H Tipp · S mischen · P Pause'),
+        'runeguard': ('Runenwächter', 'Paar-Spiel und Tower Defense auf einem Bildschirm: Verbinden Sie unten zwei gleiche Runen, um oben Zauber aufs Schlachtfeld zu wirken, und geben Sie Gold für Türme aus; 30 Level, 5 Kapitel, Waffen 1-aus-3, Bosse mit ultimativen Runen', 'Zwei gleiche Runen anklicken zum Wirken · leere Plätze für Bau anklicken · Turm anklicken für Upgrade/Verkauf'),
     },
     'it': {
         'plantguard': ('Guardiani Vegetali', 'Schiera il tuo esercito vegetale e difendi il prato dalle ondate di zombie', 'Clicca le celle vuote per piantare, raccogli i soli'),
@@ -141,6 +145,7 @@ GAMES_META = {
         'scmahjong-online': ('Mahjong del Sichuan · Online', 'Stanze con veri giocatori, senza registrazione: tavolo da 4 (bot benvenuti), seme mancante, scambio di tre, pong/kong/vittoria fino alla fine', 'Crea o entra con un codice · tocca una tessera per scartarla · pulsanti pong/kong/vittoria'),
         'stdmahjong-online': ('Mahjong Standard · Online', 'Stanze con veri giocatori, senza registrazione: tavolo da 4 (bot benvenuti), chow (giocatore a sinistra), pong, kong e vittoria a punti', 'Crea o entra con un codice · tocca una tessera per scartarla · pulsanti chow/pong/kong/vittoria'),
         'lianliankan': ('Collega Tessere', 'Abbinamento classico: 40 livelli in 4 capitoli a tema — collega due tessere identiche con una linea di massimo 2 curve; gravità e rocchi ostacolo entrano in scena, con stelle e mappa livelli', 'Clicca due tessere identiche per collegarle (max 2 curve) · H indizio · S mescola · P pausa'),
+        'runeguard': ('Guardia delle Rune', 'Coppie e tower defense su un solo schermo: unisci due rune identiche in basso per scagliare incantesimi sul campo di battaglia in alto e spendi oro in torrette; 30 livelli, 5 capitoli, armi a scelta 1-su-3, boss con rune ultime', 'Clicca due rune identiche per lanciare · clic su parcelle vuote per costruire · clic su torretta per potenziare/vendere'),
     },
     'pt': {
         'plantguard': ('Guardiões Vegetais', 'Posicione seu exército vegetal e defenda o gramado contra ondas de zumbis', 'Clique em células vazias para plantar, colete sóis'),
@@ -168,6 +173,7 @@ GAMES_META = {
         'scmahjong-online': ('Mahjong de Sichuan · Online', 'Salas com jogadores reais, sem cadastro: mesa de 4 (bots bem-vindos), naipe ausente, troca de três, pong/kong/vitória até o fim', 'Crie ou entre com um código · toque numa peça para descartar · botões pong/kong/vitória'),
         'stdmahjong-online': ('Mahjong Padrão · Online', 'Salas com jogadores reais, sem cadastro: mesa de 4 (bots bem-vindos), chow (jogador à esquerda), pong, kong e vitória por pontos', 'Crie ou entre com um código · toque numa peça para descartar · botões chow/pong/kong/vitória'),
         'lianliankan': ('Ligue Peças', 'Pares clássicos: 40 níveis em 4 capítulos temáticos — ligue duas peças iguais com uma linha de até 2 curvas; gravidade e pedras obstáculo entram em cena, com estrelas e mapa de fases', 'Clique em duas peças iguais para ligá-las (máx. 2 curvas) · H dica · S embaralhar · P pausa'),
+        'runeguard': ('Guarda das Runas', 'Pares e tower defense na mesma tela: ligue duas runas iguais embaixo para lançar feitiços no campo de batalha acima e gaste ouro em torretas; 30 níveis, 5 capítulos, armas à escolha 1-de-3, chefes com runas supremas', 'Clique em duas runas iguais para lançar · clique em parcelas vazias para construir · clique na torreta para melhorar/vender'),
     },
 }
 

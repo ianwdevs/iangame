@@ -241,6 +241,9 @@ SEED_GAMES = [
     {"slug": "lianliankan", "name": "连连看", "category": "puzzle", "icon": "🔗", "color": "#2ee6a6",
      "desc": "经典配对消除:40 关 4 大主题章节,两个相同图案折线连通即消除;重力坍缩与障碍石块渐次登场,三星评价与选关地图",
      "controls": "点击两个相同图案连线消除(折点≤2)·H 提示 S 洗牌 P 暂停"},
+    {"slug": "runeguard", "name": "符文守卫", "category": "defense", "icon": "🔮", "color": "#b537f2",
+     "desc": "连连看×塔防同屏融合:下半屏连符文即向上半屏战场施法轰炸,金币建塔布防守法师塔;30 关 5 章节,过关三选一解锁武器,BOSS 关掉落章节终极符文,三星选关+收藏馆",
+     "controls": "点两个相同符文连线施法·点战场空塔位建塔·点已建塔升级/出售"},
 ]
 
 CATEGORY_LABELS = {
