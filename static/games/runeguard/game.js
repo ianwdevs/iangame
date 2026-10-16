@@ -1334,13 +1334,13 @@
       // 标题
       var g = ctx.createLinearGradient(W / 2 - 220, 0, W / 2 + 220, 0);
       g.addColorStop(0, th.line); g.addColorStop(0.5, '#ffffff'); g.addColorStop(1, th.line);
-      ctx.fillStyle = g; ctx.font = 'bold 50px Orbitron'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+      ctx.fillStyle = g; ctx.font = 'bold 50px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
       ctx.fillText('符 文 守 卫', W / 2, 72);
-      ctx.fillStyle = C.text3; ctx.font = '15px Rajdhani';
+      ctx.fillStyle = C.text3; ctx.font = '15px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('连连看 × 塔防 · 连符文施法守卫法师塔 · 30 关 5 章节', W / 2, 98);
-      ctx.textAlign = 'right'; ctx.fillStyle = C.gold; ctx.font = 'bold 18px Orbitron';
+      ctx.textAlign = 'right'; ctx.fillStyle = C.gold; ctx.font = 'bold 18px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('★ ' + totalStars() + ' / 90', W - 30, 52);
-      ctx.textAlign = 'left'; ctx.fillStyle = C.text3; ctx.font = '13px Rajdhani';
+      ctx.textAlign = 'left'; ctx.fillStyle = C.text3; ctx.font = '13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('难度:' + ({ easy: '简单', normal: '普通', hard: '困难' })[DIFF] + '(开始前可在上方切换)', 30, 52);
       ctx.textAlign = 'center';
       // 章节页签 ×5
@@ -1358,16 +1358,16 @@
         if (active) { ctx.shadowColor = CHAPTERS[i].line; ctx.shadowBlur = 14; }
         roundRect(x, y, tw, thh, 14); ctx.stroke();
         ctx.shadowBlur = 0;
-        ctx.font = '22px sans-serif'; ctx.textAlign = 'left';
+        ctx.font = '22px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'left';
         ctx.fillStyle = active ? '#ffffff' : C.text3;
         ctx.globalAlpha = active ? 1 : 0.55;
         ctx.fillText(CHAPTERS[i].icon, x + 16, y + thh / 2 + 8);
-        ctx.font = (active ? 'bold ' : '') + '18px Rajdhani';
+        ctx.font = (active ? 'bold ' : '') + '18px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(CHAPTERS[i].name, x + 52, y + thh / 2 + 7);
         ctx.globalAlpha = 1;
         var chStars = 0;
         for (var s = 1; s <= 6; s++) chStars += progress.stars[i * 6 + s] | 0;
-        ctx.font = '12px Rajdhani'; ctx.fillStyle = C.text3; ctx.textAlign = 'right';
+        ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillStyle = C.text3; ctx.textAlign = 'right';
         ctx.fillText('★' + chStars + '/18', x + tw - 12, y + 20);
         ctx.textAlign = 'center';
         mapHits.tabs.push({ x: x, y: y, w: tw, h: thh, ch: i });
@@ -1394,14 +1394,14 @@
         ctx.beginPath(); ctx.arc(cx, cy, rr, 0, 6.29); ctx.stroke();
         ctx.shadowBlur = 0;
         if (locked) {
-          ctx.font = '30px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.font = '30px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
           ctx.fillStyle = C.text2; ctx.fillText('🔒', cx, cy);
         } else {
-          ctx.fillStyle = '#ffffff'; ctx.font = 'bold 32px Orbitron';
+          ctx.fillStyle = '#ffffff'; ctx.font = 'bold 32px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
           ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
           ctx.fillText(String(lv), cx, cy - 5);
           if (boss) {
-            ctx.fillStyle = C.danger; ctx.font = 'bold 12px Rajdhani';
+            ctx.fillStyle = C.danger; ctx.font = 'bold 12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
             ctx.fillText('BOSS', cx, cy + 26);
           }
         }
@@ -1422,31 +1422,31 @@
       roundRect(mapHits.gallery.x, mapHits.gallery.y, 220, 42, 12);
       ctx.fillStyle = 'rgba(181,55,242,.16)'; ctx.fill();
       ctx.strokeStyle = 'rgba(181,55,242,.55)'; ctx.lineWidth = 1.5; ctx.stroke();
-      ctx.fillStyle = C.text; ctx.font = 'bold 16px Rajdhani';
+      ctx.fillStyle = C.text; ctx.font = 'bold 16px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('🏛 武器收藏馆', W / 2 - 130, H - 35);
       mapHits.reset = { x: W / 2 + 20, y: H - 62, w: 220, h: 42 };
       roundRect(mapHits.reset.x, mapHits.reset.y, 220, 42, 12);
       ctx.fillStyle = resetArm > 0 ? 'rgba(255,46,99,.18)' : 'rgba(255,255,255,.03)';
       ctx.fill();
       ctx.strokeStyle = resetArm > 0 ? C.danger : 'rgba(124,58,237,.3)'; ctx.lineWidth = 1; ctx.stroke();
-      ctx.fillStyle = resetArm > 0 ? C.danger : C.text3; ctx.font = '14px Rajdhani';
+      ctx.fillStyle = resetArm > 0 ? C.danger : C.text3; ctx.font = '14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText(resetArm > 0 ? '再点一次确认重置!' : '重置全部进度', W / 2 + 130, H - 35);
-      ctx.fillStyle = C.text3; ctx.font = '13px Rajdhani';
+      ctx.fillStyle = C.text3; ctx.font = '13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('过关三选一解锁武器 · BOSS 关掉落章节终极符文 · 进度自动保存', W / 2, H - 84);
     }
 
     function drawGallery() {
       drawBg(chapterTab);
-      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 34px Orbitron'; ctx.textAlign = 'center';
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 34px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
       ctx.fillText('🏛 武器收藏馆', W / 2, 62);
-      ctx.fillStyle = C.text3; ctx.font = '14px Rajdhani';
+      ctx.fillStyle = C.text3; ctx.font = '14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('已收集 ' + (Object.keys(progress.weapons).length) + ' / ' + (RUNE_KEYS.length - 1 + TOWER_KEYS.length + RELIC_KEYS.length - 1) + ' 件', W / 2, 88);
       // 返回
       mapHits.back = { x: 28, y: 34, w: 92, h: 38 };
       roundRect(28, 34, 92, 38, 10);
       ctx.fillStyle = 'rgba(255,255,255,.05)'; ctx.fill();
       ctx.strokeStyle = 'rgba(124,58,237,.4)'; ctx.stroke();
-      ctx.fillStyle = C.text; ctx.font = '15px Rajdhani';
+      ctx.fillStyle = C.text; ctx.font = '15px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('‹ 返回', 74, 58);
       // 三区
       var sections = [
@@ -1458,7 +1458,7 @@
       galleryHits = [];
       for (var s = 0; s < sections.length; s++) {
         var sec = sections[s];
-        ctx.fillStyle = CHAPTERS[chapterTab].line; ctx.font = 'bold 17px Rajdhani'; ctx.textAlign = 'left';
+        ctx.fillStyle = CHAPTERS[chapterTab].line; ctx.font = 'bold 17px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'left';
         ctx.fillText(sec.title, 60, y0 + 14);
         ctx.textAlign = 'center';
         var cw = 148, ch2 = 84, gap = 10;
@@ -1478,14 +1478,14 @@
           ctx.lineWidth = 1.4;
           roundRect(x, y, cw, ch2, 10); ctx.stroke();
           ctx.globalAlpha = 1;
-          ctx.font = '26px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.font = '26px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
           ctx.globalAlpha = lv > 0 ? 1 : 0.3;
           ctx.fillText(sec.meta[k].icon, x + cw / 2, y + 30);
           ctx.globalAlpha = 1;
-          ctx.font = 'bold 13px Rajdhani';
+          ctx.font = 'bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
           ctx.fillStyle = lv > 0 ? C.text : C.text3;
           ctx.fillText(sec.meta[k].name, x + cw / 2, y + 56);
-          ctx.font = '11px Rajdhani';
+          ctx.font = '11px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
           if (lv > 0) {
             ctx.fillStyle = C.gold;
             var lvTxt = isBossRune ? '★ 终极' : '';
@@ -1506,11 +1506,11 @@
       var th = theme();
       var a = Math.min(1, introT / 0.25);
       ctx.globalAlpha = a;
-      ctx.font = '60px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = '60px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(th.icon, W / 2, 200);
-      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 42px Orbitron';
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 42px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('第 ' + cur.num + ' 关' + (cur.boss ? ' · BOSS' : ''), W / 2, 288);
-      ctx.fillStyle = th.line; ctx.font = 'bold 20px Rajdhani';
+      ctx.fillStyle = th.line; ctx.font = 'bold 20px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText(th.name, W / 2, 324);
       // 机制标签
       var tags = [];
@@ -1526,10 +1526,10 @@
         roundRect(x, 356, twd, 32, 16);
         ctx.fillStyle = 'rgba(255,255,255,.06)'; ctx.fill();
         ctx.strokeStyle = 'rgba(124,58,237,.35)'; ctx.lineWidth = 1; ctx.stroke();
-        ctx.fillStyle = C.text; ctx.font = '13px Rajdhani';
+        ctx.fillStyle = C.text; ctx.font = '13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(tags[i], x + twd / 2, 373);
       }
-      ctx.fillStyle = C.text2; ctx.font = '13px Rajdhani';
+      ctx.fillStyle = C.text2; ctx.font = '13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText(th.intro, W / 2, 424);
       ctx.fillStyle = C.text3;
       ctx.fillText('点击任意处开始', W / 2, 470);
@@ -1622,7 +1622,7 @@
           ctx.lineWidth = 1.5;
           ctx.beginPath(); ctx.arc(s.x, s.y, 17, 0, 6.29); ctx.stroke();
           ctx.restore();
-          ctx.fillStyle = 'rgba(255,255,255,.25)'; ctx.font = '16px Rajdhani';
+          ctx.fillStyle = 'rgba(255,255,255,.25)'; ctx.font = '16px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
           ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
           ctx.fillText('+', s.x, s.y);
           ctx.textBaseline = 'alphabetic';
@@ -1663,7 +1663,7 @@
       ctx.restore();
       ctx.shadowBlur = 0; ctx.globalAlpha = 1;
       // 图标 + 等级点
-      ctx.font = '17px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = '17px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(def.icon, slot.x, slot.y + 1);
       for (var l = 0; l < t.lv; l++) {
         ctx.beginPath(); ctx.arc(slot.x - 5 + l * 5, slot.y + 21, 1.8, 0, 6.29);
@@ -1690,10 +1690,10 @@
           ctx.fillStyle = 'rgba(90,140,255,.22)'; ctx.fill();
         }
         if (e.dotT > 0) {
-          ctx.font = '9px sans-serif'; ctx.textAlign = 'center';
+          ctx.font = '9px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
           ctx.fillText('☠️', 12, -12);
         }
-        ctx.font = '20px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.font = '20px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         if (e.flash > 0) { ctx.shadowColor = '#ffffff'; ctx.shadowBlur = 12; }
         ctx.globalAlpha = 0.92;
         ctx.fillText(def.icon, 0, 0);
@@ -1707,7 +1707,7 @@
         ctx.fillStyle = ratio > 0.5 ? C.ok : (ratio > 0.25 ? C.warn : C.danger);
         ctx.fillRect(e.x - bw / 2, e.y - (def.boss ? 26 : 17), bw * ratio, 3.5);
         if (e.frzT > 0) {
-          ctx.font = '10px sans-serif'; ctx.textAlign = 'left';
+          ctx.font = '10px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'left';
           ctx.fillText('❄️', e.x + bw / 2 + 2, e.y - 14);
         }
       }
@@ -1858,7 +1858,7 @@
       ctx.fillStyle = g; ctx.fill();
       ctx.strokeStyle = 'rgba(255,255,255,.12)'; ctx.lineWidth = 1.2;
       roundRect(x - w / 2, y - h / 2, w, h, 9); ctx.stroke();
-      ctx.font = Math.floor(Math.min(w, h) * 0.48) + 'px sans-serif';
+      ctx.font = Math.floor(Math.min(w, h) * 0.48) + 'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.globalAlpha = 0.85;
       ctx.fillText('🪨', x, y + 1);
@@ -1890,13 +1890,13 @@
       ctx.strokeStyle = 'rgba(255,255,255,.09)'; ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(x + 8, y + 4.5); ctx.lineTo(x + w - 8, y + 4.5); ctx.stroke();
       // 符文图标
-      ctx.font = Math.floor(board.iconPx * (isSel ? 1.05 : 1)) + 'px sans-serif';
+      ctx.font = Math.floor(board.iconPx * (isSel ? 1.05 : 1)) + 'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.globalAlpha = t.locked ? 0.45 : 1;
       ctx.fillText(R.icon, t.px, y + h / 2 + 1);
       ctx.globalAlpha = 1;
       if (t.locked) {
-        ctx.font = Math.floor(Math.min(w, h) * 0.24) + 'px sans-serif';
+        ctx.font = Math.floor(Math.min(w, h) * 0.24) + 'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('🔒', x + w - 11, y + 11);
         ctx.strokeStyle = 'rgba(167,139,250,.5)'; ctx.lineWidth = 1.4;
         roundRect(x + 2, y + 2, w - 4, h - 4, 7); ctx.stroke();
@@ -1928,7 +1928,7 @@
           ctx.fill();
           ctx.strokeStyle = 'rgba(124,214,255,.5)'; ctx.lineWidth = 1;
           roundRect(board.ox - 4, y, cols * board.bw + 2, board.bh, 6); ctx.stroke();
-          ctx.font = '13px sans-serif'; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+          ctx.font = '13px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
           ctx.fillText('❄️', board.ox - 10, y + board.bh / 2);
           ctx.textBaseline = 'alphabetic';
         }
@@ -1939,7 +1939,7 @@
         if (dy2.k < 0) continue;
         var s2 = 1 - dy2.k;
         ctx.globalAlpha = Math.max(0, s2);
-        ctx.font = Math.floor(board.iconPx * s2) + 'px sans-serif';
+        ctx.font = Math.floor(board.iconPx * s2) + 'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText(dy2.icon, dy2.x, dy2.y - dy2.k * 18);
         ctx.globalAlpha = 1;
@@ -2008,13 +2008,13 @@
     function drawHUD() {
       var th = theme();
       ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
-      ctx.fillStyle = th.line; ctx.font = 'bold 13px Rajdhani';
+      ctx.fillStyle = th.line; ctx.font = 'bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('第 ' + cur.num + ' 关' + (cur.boss ? ' · BOSS' : ''), 28, 34);
-      ctx.fillStyle = C.text2; ctx.font = '12px Rajdhani';
+      ctx.fillStyle = C.text2; ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText(th.icon + ' ' + th.name, 28, 52);
       // 基地 HP
       var hx = 150;
-      ctx.font = '15px sans-serif';
+      ctx.font = '15px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('🏰', hx, 38);
       var bw2 = 150;
       roundRect(hx + 22, 24, bw2, 12, 6);
@@ -2026,23 +2026,23 @@
         if (ratio <= 0.25) { ctx.globalAlpha = 0.65 + 0.35 * Math.sin(tAnim * 9); }
         ctx.fill(); ctx.globalAlpha = 1;
       }
-      ctx.fillStyle = C.text; ctx.font = 'bold 12px Orbitron';
+      ctx.fillStyle = C.text; ctx.font = 'bold 12px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText(base.hp + '/' + base.hpMax, hx + 22 + bw2 + 8, 35);
       // 金币
-      ctx.font = '17px sans-serif';
+      ctx.font = '17px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('💰', GOLD_POS.x - 40, 40);
-      ctx.fillStyle = C.gold; ctx.font = 'bold 21px Orbitron';
+      ctx.fillStyle = C.gold; ctx.font = 'bold 21px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText(String(gold), GOLD_POS.x - 12, 40);
       // 波次
       ctx.textAlign = 'center';
-      ctx.fillStyle = C.text3; ctx.font = '11px Rajdhani';
+      ctx.fillStyle = C.text3; ctx.font = '11px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('WAVE', W - 200, 26);
-      ctx.fillStyle = C.text; ctx.font = 'bold 19px Orbitron';
+      ctx.fillStyle = C.text; ctx.font = 'bold 19px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText(Math.min(waveIdx + 1, cur.waves.length) + ' / ' + cur.waves.length, W - 200, 46);
       // 分数
-      ctx.fillStyle = C.text3; ctx.font = '11px Rajdhani';
+      ctx.fillStyle = C.text3; ctx.font = '11px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('SCORE', W - 80, 26);
-      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 21px Orbitron';
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 21px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText(String(Math.round(score)), W - 80, 46);
       // combo 弹字
       if (comboPop) {
@@ -2053,7 +2053,7 @@
         ctx.scale(sc, sc);
         ctx.globalAlpha = Math.max(0, 1 - k * k);
         ctx.fillStyle = comboPop.n >= 4 ? C.danger : C.warn;
-        ctx.font = 'bold 30px Orbitron';
+        ctx.font = 'bold 30px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.shadowColor = ctx.fillStyle; ctx.shadowBlur = 16;
         ctx.fillText('COMBO ×' + comboPop.n, 0, 0);
         ctx.restore();
@@ -2075,7 +2075,7 @@
         } else { ctx.fillStyle = 'rgba(255,255,255,.15)'; ctx.fill(); }
       }
       ctx.textBaseline = 'alphabetic';
-      ctx.fillStyle = C.text2; ctx.font = '13px Rajdhani';
+      ctx.fillStyle = C.text2; ctx.font = '13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       if (waveActive) {
         ctx.fillText('⚔ 交战中 · 剩余敌人 ' + (enemies.length + spawnList.length), dotX + cur.waves.length * 16 + 12, y + 18);
       } else {
@@ -2088,7 +2088,7 @@
         roundRect(bx, y + 3, 190, 20, 10);
         ctx.fillStyle = 'rgba(255,213,74,.12)'; ctx.fill();
         ctx.strokeStyle = 'rgba(255,213,74,.4)'; ctx.lineWidth = 1; ctx.stroke();
-        ctx.fillStyle = C.gold; ctx.font = '12px Rajdhani'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillStyle = C.gold; ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText('⚡ 提前召唤 +' + Math.ceil(Math.max(0, waveT) * 2) + '💰', bx + 95, y + 14);
         ctx.textBaseline = 'alphabetic';
         btnHits.push({ x: bx, y: y + 3, w: 190, h: 20, id: 'call' });
@@ -2096,7 +2096,7 @@
       var mb = { x: W - 92, y: y + 3, w: 64, h: 20 };
       roundRect(mb.x, mb.y, mb.w, mb.h, 10);
       ctx.fillStyle = 'rgba(255,255,255,.04)'; ctx.fill();
-      ctx.fillStyle = C.text2; ctx.font = '12px Rajdhani'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = C.text2; ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(muted ? '🔇' : '🔊', mb.x + mb.w / 2, mb.y + 11);
       ctx.textBaseline = 'alphabetic';
       btnHits.push({ x: mb.x, y: mb.y, w: mb.w, h: mb.h, id: 'mute' });
@@ -2107,23 +2107,23 @@
       roundRect(x, y, w, h, 12);
       ctx.fillStyle = 'rgba(255,255,255,.025)'; ctx.fill();
       ctx.strokeStyle = 'rgba(124,58,237,.2)'; ctx.lineWidth = 1; ctx.stroke();
-      ctx.fillStyle = theme().line; ctx.font = 'bold 14px Rajdhani'; ctx.textAlign = 'left';
+      ctx.fillStyle = theme().line; ctx.font = 'bold 14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'left';
       ctx.fillText('📜 符文图鉴', x + 14, y + 24);
       var yy = y + 46;
       for (var i = 0; i < runePool.length; i++) {
         var R = RUNES[runePool[i]];
         var lv = Math.max(1, wlv(runePool[i]));
-        ctx.font = '18px sans-serif';
+        ctx.font = '18px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(R.icon, x + 16, yy + 6);
-        ctx.fillStyle = R.color; ctx.font = 'bold 12px Rajdhani';
+        ctx.fillStyle = R.color; ctx.font = 'bold 12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(R.name + (runePool[i] === 'gold' ? '' : ' Lv' + lv), x + 44, yy + 1);
-        ctx.fillStyle = C.text3; ctx.font = '10px Rajdhani';
+        ctx.fillStyle = C.text3; ctx.font = '10px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(shortDesc(runePool[i]), x + 44, yy + 15);
         yy += 32;
       }
       // 连击窗口条
       var cw = Math.max(0, 1 - (tAnim - lastMatchAt) / TUNE.comboWin);
-      ctx.fillStyle = C.text3; ctx.font = '11px Rajdhani';
+      ctx.fillStyle = C.text3; ctx.font = '11px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('连击 ×' + combo + (cw > 0 ? ' (增伤中)' : ''), x + 14, y + h - 22);
       roundRect(x + 14, y + h - 16, w - 28, 5, 3);
       ctx.fillStyle = 'rgba(255,255,255,.07)'; ctx.fill();
@@ -2150,9 +2150,9 @@
       roundRect(x, y, w, h, 12);
       ctx.fillStyle = 'rgba(255,255,255,.025)'; ctx.fill();
       ctx.strokeStyle = 'rgba(124,58,237,.2)'; ctx.lineWidth = 1; ctx.stroke();
-      ctx.fillStyle = theme().line; ctx.font = 'bold 14px Rajdhani'; ctx.textAlign = 'left';
+      ctx.fillStyle = theme().line; ctx.font = 'bold 14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'left';
       ctx.fillText('🗼 建造', x + 14, y + 24);
-      ctx.fillStyle = C.text3; ctx.font = '11px Rajdhani';
+      ctx.fillStyle = C.text3; ctx.font = '11px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('点击战场 ○ 空塔位建造', x + 14, y + 42);
       var yy = y + 62;
       var built = 0;
@@ -2163,19 +2163,19 @@
         var def = TOWERS[k];
         var cnt = 0;
         for (var s = 0; s < path.slots.length; s++) if (path.slots[s].tower && path.slots[s].tower.id === k) cnt++;
-        ctx.font = '16px sans-serif';
+        ctx.font = '16px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.globalAlpha = cnt ? 1 : 0.55;
         ctx.fillText(def.icon, x + 16, yy + 5);
-        ctx.fillStyle = def.color; ctx.font = 'bold 12px Rajdhani';
+        ctx.fillStyle = def.color; ctx.font = 'bold 12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(def.name + ' Lv' + lv, x + 40, yy);
-        ctx.fillStyle = C.text3; ctx.font = '10px Rajdhani';
+        ctx.fillStyle = C.text3; ctx.font = '10px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('在场 ×' + cnt + ' · ' + def.cost + '💰', x + 40, yy + 14);
         ctx.globalAlpha = 1;
         yy += 34;
         if (cnt) built++;
       }
       // 遗物
-      ctx.fillStyle = theme().line; ctx.font = 'bold 13px Rajdhani';
+      ctx.fillStyle = theme().line; ctx.font = 'bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('📿 遗物', x + 14, yy + 8);
       yy += 26;
       var anyRelic = false;
@@ -2183,14 +2183,14 @@
         var rl = wlv(RELIC_KEYS[i]);
         if (!rl) continue;
         anyRelic = true;
-        ctx.font = '14px sans-serif';
+        ctx.font = '14px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(RELICS[RELIC_KEYS[i]].icon, x + 18, yy + 4);
-        ctx.fillStyle = C.text2; ctx.font = '11px Rajdhani';
+        ctx.fillStyle = C.text2; ctx.font = '11px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(RELICS[RELIC_KEYS[i]].name + ' ×' + rl, x + 40, yy + 2);
         yy += 22;
       }
       if (!anyRelic) {
-        ctx.fillStyle = C.text3; ctx.font = '11px Rajdhani';
+        ctx.fillStyle = C.text3; ctx.font = '11px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('过关三选一可获得', x + 18, yy + 2);
       }
     }
@@ -2213,7 +2213,7 @@
         roundRect(x, y, w, hh, 12);
         ctx.fillStyle = 'rgba(13,17,30,.96)'; ctx.fill();
         ctx.strokeStyle = 'rgba(124,58,237,.5)'; ctx.lineWidth = 1.4; ctx.stroke();
-        ctx.fillStyle = C.text2; ctx.font = '12px Rajdhani';
+        ctx.fillStyle = C.text2; ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('选择防御塔', x + 14, y + 20);
         for (i = 0; i < opts.length; i++) {
           var def = TOWERS[opts[i]];
@@ -2225,12 +2225,12 @@
           ctx.globalAlpha = afford ? 0.7 : 0.3; ctx.lineWidth = 1.2;
           roundRect(x + 8, ry, w - 16, 38, 8); ctx.stroke();
           ctx.globalAlpha = 1;
-          ctx.font = '18px sans-serif';
+          ctx.font = '18px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
           ctx.globalAlpha = afford ? 1 : 0.45;
           ctx.fillText(def.icon, x + 18, ry + 25);
-          ctx.fillStyle = afford ? C.text : C.text3; ctx.font = 'bold 13px Rajdhani';
+          ctx.fillStyle = afford ? C.text : C.text3; ctx.font = 'bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
           ctx.fillText(def.name, x + 46, ry + 17);
-          ctx.fillStyle = afford ? C.gold : C.text3; ctx.font = '12px Rajdhani';
+          ctx.fillStyle = afford ? C.gold : C.text3; ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
           ctx.fillText(def.cost + '💰 · 伤' + def.dmg + ' · 程' + def.range, x + 46, ry + 32);
           ctx.globalAlpha = 1;
           popupHits.push({ x: x + 8, y: ry, w: w - 16, h: 38, id: 'build', tower: opts[i] });
@@ -2247,11 +2247,11 @@
         ctx.strokeStyle = def2.color; ctx.globalAlpha = 0.6; ctx.lineWidth = 1.4;
         roundRect(x2, y2, w2, h2, 12); ctx.stroke();
         ctx.globalAlpha = 1;
-        ctx.font = '18px sans-serif';
+        ctx.font = '18px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(def2.icon, x2 + 14, y2 + 26);
-        ctx.fillStyle = C.text; ctx.font = 'bold 14px Rajdhani';
+        ctx.fillStyle = C.text; ctx.font = 'bold 14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(def2.name + ' Lv' + t.lv, x2 + 42, y2 + 24);
-        ctx.fillStyle = C.text3; ctx.font = '11px Rajdhani';
+        ctx.fillStyle = C.text3; ctx.font = '11px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         var mult = TW_MULT[t.lv - 1].dmg;
         ctx.fillText('伤害 ' + Math.round(def2.dmg * mult) + ' · 射程 ' + Math.round(towerRange(t)), x2 + 14, y2 + 46);
         if (t.lv < 3) {
@@ -2260,14 +2260,14 @@
           roundRect(x2 + 10, y2 + 58, w2 - 20, 36, 8);
           ctx.fillStyle = afford2 ? 'rgba(46,230,166,.12)' : 'rgba(255,255,255,.03)'; ctx.fill();
           ctx.strokeStyle = afford2 ? C.ok : 'rgba(255,255,255,.12)'; ctx.lineWidth = 1.2; ctx.stroke();
-          ctx.fillStyle = afford2 ? C.ok : C.text3; ctx.font = 'bold 13px Rajdhani';
+          ctx.fillStyle = afford2 ? C.ok : C.text3; ctx.font = 'bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
           ctx.fillText('⬆ 升级 Lv' + (t.lv + 1) + ' · ' + cost + '💰', x2 + 22, y2 + 81);
           popupHits.push({ x: x2 + 10, y: y2 + 58, w: w2 - 20, h: 36, id: 'up' });
         }
         roundRect(x2 + 10, y2 + 102, w2 - 20, 36, 8);
         ctx.fillStyle = 'rgba(255,213,74,.1)'; ctx.fill();
         ctx.strokeStyle = 'rgba(255,213,74,.4)'; ctx.lineWidth = 1.2; ctx.stroke();
-        ctx.fillStyle = C.gold; ctx.font = 'bold 13px Rajdhani';
+        ctx.fillStyle = C.gold; ctx.font = 'bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('💰 卖出 +' + Math.floor(t.spent * 0.6), x2 + 22, y2 + 125);
         popupHits.push({ x: x2 + 10, y: y2 + 102, w: w2 - 20, h: 36, id: 'sell' });
         popup.close = { x: x2, y: y2, w: w2, h: h2 };
@@ -2279,13 +2279,13 @@
       var a = Math.min(1, k / 0.12, (1 - k) / 0.18 + 1);
       ctx.globalAlpha = Math.max(0, Math.min(1, a));
       ctx.textAlign = 'center';
-      ctx.font = 'bold 34px Orbitron';
+      ctx.font = 'bold 34px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.shadowColor = banner.color; ctx.shadowBlur = 22;
       ctx.fillStyle = banner.color;
       ctx.fillText(banner.text, W / 2, 196);
       ctx.shadowBlur = 0;
       if (banner.sub) {
-        ctx.fillStyle = C.text; ctx.font = 'bold 16px Rajdhani';
+        ctx.fillStyle = C.text; ctx.font = 'bold 16px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(banner.sub, W / 2, 224);
       }
       ctx.globalAlpha = 1;
@@ -2305,7 +2305,7 @@
       ctx.strokeStyle = C.gold; ctx.globalAlpha = 0.4 + 0.3 * Math.sin(tAnim * 4); ctx.lineWidth = 1.6;
       roundRect(x, y - 26, w, 40, 20); ctx.stroke();
       ctx.globalAlpha = 1;
-      ctx.fillStyle = C.text; ctx.font = 'bold 15px Rajdhani'; ctx.textAlign = 'center';
+      ctx.fillStyle = C.text; ctx.font = 'bold 15px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
       ctx.fillText(texts[tut.step], W / 2, y);
       for (var i = 0; i < 4; i++) {
         ctx.beginPath(); ctx.arc(x + 24 + i * 16, y + 8, 3, 0, 6.29);
@@ -2320,7 +2320,7 @@
         var a = Math.min(1, t.t / 0.3, (2.2 - t.t) / 0.25 + 1);
         ctx.globalAlpha = Math.max(0, Math.min(1, a));
         var y = 96 + i * 32;
-        ctx.font = '14px Rajdhani';
+        ctx.font = '14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         var w2 = ctx.measureText(t.text).width + 36;
         roundRect(W / 2 - w2 / 2, y - 15, w2, 28, 14);
         ctx.fillStyle = 'rgba(13,19,32,.92)'; ctx.fill();
@@ -2337,7 +2337,7 @@
       ctx.fillStyle = 'rgba(13,19,32,.9)';
       roundRect(W / 2 - 210, 560, 420, 40, 14); ctx.fill();
       ctx.strokeStyle = 'rgba(0,224,255,.4)'; ctx.lineWidth = 1; ctx.stroke();
-      ctx.fillStyle = C.text; ctx.font = '14px Rajdhani'; ctx.textAlign = 'center';
+      ctx.fillStyle = C.text; ctx.font = '14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
       ctx.fillText('📱 建议横屏或全屏游玩体验更佳', W / 2, 585);
       ctx.globalAlpha = 1;
     }
@@ -2345,16 +2345,16 @@
     function drawPick() {
       drawBg(cur.ch);
       ctx.fillStyle = 'rgba(6,8,16,.6)'; ctx.fillRect(0, 0, W, H);
-      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 34px Orbitron'; ctx.textAlign = 'center';
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 34px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
       ctx.fillText('🎁 战利品三选一', W / 2, 88);
-      ctx.fillStyle = C.text3; ctx.font = '14px Rajdhani';
+      ctx.fillStyle = C.text3; ctx.font = '14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('第 ' + cur.num + ' 关通关奖励 · 重复获得自动升级', W / 2, 114);
       if (clearInfo && clearInfo.bossGain) {
         var BR = RUNES[clearInfo.bossGain];
         roundRect(W / 2 - 260, 132, 520, 34, 17);
         ctx.fillStyle = 'rgba(255,46,99,.14)'; ctx.fill();
         ctx.strokeStyle = 'rgba(255,46,99,.5)'; ctx.stroke();
-        ctx.fillStyle = C.danger; ctx.font = 'bold 15px Rajdhani';
+        ctx.fillStyle = C.danger; ctx.font = 'bold 15px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('👑 BOSS 掉落:终极符文 ' + BR.icon + ' ' + BR.name + ' 已解锁!', W / 2, 154);
       }
       pickHits = [];
@@ -2376,27 +2376,27 @@
         ctx.shadowBlur = 0; ctx.globalAlpha = 1;
         // 类别条
         var catName = card.cat === 'rune' ? '符文武器' : (card.cat === 'tower' ? '防御塔' : '强化遗物');
-        ctx.fillStyle = meta.color || theme().line; ctx.font = 'bold 12px Rajdhani'; ctx.textAlign = 'center';
+        ctx.fillStyle = meta.color || theme().line; ctx.font = 'bold 12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
         ctx.fillText('— ' + catName + ' —', x + cw / 2, y + 30);
-        ctx.font = '58px sans-serif'; ctx.textBaseline = 'middle';
+        ctx.font = '58px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textBaseline = 'middle';
         ctx.fillText(meta.icon, x + cw / 2, y + 92);
         ctx.textBaseline = 'alphabetic';
-        ctx.fillStyle = '#ffffff'; ctx.font = 'bold 20px Rajdhani';
+        ctx.fillStyle = '#ffffff'; ctx.font = 'bold 20px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(meta.name, x + cw / 2, y + 150);
-        ctx.font = 'bold 13px Rajdhani';
+        ctx.font = 'bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillStyle = lv === 0 ? C.ok : C.gold;
         ctx.fillText(lv === 0 ? '🆕 全新解锁!' : '⬆ Lv' + lv + ' → Lv' + (lv + 1), x + cw / 2, y + 174);
-        ctx.fillStyle = C.text2; ctx.font = '13px Rajdhani';
+        ctx.fillStyle = C.text2; ctx.font = '13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         wrapText(meta.desc, x + cw / 2, y + 204, cw - 40, 18);
         if (card.cat === 'rune' && card.id !== 'gold') {
-          ctx.fillStyle = C.text3; ctx.font = '12px Rajdhani';
+          ctx.fillStyle = C.text3; ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
           ctx.fillText(shortDesc(card.id), x + cw / 2, y + 288);
         }
         ctx.restore();
         pickHits.push({ x: x, y: y, w: cw, h: chh, card: card });
       }
       ctx.textAlign = 'center';
-      ctx.fillStyle = C.text3; ctx.font = '13px Rajdhani';
+      ctx.fillStyle = C.text3; ctx.font = '13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('点击一张卡片领取', W / 2, H - 34);
     }
     function wrapText(text, cx, y, maxW, lh) {
@@ -2412,10 +2412,10 @@
     function drawClear() {
       drawPlayScene();
       ctx.fillStyle = 'rgba(6,8,16,.66)'; ctx.fillRect(0, 0, W, H);
-      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 38px Orbitron'; ctx.textAlign = 'center';
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 38px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
       ctx.fillText(cur.boss ? 'BOSS 击破!' : '第 ' + cur.num + ' 关 完成', W / 2, 150);
       if (clearInfo.bossGain) {
-        ctx.fillStyle = C.danger; ctx.font = 'bold 16px Rajdhani';
+        ctx.fillStyle = C.danger; ctx.font = 'bold 16px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('👑 获得章节终极符文:' + RUNES[clearInfo.bossGain].icon + ' ' + RUNES[clearInfo.bossGain].name, W / 2, 182);
       }
       for (var i = 0; i < 3; i++) {
@@ -2435,11 +2435,11 @@
         ctx.restore();
         if (on && k >= 1 && clearT - t0 < 0.4 && Math.random() < 0.2) spawnBurst(W / 2 + (i - 1) * 92, 236, 3, C.gold);
       }
-      ctx.fillStyle = C.text2; ctx.font = '16px Rajdhani';
+      ctx.fillStyle = C.text2; ctx.font = '16px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('基地保全加成 +' + clearInfo.bonus + '(剩余 HP ' + base.hp + '/' + base.hpMax + ')', W / 2, 316);
-      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 32px Orbitron';
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 32px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText(String(Math.round(score)), W / 2, 366);
-      ctx.fillStyle = C.text3; ctx.font = '12px Rajdhani';
+      ctx.fillStyle = C.text3; ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('TOTAL SCORE', W / 2, 386);
       clearHits = [];
       var defs = [
@@ -2459,7 +2459,7 @@
         ctx.lineWidth = 1.5;
         roundRect(x, y, bw2, bh2, 12); ctx.stroke();
         ctx.fillStyle = defs[i].primary ? '#ffffff' : C.text2;
-        ctx.font = 'bold 17px Rajdhani';
+        ctx.font = 'bold 17px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(defs[i].label, x + bw2 / 2, y + bh2 / 2 + 6);
         clearHits.push({ x: x, y: y, w: bw2, h: bh2, id: defs[i].id });
       }
@@ -2476,15 +2476,15 @@
       ctx.globalAlpha = 1;
       var g = ctx.createLinearGradient(W / 2 - 260, 0, W / 2 + 260, 0);
       g.addColorStop(0, C.gold); g.addColorStop(0.5, '#ffffff'); g.addColorStop(1, C.gold);
-      ctx.fillStyle = g; ctx.font = 'bold 52px Orbitron'; ctx.textAlign = 'center';
+      ctx.fillStyle = g; ctx.font = 'bold 52px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
       ctx.shadowColor = C.gold; ctx.shadowBlur = 30;
       ctx.fillText('🏆 全通关!', W / 2, 220);
       ctx.shadowBlur = 0;
-      ctx.fillStyle = C.text; ctx.font = '19px Rajdhani';
+      ctx.fillStyle = C.text; ctx.font = '19px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('魔王已陨落 · 你守住了全部 30 关的法师塔', W / 2, 268);
-      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 42px Orbitron';
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 42px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText(String(Math.round(score)), W / 2, 344);
-      ctx.fillStyle = C.text3; ctx.font = '13px Rajdhani';
+      ctx.fillStyle = C.text3; ctx.font = '13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('FINAL SCORE · ★ ' + totalStars() + '/90', W / 2, 368);
       var bw2 = 220, bh2 = 58;
       var bx = W / 2 - bw2 / 2, by = 430;
@@ -2493,7 +2493,7 @@
       ctx.shadowColor = C.purple; ctx.shadowBlur = 18;
       roundRect(bx, by, bw2, bh2, 12); ctx.fill();
       ctx.shadowBlur = 0;
-      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 19px Rajdhani';
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 19px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('查看结算', W / 2, by + bh2 / 2 + 7);
       mapHits.back = { x: bx, y: by, w: bw2, h: bh2 };
     }
@@ -2502,20 +2502,20 @@
       ctx.fillStyle = 'rgba(30,4,12,.72)'; ctx.fillRect(0, 0, W, H);
       var a = Math.max(0, Math.min(1, (1.6 - failT) / 0.3));
       ctx.globalAlpha = a;
-      ctx.font = '52px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = '52px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText('💔', W / 2, 232);
-      ctx.fillStyle = C.danger; ctx.font = 'bold 40px Orbitron';
+      ctx.fillStyle = C.danger; ctx.font = 'bold 40px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('法师塔陷落', W / 2, 316);
-      ctx.fillStyle = C.text2; ctx.font = '17px Rajdhani';
+      ctx.fillStyle = C.text2; ctx.font = '17px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('第 ' + cur.num + ' 关 · 得分 ' + Math.round(score) + ' · 可从地图重试', W / 2, 354);
       ctx.globalAlpha = 1;
       ctx.textBaseline = 'alphabetic';
     }
     function drawPauseVeil() {
       ctx.fillStyle = 'rgba(6,9,18,.7)'; ctx.fillRect(0, 0, W, H);
-      ctx.fillStyle = C.text; ctx.font = 'bold 34px Orbitron'; ctx.textAlign = 'center';
+      ctx.fillStyle = C.text; ctx.font = 'bold 34px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
       ctx.fillText('⏸ 已暂停', W / 2, H / 2 - 10);
-      ctx.fillStyle = C.text2; ctx.font = '15px Rajdhani';
+      ctx.fillStyle = C.text2; ctx.font = '15px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('点击工具栏「继续」或按 P 继续', W / 2, H / 2 + 26);
     }
     function drawPlayScene() {

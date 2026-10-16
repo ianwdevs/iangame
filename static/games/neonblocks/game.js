@@ -129,20 +129,20 @@
       var sx = offX + BOARD_W + 14;
       ctx.fillStyle = '#141b2e'; roundRect(sx, offY, SIDE-18, H-20, 12); ctx.fill();
       ctx.strokeStyle = 'rgba(124,58,237,.3)'; roundRect(sx, offY, SIDE-18, H-20, 12); ctx.stroke();
-      ctx.fillStyle = '#8b97b3'; ctx.font = 'bold 13px Rajdhani'; ctx.textAlign='left';
+      ctx.fillStyle = '#8b97b3'; ctx.font = 'bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='left';
       ctx.fillText('下一个', sx+14, offY+26);
       // next 预览
       var ncs = 20;
       for (var r=0;r<next.shape.length;r++) for (var c=0;c<next.shape[r].length;c++){
         if(next.shape[r][c]) { ctx.fillStyle=COLORS[next.key]; ctx.fillRect(sx+14+c*ncs, offY+38+r*ncs, ncs-2, ncs-2); }
       }
-      ctx.fillStyle='#00e0ff'; ctx.font='bold 13px Rajdhani'; ctx.fillText('分数', sx+14, offY+150);
-      ctx.fillStyle='#eaf0fb'; ctx.font='bold 22px Orbitron'; ctx.fillText(score, sx+14, offY+176);
-      ctx.fillStyle='#00e0ff'; ctx.font='bold 13px Rajdhani'; ctx.fillText('等级', sx+14, offY+206);
-      ctx.fillStyle='#eaf0fb'; ctx.font='bold 22px Orbitron'; ctx.fillText(level, sx+14, offY+232);
-      ctx.fillStyle='#00e0ff'; ctx.font='bold 13px Rajdhani'; ctx.fillText('消行', sx+14, offY+262);
-      ctx.fillStyle='#eaf0fb'; ctx.font='bold 22px Orbitron'; ctx.fillText(lines, sx+14, offY+288);
-      ctx.fillStyle='#5a6580'; ctx.font='12px Rajdhani';
+      ctx.fillStyle='#00e0ff'; ctx.font='bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillText('分数', sx+14, offY+150);
+      ctx.fillStyle='#eaf0fb'; ctx.font='bold 22px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillText(score, sx+14, offY+176);
+      ctx.fillStyle='#00e0ff'; ctx.font='bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillText('等级', sx+14, offY+206);
+      ctx.fillStyle='#eaf0fb'; ctx.font='bold 22px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillText(level, sx+14, offY+232);
+      ctx.fillStyle='#00e0ff'; ctx.font='bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillText('消行', sx+14, offY+262);
+      ctx.fillStyle='#eaf0fb'; ctx.font='bold 22px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillText(lines, sx+14, offY+288);
+      ctx.fillStyle='#5a6580'; ctx.font='12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('←→ 移动', sx+14, offY+330);
       ctx.fillText('↑ 旋转', sx+14, offY+348);
       ctx.fillText('↓ 加速', sx+14, offY+366);

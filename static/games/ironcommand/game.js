@@ -759,7 +759,7 @@ var DIFFICULTY = {
       // 浮动文字(伤害数字)
       floatTexts.forEach(function (f) {
         ctx.globalAlpha = Math.min(1, f.life / 0.9); ctx.fillStyle = f.color;
-        ctx.font = 'bold 14px Rajdhani, sans-serif'; ctx.textAlign = 'center';
+        ctx.font = 'bold 14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
         ctx.fillText(f.text, f.x, f.y);
       });
       ctx.globalAlpha = 1; ctx.textAlign = 'left';
@@ -790,7 +790,7 @@ var DIFFICULTY = {
       // 核弹目标态全屏红罩 + 提示(屏幕坐标层)
       if (nukeTargeting) {
         ctx.fillStyle = 'rgba(255,77,77,0.08)'; ctx.fillRect(0, 0, VW, VH);
-        ctx.fillStyle = '#ff4d4d'; ctx.font = 'bold 22px Rajdhani'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#ff4d4d'; ctx.font = 'bold 22px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText('☢️ 点击地图选择核弹落点(右键/ESC 取消)', VW / 2, VH - 40);
         ctx.textBaseline = 'alphabetic';
       }
@@ -947,7 +947,7 @@ var DIFFICULTY = {
         ctx.beginPath(); ctx.moveTo(-14, H + 4); ctx.lineTo(0, H - 12); ctx.lineTo(14, H + 4); ctx.fill(); // 尖顶
         ctx.fillStyle = dark; ctx.fillRect(-14, H + 2, 28, 4); // 屋檐
         // 军徽
-        ctx.fillStyle = accent; ctx.font = 'bold 14px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillStyle = accent; ctx.font = 'bold 14px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText('★', 0, H - 1);
         // 两侧岗亭
         ctx.fillStyle = dark; ctx.fillRect(-17, H - 4, 4, 10); ctx.fillRect(13, H - 4, 4, 10);
@@ -1032,7 +1032,7 @@ var DIFFICULTY = {
         ctx.fillStyle = mid; ctx.beginPath(); ctx.arc(0, H - 14, 8, 0, 7); ctx.fill();
         ctx.fillStyle = shade(col, 0.5); ctx.beginPath(); ctx.arc(0, H - 16, 5, 0, 7); ctx.fill();
         // 辐射符号(黄)
-        ctx.fillStyle = '#ffd54a'; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#ffd54a'; ctx.font = 'bold 11px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText('☢', 0, H - 14);
         ctx.textBaseline = 'alphabetic';
         // 两侧冷却塔 + 蒸汽
@@ -1061,14 +1061,14 @@ var DIFFICULTY = {
           ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(ma) * 8, Math.sin(ma) * 8); ctx.stroke();
         }
         ctx.restore();
-        ctx.fillStyle = '#00e0ff'; ctx.font = 'bold 10px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#00e0ff'; ctx.font = 'bold 10px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText('🔬', 0, H - 24);
         ctx.textBaseline = 'alphabetic'; ctx.lineWidth = 1;
       }
     }
     // 名字标签:半透明底条 + 白字
     function drawLabel(text, x, y, col) {
-      ctx.font = 'bold 11px Rajdhani, sans-serif';
+      ctx.font = 'bold 11px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       var w = ctx.measureText(text).width + 10;
       ctx.fillStyle = 'rgba(6,9,18,0.78)';
       roundRect(x - w / 2, y, w, 15, 4); ctx.fill();
@@ -1172,7 +1172,7 @@ var DIFFICULTY = {
       // 顶栏:矿石/电力/核弹
       ctx.fillStyle = 'rgba(6,9,18,0.85)'; roundRectH(8, 8, VW - 16, 44, 10); ctx.fill();
       ctx.strokeStyle = 'rgba(124,58,237,0.3)'; roundRectH(8, 8, VW - 16, 44, 10); ctx.stroke();
-      ctx.textBaseline = 'middle'; ctx.font = 'bold 16px Rajdhani';
+      ctx.textBaseline = 'middle'; ctx.font = 'bold 16px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillStyle = MINE_COLOR; ctx.textAlign = 'left'; ctx.fillText('💰 ' + (oreP | 0), 20, 30);
       ctx.fillStyle = powerP >= 0 ? '#2ee6a6' : '#ff4d4d'; ctx.fillText('⚡ ' + powerP, 130, 30);
       ctx.fillStyle = '#8b97b3'; ctx.fillText('🎯 击杀 ' + kills, 220, 30);
@@ -1193,7 +1193,7 @@ var DIFFICULTY = {
         ctx.fillStyle = ready ? 'rgba(255,77,77,0.35)' : 'rgba(6,9,18,0.6)';
         roundRectH(rx, 14, nbw, 32, 8); ctx.fill();
         ctx.strokeStyle = ready ? '#ff4d4d' : 'rgba(255,255,255,0.2)'; roundRectH(rx, 14, nbw, 32, 8); ctx.stroke();
-        ctx.fillStyle = ready ? '#ff4d4d' : '#8b97b3'; ctx.textAlign = 'center'; ctx.font = 'bold 13px Rajdhani';
+        ctx.fillStyle = ready ? '#ff4d4d' : '#8b97b3'; ctx.textAlign = 'center'; ctx.font = 'bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(nukeTargeting ? '点落点' : (ready ? '☢️ 发射' : '☢️ ' + Math.floor(nukeCharge.player * 100) + '%'), rx + nbw / 2, 30);
         // 记录核弹按钮区域供点击检测
         NUKE_BTN = { x: rx, y: 14, w: nbw, h: 32 };
@@ -1206,7 +1206,7 @@ var DIFFICULTY = {
         var sbw = 80; rx -= sbw;
         ctx.fillStyle = 'rgba(255,182,39,0.25)'; roundRectH(rx, 14, sbw, 32, 8); ctx.fill();
         ctx.strokeStyle = '#ffb627'; roundRectH(rx, 14, sbw, 32, 8); ctx.stroke();
-        ctx.fillStyle = '#ffd54a'; ctx.textAlign = 'center'; ctx.font = 'bold 13px Rajdhani';
+        ctx.fillStyle = '#ffd54a'; ctx.textAlign = 'center'; ctx.font = 'bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('💰 卖出', rx + sbw / 2, 30);
         SELL_BTN = { x: rx, y: 14, w: sbw, h: 32, bid: selected[0] };
       }
@@ -1214,7 +1214,7 @@ var DIFFICULTY = {
       // 左侧建造面板
       drawBuildPanel();
       // 提示
-      ctx.fillStyle = '#5a6580'; ctx.textAlign = 'left'; ctx.font = '12px Rajdhani';
+      ctx.fillStyle = '#5a6580'; ctx.textAlign = 'left'; ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('左键框选·右键移动/攻击·WASD移视野·双击选同兵种', 12, VH - 14);
     }
     function baseHp(team) {
@@ -1233,7 +1233,7 @@ var DIFFICULTY = {
       ctx.strokeStyle = 'rgba(124,58,237,0.4)'; ctx.lineWidth = 1.5; roundRectH(PANEL_X, y0, PANEL_W, panelH, 10); ctx.stroke(); ctx.lineWidth = 1;
       // 标题栏
       ctx.fillStyle = 'rgba(124,58,237,0.25)'; roundRectH(PANEL_X, y0, PANEL_W, 26, 10); ctx.fill();
-      ctx.fillStyle = '#eaf0fb'; ctx.textAlign = 'center'; ctx.font = 'bold 13px Rajdhani'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#eaf0fb'; ctx.textAlign = 'center'; ctx.font = 'bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textBaseline = 'middle';
       ctx.fillText('🏗 建造 / ⚔ 单位', PANEL_X + PANEL_W / 2, y0 + 13);
       ctx.textBaseline = 'alphabetic';
 
@@ -1261,7 +1261,7 @@ var DIFFICULTY = {
         var iy = contentTop + i * PANEL_ITEM_H - panelScroll;
         if (iy + PANEL_ITEM_H < contentTop || iy > viewportBottom) return; // 视口外跳过
         if (it.divider) {
-          ctx.fillStyle = '#8b97b3'; ctx.font = 'bold 11px Rajdhani'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+          ctx.fillStyle = '#8b97b3'; ctx.font = 'bold 11px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
           ctx.fillText(it.divider, PANEL_X + 10, iy + 12);
           ctx.textBaseline = 'alphabetic';
         } else {
@@ -1281,7 +1281,7 @@ var DIFFICULTY = {
       }
       // 滚动提示
       if (panelScrollMax > 0) {
-        ctx.fillStyle = '#5a6580'; ctx.font = '10px Rajdhani'; ctx.textAlign = 'center';
+        ctx.fillStyle = '#5a6580'; ctx.font = '10px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
         ctx.fillText('📜 滚轮滚动', PANEL_X + PANEL_W / 2, y0 + panelH - 4);
       }
     }
@@ -1296,21 +1296,21 @@ var DIFFICULTY = {
       var iconBg = type === 'building' ? shade('#3da9fc', -0.35) : shade('#ffb627', -0.3);
       ctx.fillStyle = iconBg; roundRectH(x + 4, y + 4, h - 8, h - 8, 6); ctx.fill();
       // 图标 emoji(大字号,居中)
-      ctx.font = 'bold 22px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = 'bold 22px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(def.icon, x + 4 + (h - 8) / 2, y + h / 2 + 1);
       ctx.textBaseline = 'alphabetic';
 
       // 右侧:名字 + 价格
       var tx = x + h + 2;
-      ctx.fillStyle = avail ? '#eaf0fb' : '#8b97b3'; ctx.font = 'bold 12px Rajdhani'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = avail ? '#eaf0fb' : '#8b97b3'; ctx.font = 'bold 12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
       ctx.fillText(def.name, tx, y + 13);
       // 价格 / 状态
       if (!avail) {
-        ctx.fillStyle = '#ff4d4d'; ctx.font = '10px Rajdhani'; ctx.fillText('🔒 前置未满足', tx, y + 28);
+        ctx.fillStyle = '#ff4d4d'; ctx.font = '10px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillText('🔒 前置未满足', tx, y + 28);
       } else if (!afford) {
-        ctx.fillStyle = '#ff4d4d'; ctx.font = 'bold 11px Rajdhani'; ctx.fillText('💰 ' + def.cost + ' (不足)', tx, y + 28);
+        ctx.fillStyle = '#ff4d4d'; ctx.font = 'bold 11px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillText('💰 ' + def.cost + ' (不足)', tx, y + 28);
       } else {
-        ctx.fillStyle = MINE_COLOR; ctx.font = 'bold 11px Rajdhani'; ctx.fillText('💰 ' + def.cost, tx, y + 28);
+        ctx.fillStyle = MINE_COLOR; ctx.font = 'bold 11px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillText('💰 ' + def.cost, tx, y + 28);
       }
       ctx.textBaseline = 'alphabetic';
     }

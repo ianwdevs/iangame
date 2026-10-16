@@ -69,13 +69,13 @@
     function draw() {
       ctx.fillStyle = '#060912'; ctx.fillRect(0, 0, W, H);
       // 顶栏
-      ctx.fillStyle = '#8b97b3'; ctx.font = 'bold 16px Rajdhani'; ctx.textAlign = 'left';
+      ctx.fillStyle = '#8b97b3'; ctx.font = 'bold 16px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'left';
       ctx.fillText('步数: ' + moves, 14, 28);
       ctx.textAlign = 'right';
       time = ((Date.now() - startT)/1000)|0;
       ctx.fillText('⏱ ' + time + 's', W - 14, 28);
       ctx.textAlign = 'center';
-      ctx.fillStyle = '#00e0ff'; ctx.font = 'bold 16px Orbitron';
+      ctx.fillStyle = '#00e0ff'; ctx.font = 'bold 16px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('已配对 ' + matched + '/' + cards.length, W/2, 28);
       // 卡牌
       cards.forEach(function (c) {
@@ -94,7 +94,7 @@
           ctx.fillStyle = g; roundRect(-r.w/2, -r.h/2, r.w, r.h, 12); ctx.fill();
           ctx.shadowBlur = 0;
           ctx.strokeStyle = '#b537f2'; ctx.lineWidth = 2; roundRect(-r.w/2, -r.h/2, r.w, r.h, 12); ctx.stroke();
-          ctx.fillStyle = '#b537f2'; ctx.font = 'bold 32px Orbitron'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillStyle = '#b537f2'; ctx.font = 'bold 32px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
           ctx.fillText('?', 0, 2);
         } else {
           ctx.shadowBlur = c.done ? 16 : 10; ctx.shadowColor = c.done ? '#2ee6a6' : '#00e0ff';
@@ -102,7 +102,7 @@
           roundRect(-r.w/2, -r.h/2, r.w, r.h, 12); ctx.fill();
           ctx.shadowBlur = 0;
           ctx.strokeStyle = c.done ? '#2ee6a6' : '#00e0ff'; ctx.lineWidth = 2; roundRect(-r.w/2, -r.h/2, r.w, r.h, 12); ctx.stroke();
-          ctx.font = '40px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.font = '40px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
           ctx.fillText(c.icon, 0, 4);
         }
         ctx.restore();

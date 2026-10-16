@@ -91,7 +91,7 @@
         roundRect(x, y, size, size, 10); ctx.fillStyle = TILE_COLORS[v] || '#eaf0fb'; ctx.fill();
         ctx.shadowBlur = 0;
         ctx.fillStyle = v <= 4 ? '#8b97b3' : '#060912';
-        ctx.font = 'bold ' + Math.round(v < 100 ? size*.42 : v < 1000 ? size*.32 : size*.26) + 'px Orbitron, sans-serif';
+        ctx.font = 'bold ' + Math.round(v < 100 ? size*.42 : v < 1000 ? size*.32 : size*.26) + 'px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText(v, x + size/2, y + size/2 + 2);
       }

@@ -95,7 +95,7 @@
       ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.r, 0, 7); ctx.fill();
       ctx.shadowBlur = 0;
       // 生命
-      ctx.fillStyle = '#ff2e63'; ctx.font = 'bold 14px Rajdhani';
+      ctx.fillStyle = '#ff2e63'; ctx.font = 'bold 14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.textAlign = 'left'; ctx.fillText('❤'.repeat(Math.max(0,lives)), 12, H - 10);
     }
     function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}

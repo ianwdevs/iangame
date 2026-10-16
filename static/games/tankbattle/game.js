@@ -166,7 +166,7 @@
         var v = map[r][c], x=offX+c*CELL, y=offY+r*CELL;
         if (v===T.BRICK){ ctx.fillStyle='#c2602a'; ctx.fillRect(x+1,y+1,CELL-2,CELL-2); ctx.fillStyle='#7a3a14'; for(var bi=0;bi<CELL;bi+=6){ctx.fillRect(x+bi,y+1,3,CELL-2);ctx.fillRect(x+1,y+bi,CELL-2,3);} }
         else if (v===T.STEEL){ ctx.fillStyle='#8b97b3'; ctx.fillRect(x+1,y+1,CELL-2,CELL-2); ctx.fillStyle='#5a6580'; ctx.fillRect(x+1,y+1,CELL-2,4); }
-        else if (v===T.BASE){ ctx.fillStyle=baseAlive?'#2ee6a6':'#ff2e63'; ctx.font=(CELL*0.7)+'px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(baseAlive?'🏠':'💥', x+CELL/2, y+CELL/2); }
+        else if (v===T.BASE){ ctx.fillStyle=baseAlive?'#2ee6a6':'#ff2e63'; ctx.font=(CELL*0.7)+'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(baseAlive?'🏠':'💥', x+CELL/2, y+CELL/2); }
       }
       ctx.textBaseline='alphabetic';
       // 坦克
@@ -180,7 +180,7 @@
       particles.forEach(function(p){ctx.globalAlpha=p.life/20;ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,p.r,p.r);});
       ctx.globalAlpha=1;
       // HUD
-      ctx.fillStyle='#8b97b3'; ctx.font='bold 13px Rajdhani'; ctx.textAlign='left';
+      ctx.fillStyle='#8b97b3'; ctx.font='bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='left';
       ctx.fillText('关卡 '+level+' · 敌人剩余 '+Math.max(0,enemiesLeft), offX, offY-6);
       ctx.fillStyle='#ff2e63'; ctx.textAlign='right'; ctx.fillText('❤'+lives+' · 装甲'+player.hp, offX+CELL*COLS, offY-6);
     }

@@ -590,7 +590,7 @@
       ctx.beginPath(); ctx.arc(ox, oy, size * 0.06, 0, Math.PI * 2); ctx.fill();
       ctx.restore();
       // 叠层数字
-      ctx.fillStyle = '#fff'; ctx.font = 'bold 9px Rajdhani, sans-serif';
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 9px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(s.n, ox, oy);
     }
@@ -1547,7 +1547,7 @@
         // 元素角标
         if (def.element) {
           ctx.fillStyle = ELEMENT_CFG[def.element].color;
-          ctx.font = '13px sans-serif'; ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+          ctx.font = '13px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'right'; ctx.textBaseline = 'top';
           ctx.fillText(ELEMENT_CFG[def.element].icon, r.x + r.w - 4, r.y + 2);
         }
         ctx.save();
@@ -1556,7 +1556,7 @@
         ctx.restore();
         if (cooling) { var pct = state.shopCD[key] / def.recharge; ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(r.x, r.y, r.w, r.h * pct); }
         if (!affordable || cooling) { ctx.fillStyle = 'rgba(0,0,0,0.4)'; roundRectPath(ctx, r.x, r.y, r.w, r.h, 8); ctx.fill(); }
-        ctx.font = 'bold 12px Rajdhani, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.font = 'bold 12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillStyle = affordable ? COLOR.sun : COLOR.text2;
         ctx.fillText(def.cost, r.x + r.w / 2, r.y + r.h - 9);
       }
@@ -1567,7 +1567,7 @@
       ctx.fillStyle = 'rgba(13,19,32,0.9)'; roundRectPath(ctx, sx, sy, sw, sh, 10); ctx.fill();
       ctx.strokeStyle = 'rgba(255,216,77,0.4)'; ctx.lineWidth = 1; roundRectPath(ctx, sx, sy, sw, sh, 10); ctx.stroke();
       drawSun(ctx, { x: sx + 22, y: sy + sh / 2, phase: 0 }, state.time);
-      ctx.font = 'bold 22px Orbitron, sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.font = 'bold 22px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
       ctx.fillStyle = COLOR.sun; ctx.shadowColor = 'rgba(255,216,77,0.6)'; ctx.shadowBlur = 8;
       ctx.fillText(state.sun, sx + 46, sy + sh / 2); ctx.shadowBlur = 0;
 
@@ -1575,9 +1575,9 @@
       var waveX = RIGHT_PANEL_X + SHOP_SUN_W + 12, waveRight = RIGHT_BTN_X - 8;
       var waveW = waveRight - waveX;
       ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-      ctx.font = 'bold 14px Rajdhani, sans-serif'; ctx.fillStyle = COLOR.text;
+      ctx.font = 'bold 14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillStyle = COLOR.text;
       ctx.fillText('第 ' + state.level + ' / ' + LEVELS + ' 章', waveX, 14);
-      ctx.font = '12px Rajdhani, sans-serif'; ctx.fillStyle = COLOR.text2;
+      ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillStyle = COLOR.text2;
       ctx.fillText('第 ' + state.wave + ' / ' + WAVES_PER_LEVEL + ' 波', waveX, 33);
       ctx.fillText('剩余 ' + state.zombies.length, waveX, 49);
       // 波次进度条
@@ -1592,7 +1592,7 @@
       roundRectPath(ctx, ar.x, ar.y, ar.w, ar.h, 7); ctx.fill();
       ctx.strokeStyle = state.autoSun ? COLOR.sun : 'rgba(124,58,237,0.4)'; ctx.lineWidth = state.autoSun ? 2 : 1;
       roundRectPath(ctx, ar.x, ar.y, ar.w, ar.h, 7); ctx.stroke();
-      ctx.font = '15px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = '15px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillStyle = state.autoSun ? COLOR.sun : COLOR.text2;
       ctx.fillText('☀', ar.x + ar.w / 2 - 4, ar.y + ar.h / 2);
       // 开关状态点
@@ -1604,7 +1604,7 @@
       roundRectPath(ctx, sr2.x, sr2.y, sr2.w, sr2.h, 7); ctx.fill();
       ctx.strokeStyle = state.shovelActive ? COLOR.neon : 'rgba(124,58,237,0.4)'; ctx.lineWidth = state.shovelActive ? 2 : 1;
       roundRectPath(ctx, sr2.x, sr2.y, sr2.w, sr2.h, 7); ctx.stroke();
-      ctx.font = '15px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = '15px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillStyle = state.shovelActive ? COLOR.neon : COLOR.text;
       ctx.fillText('🪏', sr2.x + sr2.w / 2, sr2.y + sr2.h / 2);
     }
@@ -1618,21 +1618,21 @@
       var grd = ctx.createLinearGradient(bx, 0, bx + bw, 0);
       grd.addColorStop(0, COLOR.danger); grd.addColorStop(1, COLOR.neon2);
       ctx.fillStyle = grd; roundRectPath(ctx, bx, by, bw * hr, 10, 5); ctx.fill();
-      ctx.font = 'bold 13px Orbitron, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+      ctx.font = 'bold 13px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
       ctx.fillStyle = '#fff'; ctx.fillText('☠ 僵尸博士', W / 2, by - 4);
     }
     function drawWaveBanner() {
       var alpha = state.waveBanner > 1.2 ? (1.6 - state.waveBanner) / 0.4 : Math.min(1, state.waveBanner / 0.5);
       ctx.save(); ctx.globalAlpha = alpha;
       ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(0, H / 2 - 40, W, 80);
-      ctx.font = 'bold 32px Orbitron, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = 'bold 32px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillStyle = COLOR.neon; ctx.shadowColor = COLOR.neon; ctx.shadowBlur = 16;
       ctx.fillText(state.waveBannerText, W / 2, H / 2);
       ctx.restore();
     }
     function drawLevelFlash() { ctx.save(); ctx.globalAlpha = state.levelStartFlash * 0.3; ctx.fillStyle = COLOR.ok; ctx.fillRect(0, 0, W, H); ctx.restore(); }
     function drawToasts() {
-      ctx.font = 'bold 14px Rajdhani, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.font = 'bold 14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
       for (var i = 0; i < state.toasts.length; i++) {
         var t = state.toasts[i];
         var alpha = t.life > t.max - 0.3 ? (t.max - t.life) / 0.3 : Math.min(1, t.life / 0.5);

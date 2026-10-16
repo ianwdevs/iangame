@@ -140,7 +140,7 @@
         ctx.stroke(); ctx.shadowBlur=0;
       }
       // 状态
-      ctx.fillStyle='#8b97b3'; ctx.font='bold 14px Rajdhani'; ctx.textAlign='center';
+      ctx.fillStyle='#8b97b3'; ctx.font='bold 14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center';
       var msg = over ? (winLine?'对局结束':'平局') : (turn===1?'你的回合 (白)':'AI 思考中…');
       ctx.fillText(msg, W/2, 16);
     }

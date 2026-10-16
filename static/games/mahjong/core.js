@@ -881,12 +881,12 @@ window.MahjongCore = (function () {
       ctx.fillStyle = SUIT_COLOR[su];
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       if (su === 3) {
-        ctx.font = 'bold ' + Math.floor(h * 0.52) + 'px sans-serif';
+        ctx.font = 'bold ' + Math.floor(h * 0.52) + 'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(HON[rk - 1], x + w / 2, y + h / 2 + 1);
       } else {
-        ctx.font = 'bold ' + Math.floor(h * 0.32) + 'px sans-serif';
+        ctx.font = 'bold ' + Math.floor(h * 0.32) + 'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(NUM[rk - 1], x + w / 2, y + h * 0.32);
-        ctx.font = 'bold ' + Math.floor(h * 0.30) + 'px sans-serif';
+        ctx.font = 'bold ' + Math.floor(h * 0.30) + 'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(SUIT_NAME[su], x + w / 2, y + h * 0.68);
       }
       ctx.globalAlpha = 1;
@@ -910,9 +910,9 @@ window.MahjongCore = (function () {
 
       // HUD
       ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-      ctx.fillStyle = '#cfe8df'; ctx.font = '14px sans-serif';
+      ctx.fillStyle = '#cfe8df'; ctx.font = '14px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText((cfg.sichuan ? '四川麻将 · 血战到底' : '标准麻将') + '  第' + game.handNo + '局  牌墙 ' + game.wall.length + '  积分 ' + game.sessScore, 14, 10);
-      if (game.msg) { ctx.textAlign = 'center'; ctx.fillStyle = '#ffe9a8'; ctx.font = '15px sans-serif'; ctx.fillText(game.msg, CX, 12); }
+      if (game.msg) { ctx.textAlign = 'center'; ctx.fillStyle = '#ffe9a8'; ctx.font = '15px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillText(game.msg, CX, 12); }
 
       drawOpponents();
       drawDiscardPools();
@@ -932,7 +932,7 @@ window.MahjongCore = (function () {
       ctx.fill();
       ctx.strokeStyle = '#3f7a6a'; ctx.lineWidth = 1.5;
       roundRect(CX - 335, 60, 670, 46, 10); ctx.stroke();
-      ctx.fillStyle = '#ffe9a8'; ctx.font = 'bold 17px sans-serif';
+      ctx.fillStyle = '#ffe9a8'; ctx.font = 'bold 17px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText('📱 竖屏画面较小,建议横屏或全屏获得最佳体验', CX, 83);
       ctx.textBaseline = 'alphabetic';
@@ -943,7 +943,7 @@ window.MahjongCore = (function () {
         var p = game.players[s];
         var info = p.name + (p.que >= 0 ? '(缺' + SUIT_NAME[p.que] + ')' : '') +
           (p.win ? ' ✓胡' + (p.winDetail ? p.winDetail.total + '番' : '') : '') + (p.out && !p.win ? ' 出局' : '');
-        ctx.font = '13px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.font = '13px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillStyle = p.win ? '#ffd35c' : '#bfe0d6';
         if (s === 2) {
           ctx.fillText(info, CX, 52);
@@ -962,7 +962,7 @@ window.MahjongCore = (function () {
       // 当前回合指示
       if (!game.over && game.phase !== 'idle') {
         var pos = SEAT_POS[game.turn];
-        ctx.fillStyle = '#ffd35c'; ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'center';
+        ctx.fillStyle = '#ffd35c'; ctx.font = 'bold 13px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
         var pts = { bottom: [CX, H - 116], right: [W - 80, 104], top: [CX, 34], left: [60, 104] }[pos];
         ctx.fillText('●出牌', pts[0], pts[1]);
       }
@@ -1021,27 +1021,27 @@ window.MahjongCore = (function () {
           if (ting.length) hint = '打出「' + tName(p.hand[sel]) + '」听: ' + ting.map(tName).join(' / ');
         }
         if (hint) {
-          ctx.fillStyle = '#8fe3b0'; ctx.font = '13px sans-serif'; ctx.textAlign = 'left';
+          ctx.fillStyle = '#8fe3b0'; ctx.font = '13px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'left';
           ctx.fillText(hint, 20, 34);
         }
       }
       if (p.que >= 0) {
-        ctx.fillStyle = '#ffb1b1'; ctx.font = '13px sans-serif'; ctx.textAlign = 'right';
+        ctx.fillStyle = '#ffb1b1'; ctx.font = '13px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'right';
         ctx.fillText('我的缺门: ' + SUIT_NAME[p.que], W - 16, 34);
       }
     }
     function drawPanels() {
       if (game.phase === 'dingque' && !game.players[0].ai) {
         dim();
-        ctx.fillStyle = '#ffe9a8'; ctx.font = 'bold 22px sans-serif'; ctx.textAlign = 'center';
+        ctx.fillStyle = '#ffe9a8'; ctx.font = 'bold 22px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
         ctx.fillText('请选择定缺门(该花色牌必须全部打出)', CX, H / 2 - 70);
       }
       if (game.phase === 'huan3' && !game.players[0].ai && game._huan3) {
         dim();
-        ctx.fillStyle = '#ffe9a8'; ctx.font = 'bold 20px sans-serif'; ctx.textAlign = 'center';
+        ctx.fillStyle = '#ffe9a8'; ctx.font = 'bold 20px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
         ctx.fillText('换三张: 点击选择 3 张要换出去的牌(建议缺门)', CX, H / 2 - 70);
         var pick = game._huan3.pick;
-        ctx.fillStyle = '#cfe8df'; ctx.font = '14px sans-serif';
+        ctx.fillStyle = '#cfe8df'; ctx.font = '14px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('已选 ' + pick.length + '/3: ' + pick.map(tName).join(' '), CX, H / 2 - 42);
       }
       if (game.phase === 'over') {
@@ -1050,9 +1050,9 @@ window.MahjongCore = (function () {
         roundRect(px, py, cw, ch2, 14);
         ctx.fillStyle = 'rgba(18,42,36,0.96)'; ctx.fill();
         ctx.strokeStyle = '#3f7a6a'; ctx.lineWidth = 2; ctx.stroke();
-        ctx.fillStyle = '#ffe9a8'; ctx.font = 'bold 22px sans-serif'; ctx.textAlign = 'center';
+        ctx.fillStyle = '#ffe9a8'; ctx.font = 'bold 22px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
         ctx.fillText(game.players.some(function (q) { return q.win; }) ? '本局结算' : '流局', CX, py + 38);
-        ctx.font = '15px sans-serif';
+        ctx.font = '15px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         var ys = py + 78;
         for (var s = 0; s < 4; s++) {
           var p = game.players[s];
@@ -1063,7 +1063,7 @@ window.MahjongCore = (function () {
           // 亮出 AI 手牌
           if (!p.ai || p.win) { /* 手牌已在底部展示 */ }
         }
-        ctx.fillStyle = '#8fe3b0'; ctx.font = 'bold 16px sans-serif';
+        ctx.fillStyle = '#8fe3b0'; ctx.font = 'bold 16px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('你的积分: ' + game.sessScore, CX, ys + 4 * 26 + 14);
       }
     }
@@ -1080,7 +1080,7 @@ window.MahjongCore = (function () {
         ctx.strokeStyle = b.kind === 'primary' ? '#8a6215' : '#1e3a32';
         ctx.lineWidth = 2; ctx.stroke();
         ctx.fillStyle = b.kind === 'primary' ? '#31200a' : '#dff0ea';
-        ctx.font = 'bold ' + Math.floor(b.h * 0.4) + 'px sans-serif';
+        ctx.font = 'bold ' + Math.floor(b.h * 0.4) + 'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText(b.label, b.x + b.w / 2, b.y + b.h / 2 + 1);
       }

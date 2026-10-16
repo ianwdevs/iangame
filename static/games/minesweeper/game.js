@@ -100,15 +100,15 @@
     function draw() {
       ctx.fillStyle = '#060912'; ctx.fillRect(0,0,W,H);
       // 顶栏
-      ctx.fillStyle = '#8b97b3'; ctx.font = 'bold 16px Rajdhani'; ctx.textAlign = 'left';
+      ctx.fillStyle = '#8b97b3'; ctx.font = 'bold 16px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'left';
       var flagsUsed = 0; for (var r=0;r<cfg.r;r++) for (var c=0;c<cfg.c;c++) flagsUsed += flagged[r][c];
       ctx.fillText('💣 ' + Math.max(0, mines-flagsUsed), 14, 28);
       if (started && !gameOver) time = ((Date.now()-startT)/1000)|0;
       ctx.textAlign = 'right'; ctx.fillText('⏱ ' + time + 's', W-14, 28);
-      ctx.textAlign = 'center'; ctx.fillStyle = '#00e0ff'; ctx.font = 'bold 18px Orbitron';
+      ctx.textAlign = 'center'; ctx.fillStyle = '#00e0ff'; ctx.font = 'bold 18px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText(score, W/2, 30);
       // 难度切换提示
-      ctx.fillStyle = '#5a6580'; ctx.font = '12px Rajdhani'; ctx.textAlign = 'left';
+      ctx.fillStyle = '#5a6580'; ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'left';
       ctx.fillText('[1]简单 [2]中等 [3]困难 · 右键插旗', 14, topBar - 6);
 
       for (var r=0;r<cfg.r;r++) for (var c=0;c<cfg.c;c++) {
@@ -116,14 +116,14 @@
         if (!revealed[r][c]) {
           ctx.fillStyle = '#141b2e'; roundRect(x+1,y+1,cell-2,cell-2,4); ctx.fill();
           ctx.strokeStyle = 'rgba(124,58,237,.3)'; ctx.lineWidth=1; roundRect(x+1,y+1,cell-2,cell-2,4); ctx.stroke();
-          if (flagged[r][c]) { ctx.fillStyle='#ff2e63'; ctx.font=(cell*0.6)+'px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('🚩', x+cell/2, y+cell/2+1); }
+          if (flagged[r][c]) { ctx.fillStyle='#ff2e63'; ctx.font=(cell*0.6)+'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('🚩', x+cell/2, y+cell/2+1); }
         } else {
           ctx.fillStyle = grid[r][c]===-1 ? 'rgba(255,46,99,.25)' : '#0a0f1c';
           roundRect(x+1,y+1,cell-2,cell-2,4); ctx.fill();
           ctx.strokeStyle = grid[r][c]===-1 ? '#ff2e63' : 'rgba(0,224,255,.2)'; ctx.lineWidth=1; roundRect(x+1,y+1,cell-2,cell-2,4); ctx.stroke();
           var v = grid[r][c];
-          if (v === -1) { ctx.fillStyle='#ff2e63'; ctx.font='bold '+(cell*0.6)+'px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('💣', x+cell/2, y+cell/2+1); }
-          else if (v > 0) { ctx.fillStyle = NUM_COLORS[v]; ctx.font='bold '+(cell*0.55)+'px Orbitron'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(v, x+cell/2, y+cell/2+1); }
+          if (v === -1) { ctx.fillStyle='#ff2e63'; ctx.font='bold '+(cell*0.6)+'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('💣', x+cell/2, y+cell/2+1); }
+          else if (v > 0) { ctx.fillStyle = NUM_COLORS[v]; ctx.font='bold '+(cell*0.55)+'px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(v, x+cell/2, y+cell/2+1); }
         }
       }
       ctx.textBaseline = 'alphabetic';

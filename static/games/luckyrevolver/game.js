@@ -67,9 +67,9 @@
       ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 
       // 标题与提示
-      ctx.fillStyle = '#eaf0fb'; ctx.font = 'bold 34px Orbitron'; ctx.textAlign = 'center';
+      ctx.fillStyle = '#eaf0fb'; ctx.font = 'bold 34px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
       ctx.fillText('幸运左轮', CX, 58);
-      ctx.fillStyle = '#8b97b3'; ctx.font = '15px Rajdhani';
+      ctx.fillStyle = '#8b97b3'; ctx.font = '15px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       var hint = state === 'over'
         ? '第 ' + pulls + ' 枪命中 · 空枪 ' + score + ' 次'
         : '六个弹巢一颗子弹 · 已扣 ' + pulls + '/6 · 轮流扣扳机';
@@ -94,7 +94,7 @@
         ctx.strokeStyle = fired ? '#ff2e63' : 'rgba(124,58,237,.6)';
         ctx.lineWidth = 2; ctx.stroke();
         if (fired) {
-          ctx.fillStyle = '#ff2e63'; ctx.font = 'bold ' + Math.round(R * 0.18) + 'px Orbitron';
+          ctx.fillStyle = '#ff2e63'; ctx.font = 'bold ' + Math.round(R * 0.18) + 'px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
           ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
           ctx.fillText('✕', cx, cy + 1);
         }
@@ -116,20 +116,20 @@
         roundRect(bx, by, bw, bh, 16); ctx.fill();
         ctx.shadowBlur = 0;
         ctx.fillStyle = active ? '#fff' : '#8b97b3';
-        ctx.font = 'bold 26px Orbitron'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.font = 'bold 26px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText(spinT > 0 ? '咔…' : '🔫  扣扳机', CX, by + bh / 2 + 1);
         ctx.textBaseline = 'alphabetic';
-        ctx.fillStyle = '#8b97b3'; ctx.font = '14px Rajdhani';
+        ctx.fillStyle = '#8b97b3'; ctx.font = '14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('传给下一位,点击扣扳机', CX, by + bh + 30);
       } else {
         // 结束面板
-        ctx.fillStyle = '#ff2e63'; ctx.font = 'bold 44px Orbitron';
+        ctx.fillStyle = '#ff2e63'; ctx.font = 'bold 44px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('💥 中弹!', CX, CY + R + 70);
-        ctx.fillStyle = '#8b97b3'; ctx.font = '16px Rajdhani';
+        ctx.fillStyle = '#8b97b3'; ctx.font = '16px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('第 ' + (bullet + 1) + ' 号弹巢 · 本轮空枪 ' + score + ' 次', CX, CY + R + 104);
         var bw3 = 200, bh3 = 56, bx3 = CX - bw3 / 2, by3 = H - 120;
         roundRect(bx3, by3, bw3, bh3, 12); ctx.fillStyle = '#b537f2'; ctx.fill();
-        ctx.fillStyle = '#fff'; ctx.font = 'bold 18px Rajdhani'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#fff'; ctx.font = 'bold 18px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText('重新装弹,再来', CX, by3 + 29);
         ctx.textBaseline = 'alphabetic';
       }

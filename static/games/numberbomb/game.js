@@ -89,16 +89,16 @@
       }
 
       // 标题
-      ctx.fillStyle = '#eaf0fb'; ctx.font = 'bold 34px Orbitron'; ctx.textAlign = 'center';
+      ctx.fillStyle = '#eaf0fb'; ctx.font = 'bold 34px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
       ctx.fillText('数字炸弹', W / 2, 58);
-      ctx.fillStyle = '#8b97b3'; ctx.font = '15px Rajdhani';
+      ctx.fillStyle = '#8b97b3'; ctx.font = '15px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('轮流报数收缩范围,踩中炸弹的人中招 · 安全 ' + safeRounds + ' 轮', W / 2, 88);
 
       // 范围显示
       var ry = 158;
       ctx.strokeStyle = 'rgba(255,182,39,.4)'; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.moveTo(W / 2 - 250, ry); ctx.lineTo(W / 2 + 250, ry); ctx.stroke();
-      ctx.fillStyle = '#ffb627'; ctx.font = 'bold 15px Orbitron';
+      ctx.fillStyle = '#ffb627'; ctx.font = 'bold 15px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.textAlign = 'left'; ctx.fillText(String(lo), W / 2 - 246, ry - 12);
       ctx.textAlign = 'right'; ctx.fillText(String(hi), W / 2 + 246, ry - 12);
       ctx.textAlign = 'center';
@@ -116,10 +116,10 @@
       ctx.fillStyle = '#0d1320'; roundRect(W / 2 - 130, iy - 46, 260, 74, 12); ctx.fill();
       ctx.strokeStyle = 'rgba(0,224,255,.5)'; ctx.lineWidth = 2; roundRect(W / 2 - 130, iy - 46, 260, 74, 12); ctx.stroke();
       ctx.fillStyle = input ? '#00e0ff' : '#39445c';
-      ctx.font = 'bold 44px Orbitron'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = 'bold 44px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(input || '···', W / 2, iy - 9);
       ctx.textBaseline = 'alphabetic';
-      ctx.fillStyle = '#8b97b3'; ctx.font = '13px Rajdhani';
+      ctx.fillStyle = '#8b97b3'; ctx.font = '13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText(input ? ('报 ' + input + ' · 点 ✓ 确认') : '轮到下一位,输入一个 ' + lo + '~' + hi + ' 的数', W / 2, iy + 46);
 
       // 数字键盘
@@ -153,12 +153,12 @@
       if (t > 40) ctx.scale(1 + (t - 40) / 60, 1 + (t - 40) / 60);
       // 爆炸
       ctx.shadowBlur = 60; ctx.shadowColor = '#ff2e63';
-      ctx.fillStyle = '#ff2e63'; ctx.font = 'bold 120px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#ff2e63'; ctx.font = 'bold 120px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText('💥', 0, 0);
       ctx.shadowBlur = 0;
-      ctx.fillStyle = '#eaf0fb'; ctx.font = 'bold 40px Orbitron';
+      ctx.fillStyle = '#eaf0fb'; ctx.font = 'bold 40px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('BOOM!', 0, 110);
-      ctx.fillStyle = '#8b97b3'; ctx.font = '17px Rajdhani';
+      ctx.fillStyle = '#8b97b3'; ctx.font = '17px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText('炸弹是 ' + bomb + ' · 本局安全 ' + safeRounds + ' 轮', 0, 150);
       // 再来一局
       var bw = 200, bh = 56;
@@ -167,7 +167,7 @@
       ctx.save();
       var bx = W / 2 - 100, by = H / 2 + 90;
       roundRect(bx, by, 200, 56, 12); ctx.fillStyle = '#b537f2'; ctx.fill();
-      ctx.fillStyle = '#fff'; ctx.font = 'bold 18px Rajdhani'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 18px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText('再来一局', W / 2, by + 29);
       ctx.restore();
     }

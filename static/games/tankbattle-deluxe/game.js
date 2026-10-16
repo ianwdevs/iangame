@@ -540,7 +540,7 @@
     // 星级标记(玩家)
     if (opt.isPlayer) {
       ctx.fillStyle = COLOR.warn;
-      ctx.font = 'bold ' + (size * 0.22) + 'px sans-serif';
+      ctx.font = 'bold ' + (size * 0.22) + 'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       // 画对应星数
       var starStr = '';
@@ -619,7 +619,7 @@
     ctx.restore();
     // 图标(不旋转)
     ctx.fillStyle = p.def.color;
-    ctx.font = '16px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = '16px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText(p.def.icon, p.x, p.y);
   }
 
@@ -1309,7 +1309,7 @@
       ctx.fillStyle = state.baseAlive ? COLOR.base : COLOR.text3;
       roundRectPath(ctx, x + 3, y + 3, s - 6, s - 6, 4); ctx.fill();
       ctx.fillStyle = '#060912';
-      ctx.font = 'bold ' + (s * 0.5) + 'px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = 'bold ' + (s * 0.5) + 'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(state.baseAlive ? '⚔' : '☠', x + s / 2, y + s / 2);
     }
 
@@ -1378,43 +1378,43 @@
 
       // 关卡 + 敌数
       ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-      ctx.font = 'bold 16px Orbitron, sans-serif'; ctx.fillStyle = COLOR.text;
+      ctx.font = 'bold 16px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillStyle = COLOR.text;
       ctx.fillText('第 ' + state.level + ' / ' + LEVELS + ' 关', 16, HUD_TOP / 2);
-      ctx.font = '13px Rajdhani, sans-serif'; ctx.fillStyle = COLOR.text2;
+      ctx.font = '13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillStyle = COLOR.text2;
       ctx.fillText('剩余敌坦 ' + (state.enemies.length + state.enemiesLeft), 120, HUD_TOP / 2);
 
       // 生命 + 装甲
       ctx.textAlign = 'center';
-      ctx.font = 'bold 15px Orbitron, sans-serif'; ctx.fillStyle = COLOR.danger;
+      ctx.font = 'bold 15px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillStyle = COLOR.danger;
       ctx.fillText('❤ ' + state.lives, W / 2 - 60, HUD_TOP / 2);
       if (state.player) {
         var tier = getTier();
         ctx.fillStyle = COLOR.warn;
         ctx.fillText('★'.repeat(state.player.tierIdx + 1), W / 2, HUD_TOP / 2);
-        ctx.fillStyle = COLOR.neon; ctx.font = '13px Rajdhani, sans-serif';
+        ctx.fillStyle = COLOR.neon; ctx.font = '13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('装甲 ' + (state.player.hp || tier.hp), W / 2 + 70, HUD_TOP / 2);
       }
 
       // 操作提示
-      ctx.textAlign = 'right'; ctx.font = '12px Rajdhani, sans-serif'; ctx.fillStyle = COLOR.text2;
+      ctx.textAlign = 'right'; ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillStyle = COLOR.text2;
       ctx.fillText('WASD 移动 · 空格开炮', W - 16, HUD_TOP / 2);
 
       // 状态 buff 提示(护盾/加速)
       var buffX = W - 200;
       if (state.player && state.player.shieldTimer > 0) {
-        ctx.textAlign = 'left'; ctx.fillStyle = COLOR.neon; ctx.font = '12px Rajdhani, sans-serif';
+        ctx.textAlign = 'left'; ctx.fillStyle = COLOR.neon; ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('🛡' + Math.ceil(state.player.shieldTimer) + 's', buffX, HUD_TOP / 2);
       }
       if (state.speedBoostTimer > 0) {
-        ctx.textAlign = 'left'; ctx.fillStyle = COLOR.ok; ctx.font = '12px Rajdhani, sans-serif';
+        ctx.textAlign = 'left'; ctx.fillStyle = COLOR.ok; ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('⚡' + Math.ceil(state.speedBoostTimer) + 's', buffX + 60, HUD_TOP / 2);
       }
       if (state.freezeTimer > 0) {
-        ctx.textAlign = 'left'; ctx.fillStyle = COLOR.ice2; ctx.font = '12px Rajdhani, sans-serif';
+        ctx.textAlign = 'left'; ctx.fillStyle = COLOR.ice2; ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('❄' + Math.ceil(state.freezeTimer) + 's', buffX + 120, HUD_TOP / 2);
       }
       if (state.player && state.player.pierceTimer > 0) {
-        ctx.textAlign = 'left'; ctx.fillStyle = COLOR.neon2; ctx.font = '12px Rajdhani, sans-serif';
+        ctx.textAlign = 'left'; ctx.fillStyle = COLOR.neon2; ctx.font = '12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText('➤' + Math.ceil(state.player.pierceTimer) + 's', buffX + 180, HUD_TOP / 2);
       }
     }
@@ -1428,7 +1428,7 @@
       var grd = ctx.createLinearGradient(bx, 0, bx + bw, 0);
       grd.addColorStop(0, COLOR.danger); grd.addColorStop(1, COLOR.neon2);
       ctx.fillStyle = grd; roundRectPath(ctx, bx, by, bw * hr, 10, 5); ctx.fill();
-      ctx.font = 'bold 13px Orbitron, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+      ctx.font = 'bold 13px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
       ctx.fillStyle = '#fff'; ctx.fillText('☠ ' + z.def.name, W / 2, by - 4);
     }
 
@@ -1436,13 +1436,13 @@
       var alpha = state.levelBanner > 1.4 ? (1.8 - state.levelBanner) / 0.4 : Math.min(1, state.levelBanner / 0.5);
       ctx.save(); ctx.globalAlpha = alpha;
       ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(0, H / 2 - 40, W, 80);
-      ctx.font = 'bold 30px Orbitron, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = 'bold 30px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillStyle = COLOR.neon; ctx.shadowColor = COLOR.neon; ctx.shadowBlur = 16;
       ctx.fillText(state.levelBannerText, W / 2, H / 2);
       ctx.restore();
     }
     function drawToasts() {
-      ctx.font = 'bold 14px Rajdhani, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.font = 'bold 14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
       for (var i = 0; i < state.toasts.length; i++) {
         var t = state.toasts[i];
         var alpha = t.life > t.max - 0.3 ? (t.max - t.life) / 0.3 : Math.min(1, t.life / 0.5);

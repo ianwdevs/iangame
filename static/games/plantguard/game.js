@@ -176,14 +176,14 @@
 
       // 房屋(左侧)
       ctx.fillStyle='#2a3a5a'; ctx.fillRect(offX-30, offY, 30, lawnH);
-      ctx.fillStyle='#7c3aed'; ctx.font='22px sans-serif'; ctx.textAlign='center';
+      ctx.fillStyle='#7c3aed'; ctx.font='22px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center';
       for (var hr=0;hr<ROWS;hr++) ctx.fillText('🏠', offX-15, offY+hr*CELL+CELL/2+8);
 
       // 植物
       plants.forEach(function(p){
         var def = PLANTS[p.kind];
         ctx.shadowBlur=8; ctx.shadowColor=def.color;
-        ctx.font=(CELL*0.6)+'px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.font=(CELL*0.6)+'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
         ctx.fillText(def.icon, p.x, p.y);
         ctx.shadowBlur=0;
         // 血条
@@ -199,10 +199,10 @@
         // 身体
         ctx.shadowBlur=8; ctx.shadowColor=def.color;
         ctx.fillStyle=def.color;
-        ctx.font=(CELL*0.7)+'px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.font=(CELL*0.7)+'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
         ctx.fillText('🧟', 0, 0);
         // 帽子
-        if (def.hat){ ctx.font=(CELL*0.4)+'px sans-serif'; ctx.fillText(def.hat, 0, -CELL*0.28); }
+        if (def.hat){ ctx.font=(CELL*0.4)+'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillText(def.hat, 0, -CELL*0.28); }
         ctx.restore();
         ctx.shadowBlur=0;
         // 血条
@@ -250,7 +250,7 @@
       ctx.beginPath(); ctx.arc(36,36,14,0,7); ctx.fill();
       ctx.fillStyle='#ffb627'; ctx.beginPath(); ctx.arc(36,36,8,0,7); ctx.fill();
       ctx.shadowBlur=0;
-      ctx.fillStyle='#ffd54a'; ctx.font='bold 22px Orbitron'; ctx.textAlign='left'; ctx.textBaseline='middle';
+      ctx.fillStyle='#ffd54a'; ctx.font='bold 22px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='left'; ctx.textBaseline='middle';
       ctx.fillText(sun, 58, 38);
       // 商店
       var keys = ['sunflower','peashooter','wallnut'];
@@ -264,9 +264,9 @@
         ctx.strokeStyle = selected===k ? '#00e0ff' : can ? def.color : '#3a3a3a';
         ctx.lineWidth = selected===k?2:1; roundRect(sx,10,bw,52,10); ctx.stroke(); ctx.lineWidth=1;
         ctx.globalAlpha = can?1:0.4;
-        ctx.font='26px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.font='26px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
         ctx.fillText(def.icon, sx+bw/2, 28);
-        ctx.fillStyle=can?'#ffd54a':'#8b97b3'; ctx.font='bold 13px Orbitron';
+        ctx.fillStyle=can?'#ffd54a':'#8b97b3'; ctx.font='bold 13px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.fillText(def.cost, sx+bw/2, 50);
         ctx.globalAlpha=1;
         // 冷却遮罩
@@ -274,7 +274,7 @@
         sx += bw + 6;
       });
       // 波次信息
-      ctx.fillStyle='#8b97b3'; ctx.font='bold 13px Rajdhani'; ctx.textAlign='right'; ctx.textBaseline='middle';
+      ctx.fillStyle='#8b97b3'; ctx.font='bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='right'; ctx.textBaseline='middle';
       ctx.fillText('第 '+level+'/'+LEVELS+' 章 · 第 '+wave+'/'+WAVES_PER_LEVEL+' 波 · 剩余 '+(zombiesToSpawn+zombies.length), W-12, 22);
       ctx.fillStyle='#ff2e63'; ctx.fillText('僵尸来袭!', W-12, 44);
       ctx.textBaseline='alphabetic';

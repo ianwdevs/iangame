@@ -154,9 +154,9 @@
       ctx.fillStyle = g; ctx.fillRect(-10, -10, W + 20, H + 20);
 
       // 标题
-      ctx.fillStyle = '#eaf0fb'; ctx.font = 'bold 34px Orbitron'; ctx.textAlign = 'center';
+      ctx.fillStyle = '#eaf0fb'; ctx.font = 'bold 34px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center';
       ctx.fillText('真心话大冒险', CX, 62);
-      ctx.fillStyle = '#8b97b3'; ctx.font = '15px Rajdhani';
+      ctx.fillStyle = '#8b97b3'; ctx.font = '15px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       var hint = state === 'ready' ? '点击转盘,选出本轮的"幸运儿"' :
         state === 'spin' ? '转盘转动中…' :
         state === 'select' ? SEATS[chosen] + ',请选择:' :
@@ -177,7 +177,7 @@
         // 扇区文字
         ctx.save();
         ctx.rotate(a0 + per / 2);
-        ctx.fillStyle = '#060912'; ctx.font = 'bold 17px Rajdhani';
+        ctx.fillStyle = '#060912'; ctx.font = 'bold 17px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
         ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
         ctx.fillText(SEATS[i], R - 16, 0);
         ctx.restore();
@@ -187,7 +187,7 @@
       ctx.beginPath(); ctx.arc(0, 0, R * 0.18, 0, 7);
       ctx.fillStyle = '#0d1320'; ctx.fill();
       ctx.strokeStyle = '#00e0ff'; ctx.lineWidth = 3; ctx.stroke();
-      ctx.fillStyle = '#00e0ff'; ctx.font = 'bold 15px Orbitron'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#00e0ff'; ctx.font = 'bold 15px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(state === 'ready' ? 'GO' : '·', 0, 1);
       ctx.restore();
       // 指针(正上方)
@@ -207,13 +207,13 @@
           // 完成按钮
           var bw = 180, bh = 52, bx = CX - bw / 2, by = H - 92;
           roundRect(bx, by, bw, bh, 12); ctx.fillStyle = '#b537f2'; ctx.fill();
-          ctx.fillStyle = '#fff'; ctx.font = 'bold 18px Rajdhani'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillStyle = '#fff'; ctx.font = 'bold 18px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
           ctx.fillText('完成,下一轮 →', CX, by + bh / 2 + 1);
         }
       }
 
       // 计分
-      ctx.fillStyle = '#8b97b3'; ctx.font = '14px Rajdhani'; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+      ctx.fillStyle = '#8b97b3'; ctx.font = '14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
       ctx.fillText('已完成 ' + score + ' 轮', 24, H - 24);
 
       // 粒子
@@ -232,9 +232,9 @@
       roundRect(x, y, w, h, 16); ctx.fillStyle = '#0d1320'; ctx.fill();
       ctx.shadowBlur = 0;
       ctx.strokeStyle = color; ctx.lineWidth = 2.5; roundRect(x, y, w, h, 16); ctx.stroke();
-      ctx.fillStyle = color; ctx.font = 'bold 52px Orbitron'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = color; ctx.font = 'bold 52px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(mark, x + w / 2, y + 52);
-      ctx.fillStyle = '#eaf0fb'; ctx.font = 'bold 24px Rajdhani';
+      ctx.fillStyle = '#eaf0fb'; ctx.font = 'bold 24px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       ctx.fillText(label, x + w / 2, y + 116);
       ctx.restore();
     }
@@ -246,10 +246,10 @@
       roundRect(x, y, w, h, 18); ctx.fillStyle = '#0d1320'; ctx.fill();
       ctx.shadowBlur = 0;
       ctx.strokeStyle = color; ctx.lineWidth = 3; roundRect(x, y, w, h, 18); ctx.stroke();
-      ctx.fillStyle = color; ctx.font = 'bold 24px Rajdhani'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = color; ctx.font = 'bold 24px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText('· ' + label + ' ·', cx, y + 40);
       // 题目自动换行
-      ctx.fillStyle = '#eaf0fb'; ctx.font = '22px Rajdhani';
+      ctx.fillStyle = '#eaf0fb'; ctx.font = '22px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       wrapText(text, cx, y + 105, w - 60, 30);
       ctx.restore();
     }

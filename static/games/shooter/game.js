@@ -149,7 +149,7 @@
       powerups.forEach(function(p){
         ctx.shadowBlur=12; ctx.shadowColor = p.kind==='life'?'#2ee6a6':'#ffb627';
         ctx.fillStyle = p.kind==='life'?'#2ee6a6':'#ffb627';
-        ctx.font='20px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.font='20px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
         ctx.fillText(p.kind==='life'?'❤':'⚡', p.x, p.y);
         ctx.shadowBlur=0;
       });
@@ -163,7 +163,7 @@
       // 敌机
       enemies.forEach(function(e){
         ctx.shadowBlur=8; ctx.shadowColor = e.kind==='big'?'#ff2e63':'#ff7847';
-        ctx.font=(e.h+8)+'px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.font=(e.h+8)+'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
         ctx.fillText(e.kind==='big'?'👾':'🛸', e.x, e.y);
         ctx.shadowBlur=0;
       });
@@ -175,7 +175,7 @@
         ctx.beginPath(); ctx.moveTo(-6, player.h/2); ctx.lineTo(0, player.h/2+10+Math.random()*6); ctx.lineTo(6, player.h/2); ctx.fill();
         ctx.globalAlpha=1;
         ctx.shadowBlur=14; ctx.shadowColor='#00e0ff';
-        ctx.fillStyle='#00e0ff'; ctx.font='36px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.fillStyle='#00e0ff'; ctx.font='36px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
         ctx.fillText('🚀', 0, 0);
         ctx.restore();
         ctx.shadowBlur=0;
@@ -184,7 +184,7 @@
       particles.forEach(function(p){ ctx.globalAlpha=p.life/30; ctx.fillStyle=p.color; ctx.fillRect(p.x-p.r/2, p.y-p.r/2, p.r, p.r); });
       ctx.globalAlpha=1;
       // HUD
-      ctx.fillStyle='#8b97b3'; ctx.font='bold 14px Rajdhani'; ctx.textAlign='left';
+      ctx.fillStyle='#8b97b3'; ctx.font='bold 14px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='left';
       ctx.fillText('关卡 ' + level, 12, 22);
       ctx.fillStyle='#ff2e63'; ctx.fillText('❤'.repeat(Math.max(0,lives)), 12, 42);
       ctx.fillStyle='#ffb627'; ctx.textAlign='right'; ctx.fillText('⚡火力 '+power+(powerTimer>0?' ('+Math.ceil(powerTimer/60)+'s)':''), W-12, 22);

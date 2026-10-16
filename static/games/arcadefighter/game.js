@@ -214,7 +214,7 @@
       ctx.globalAlpha=1; ctx.shadowBlur=0;
 
       // 浮动伤害数字
-      floats.forEach(function(f){ f.y-=1; f.life--; ctx.globalAlpha=Math.min(1,f.life/20); ctx.fillStyle=f.c; ctx.font='bold 22px Orbitron'; ctx.textAlign='center'; ctx.fillText(f.t, f.x, f.y); });
+      floats.forEach(function(f){ f.y-=1; f.life--; ctx.globalAlpha=Math.min(1,f.life/20); ctx.fillStyle=f.c; ctx.font='bold 22px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center'; ctx.fillText(f.t, f.x, f.y); });
       ctx.globalAlpha=1;
       floats = floats.filter(function(f){return f.life>0;});
 
@@ -264,7 +264,7 @@
       ctx.restore(); ctx.shadowBlur=0;
 
       // 名字
-      ctx.fillStyle=f.color; ctx.font='bold 12px Rajdhani'; ctx.textAlign='center';
+      ctx.fillStyle=f.color; ctx.font='bold 12px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center';
       ctx.fillText(f.name, f.x, f.y+18);
     }
 
@@ -276,16 +276,16 @@
       drawBar(W-340, 18, 320, 16, p2.hp/p2.maxhp, '#ff2e63', p2.name, true);
       drawEnergy(W-340, 38, 320, 6, p2.energy/100, '#ffb627');
       // 回合胜场
-      ctx.textAlign='center'; ctx.font='bold 13px Rajdhani'; ctx.fillStyle='#8b97b3';
+      ctx.textAlign='center'; ctx.font='bold 13px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.fillStyle='#8b97b3';
       ctx.fillText('第 '+round+' 局', W/2, 20);
-      ctx.fillStyle='#00e0ff'; ctx.font='20px sans-serif';
+      ctx.fillStyle='#00e0ff'; ctx.font='20px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
       for (var i=0;i<2;i++) ctx.fillText(i<p1Wins?'★':'☆', W/2-20+i*20, 44);
       ctx.fillStyle='#ff2e63';
       for (var i=0;i<2;i++) ctx.fillText(i<p2Wins?'★':'☆', W/2+20-i*20, 44);
       // 提示
       if (roundEndT>0 && !over){
         ctx.fillStyle='rgba(6,9,18,.6)'; ctx.fillRect(0,H/2-40,W,80);
-        ctx.fillStyle=p1.hp>p2.hp?'#00e0ff':'#ff2e63'; ctx.font='bold 36px Orbitron'; ctx.textAlign='center';
+        ctx.fillStyle=p1.hp>p2.hp?'#00e0ff':'#ff2e63'; ctx.font='bold 36px Orbitron,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center';
         ctx.fillText((p1.hp>p2.hp?p1.name:p2.name)+' 胜!', W/2, H/2+10);
       }
     }
@@ -295,7 +295,7 @@
       ctx.fillStyle=color; 
       if(right){ roundRect(x+w*(1-pct),y,w*pct,h,4); } else { roundRect(x,y,w*pct,h,4); }
       ctx.fill();
-      ctx.fillStyle='#eaf0fb'; ctx.font='bold 11px Rajdhani'; ctx.textAlign=right?'right':'left';
+      ctx.fillStyle='#eaf0fb'; ctx.font='bold 11px Rajdhani,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign=right?'right':'left';
       ctx.fillText(name+' '+Math.ceil(pct*100), right?x+w-6:x+6, y-4);
     }
     function drawEnergy(x,y,w,h,pct,color){
