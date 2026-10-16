@@ -1055,6 +1055,7 @@
 
     /* ----- 波次调度 ----- */
     function startWave() {
+      if (waveIdx >= cur.waves.length) return;          // 越界防御:全部波次已打完
       var w = cur.waves[waveIdx];
       spawnList = [];
       for (var g = 0; g < w.length; g++) {
@@ -1086,6 +1087,7 @@
     }
     function updateWaves(dt) {
       if (!waveActive) {
+        if (waveIdx >= cur.waves.length) return;        // 等待 doLevelClear,不再倒计时
         waveT -= dt;
         if (waveT <= 0) startWave();
         return;
@@ -1107,7 +1109,7 @@
       }
     }
     function earlyCall() {
-      if (waveActive || waveIdx === 0) return;
+      if (waveActive || waveIdx === 0 || waveIdx >= cur.waves.length) return;
       var bonus = Math.ceil(waveT * 2);
       gold += bonus;
       floats.push({ x: W / 2, y: 320, text: '+' + bonus + '💰 提前召唤', color: C.gold, t: 0, dur: 1, vy: -30 });
@@ -2777,7 +2779,9 @@
         portraitShown = true;
         portraitHintT = 9;
       }
-      if (running && !paused) step(dt);
+      if (running && !paused) {
+        try { step(dt); } catch (e) { if (window.console) console.error(e); /* 单帧异常不冻结游戏 */ }
+      }
       draw();
       rafId = requestAnimationFrame(loop);
     }
